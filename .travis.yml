@@ -4,8 +4,6 @@ jdk:
     - oraclejdk8
 
 sudo: required
-notifications:
-      slack: gojava5:NHIHdfuSA5H2riwEG9X8dL8V
-      email: false
-#script: -mvn checkstyle:check
+
+script: -mvn clean test
 
