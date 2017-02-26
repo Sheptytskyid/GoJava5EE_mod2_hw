@@ -4,6 +4,7 @@ import jdbchomework.dao.model.CompaniesDao;
 import jdbchomework.entity.Company;
 import jdbchomework.entity.Developer;
 import jdbchomework.entity.Project;
+import jdbchomework.utils.ConnectionUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,10 +14,12 @@ import java.util.List;
  * Created by GetFire on 25.02.2017.
  */
 public class CompaniesJdbcDao implements CompaniesDao {
+
+
     private Connection connection;
 
-    public CompaniesJdbcDao(Connection connection) {
-        this.connection = connection;
+    public CompaniesJdbcDao() {
+        this.connection = ConnectionUtil.getConnection();
     }
 
     @Override
@@ -27,6 +30,7 @@ public class CompaniesJdbcDao implements CompaniesDao {
             connection.setAutoCommit(false);
             statement.setString(1, name);
             statement.executeUpdate();
+            System.out.println(name+ "Successfully added to DB");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -63,7 +67,6 @@ public class CompaniesJdbcDao implements CompaniesDao {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 company = createCompany(rs);
-                connection.commit();
             } else {
                 System.out.println("Cannot find any company with id: " + id);
                 company = new Company("Default");
@@ -213,7 +216,7 @@ public class CompaniesJdbcDao implements CompaniesDao {
     }
 
     private Company createCompany(ResultSet resultSet) throws SQLException {
-        return new Company(resultSet.getString("company_name"),
+        return new Company(resultSet.getString("name"),
                 resultSet.getInt("company_id"));
 
     }

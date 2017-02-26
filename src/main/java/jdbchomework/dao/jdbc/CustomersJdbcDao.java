@@ -3,6 +3,7 @@ package jdbchomework.dao.jdbc;
 import jdbchomework.dao.model.CustomersDao;
 import jdbchomework.entity.Customer;
 import jdbchomework.entity.Project;
+import jdbchomework.utils.ConnectionUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,8 +12,8 @@ import java.util.List;
 public class CustomersJdbcDao implements CustomersDao {
     private Connection connection;
 
-    public CustomersJdbcDao(Connection connection) {
-        this.connection = connection;
+    public CustomersJdbcDao() {
+        this.connection = ConnectionUtil.getConnection();
     }
 
     @Override
@@ -102,7 +103,6 @@ public class CustomersJdbcDao implements CustomersDao {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 customer = createCustomer(rs);
-                connection.commit();
             } else {
                 System.out.println("Cannot find any company with id: " + id);
                 customer = new Customer("Default");
