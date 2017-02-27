@@ -139,6 +139,7 @@ public class SkillsJdbcDao implements SkillsDao {
             res = 1;
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
+
         } finally {
             try {
                 connection.setAutoCommit(true);
