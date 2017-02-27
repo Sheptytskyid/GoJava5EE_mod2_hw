@@ -25,21 +25,21 @@ VALUES
   ('Smart driving', 9300, 3, 2);
 
 -- Fill the developers table--
-INSERT INTO developers (name, project_id)
+INSERT INTO developers (name, project_id, salary)
 VALUES
-  ('Denys Butenko', 1),
-  ('Nick Pick', 2),
-  ('Joe Goe', 3),
-  ('Roman Moroz', 4),
-  ('Roman Boyko', 5),
-  ('Oleg Moroz', 6),
-  ('Katia Liakh', 7),
-  ('Olena Bilan', 8),
-  ('Roman Chalyi', 9),
-  ('Petro Kish', 1),
-  ('Vasyl Chornyi', 2),
-  ('Ivan Brom', 3),
-  ('Cristina Boyko', 4);
+  ('Denys Butenko', 1, 1200),
+  ('Nick Pick', 2, 1200),
+  ('Joe Goe', 3,2000),
+  ('Roman Moroz', 4, 2000),
+  ('Roman Boyko', 5, 2800),
+  ('Oleg Moroz', 6, 2800),
+  ('Katia Liakh', 7, 3600),
+  ('Olena Bilan', 8, 3600),
+  ('Roman Chalyi', 9, 4400),
+  ('Petro Kish', 1, 4400),
+  ('Vasyl Chornyi', 2, 5200),
+  ('Ivan Brom', 3, 5200),
+  ('Cristina Boyko', 4, 6000);
 
 -- Fill the skills table--
 INSERT INTO skills (name)
