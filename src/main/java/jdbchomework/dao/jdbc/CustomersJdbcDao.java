@@ -5,7 +5,11 @@ import jdbchomework.entity.Customer;
 import jdbchomework.entity.Project;
 import jdbchomework.utils.ConnectionUtil;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +43,8 @@ public class CustomersJdbcDao implements CustomersDao {
     @Override
     public Customer getByName(String aName) {
         Customer customer = null;
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers WHERE name LIKE ?")) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers "
+                + "WHERE name LIKE ?")) {
             aName = "%" + aName + "%";
             statement.setString(1, aName);
             ResultSet resultSet = statement.executeQuery();
@@ -96,7 +101,7 @@ public class CustomersJdbcDao implements CustomersDao {
     }
 
     @Override
-    public Customer getByID(int id) {
+    public Customer getById(int id) {
         Customer customer;
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers WHERE customer_id = ?;")) {
             statement.setInt(1, id);
@@ -114,9 +119,10 @@ public class CustomersJdbcDao implements CustomersDao {
     }
 
     @Override
-    public int deleteByID(int id) {
+    public int deleteById(int id) {
         int res;
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM customers WHERE customer_id = ?;")) {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM customers "
+                + "WHERE customer_id = ?;")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             connection.setAutoCommit(false);
             statement.setInt(1, id);
@@ -137,8 +143,9 @@ public class CustomersJdbcDao implements CustomersDao {
     }
 
     @Override
-    public void updateByID(int id, Customer toUpdate) {
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE customers SET name = ? WHERE customer_id =?;")) {
+    public void updateById(int id, Customer toUpdate) {
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE customers SET name = ? "
+                + "WHERE customer_id =?;")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             connection.setAutoCommit(false);
             String name = toUpdate.getName();
@@ -161,8 +168,10 @@ public class CustomersJdbcDao implements CustomersDao {
     @Override
     public List<Project> getCustomersProject(Customer customer) {
         List<Project> projects = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement("SELECT projects.name AS project_name, projects.cost AS project_cost FROM "
-                + "projects INNER JOIN customers USING (customer_id) WHERE customers.name LIKE ?;")) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT projects.name AS project_name, "
+                + "projects.cost AS project_cost FROM "
+                + "projects INNER JOIN customers USING (customer_id) "
+                + "WHERE customers.name LIKE ?;")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             connection.setAutoCommit(false);
             String name = "%" + customer.getName() + "%";

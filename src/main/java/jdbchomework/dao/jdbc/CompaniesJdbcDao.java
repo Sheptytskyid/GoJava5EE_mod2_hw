@@ -6,7 +6,12 @@ import jdbchomework.entity.Developer;
 import jdbchomework.entity.Project;
 import jdbchomework.utils.ConnectionUtil;
 
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +30,13 @@ public class CompaniesJdbcDao implements CompaniesDao {
     @Override
     public void add(Company toAdd) {
         String name = toAdd.getName();
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO companies(name) VALUES (?);")) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO "
+                + "companies(name) VALUES (?);")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             connection.setAutoCommit(false);
             statement.setString(1, name);
             statement.executeUpdate();
-            System.out.println(name+ "Successfully added to DB");
+            System.out.println(name + "Successfully added to DB");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -60,9 +66,10 @@ public class CompaniesJdbcDao implements CompaniesDao {
     }
 
     @Override
-    public Company getByID(int id) {
+    public Company getById(int id) {
         Company company;
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM companies WHERE company_id = ?;")) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM "
+                + "companies WHERE company_id = ?;")) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -78,9 +85,10 @@ public class CompaniesJdbcDao implements CompaniesDao {
     }
 
     @Override
-    public int deleteByID(int id) {
+    public int deleteById(int id) {
         int res;
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM companies WHERE company_id = ?;")) {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM "
+                + "companies WHERE company_id = ?;")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             connection.setAutoCommit(false);
             statement.setInt(1, id);
@@ -103,7 +111,8 @@ public class CompaniesJdbcDao implements CompaniesDao {
     @Override
     public Company getByName(String aName) {
         Company result = null;
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM companies WHERE name LIKE ?;")) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM "
+                + "companies WHERE name LIKE ?;")) {
             aName = "%" + aName + "%";
             statement.setString(1, aName);
             ResultSet resultSet = statement.executeQuery();
@@ -119,7 +128,7 @@ public class CompaniesJdbcDao implements CompaniesDao {
     }
 
     @Override
-    public void updateByID(int id, Company toUpdate) {
+    public void updateById(int id, Company toUpdate) {
         try (PreparedStatement statement = connection.prepareStatement("UPDATE companies SET name = ? WHERE company_id =?;")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             connection.setAutoCommit(false);
@@ -143,8 +152,10 @@ public class CompaniesJdbcDao implements CompaniesDao {
     @Override
     public List<Project> getCompaniesProjects(Company company) {
         List<Project> result = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement("SELECT projects.name AS project_name, projects.cost AS project_cost FROM "
-                + "projects INNER JOIN companies USING (company_id) WHERE companies.name LIKE ?;")) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT projects.name AS project_name, "
+                + "projects.cost AS project_cost FROM "
+                + "projects INNER JOIN companies USING (company_id)"
+                + " WHERE companies.name LIKE ?;")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             connection.setAutoCommit(false);
             String name = "%" + company.getName() + "%";
@@ -198,8 +209,10 @@ public class CompaniesJdbcDao implements CompaniesDao {
     public List<Developer> getAllDevelopers(String companyName) {
         companyName = "%" + companyName + "%";
         List<Developer> developers = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement("SELECT developers.name AS dev_name FROM developers INNER JOIN "
-                + "projects USING (project_id) INNER JOIN companies USING (company_id) WHERE companies.name LIKE ?;")) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT developers.name AS dev_name "
+                + "FROM developers INNER JOIN projects USING (project_id) "
+                + "INNER JOIN companies USING (company_id) "
+                + "WHERE companies.name LIKE ?;")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             connection.setAutoCommit(false);
             statement.setString(1, companyName);

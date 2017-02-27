@@ -5,12 +5,17 @@ import java.util.List;
 /**
  * Created by GetFire on 25.02.2017.
  */
-public interface Dao<T>{
-    public void add(T toAdd);
-    public List<T> getAll();
-    public T getByID(int id);
-    public int deleteByID(int id);
-    public void updateByID(int id, T toUpdate);
+public interface Dao<T> {
+    void add(T toAdd);
+
+    List<T> getAll();
+
+    T getById(int id);
+
+    int deleteById(int id);
+
+    void updateById(int id, T toUpdate);
 
 
 }
+

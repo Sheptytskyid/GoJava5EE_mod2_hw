@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface CompaniesDao extends Dao<Company> {
 
-    public Company getByName(String name);
+    Company getByName(String name);
 
-    public List<Project> getCompaniesProjects(Company company);
+    List<Project> getCompaniesProjects(Company company);
 
-    public int deleteByName(String name);
+    int deleteByName(String name);
 
-    public List<Developer> getAllDevelopers(String companyName);
+    List<Developer> getAllDevelopers(String companyName);
 }
