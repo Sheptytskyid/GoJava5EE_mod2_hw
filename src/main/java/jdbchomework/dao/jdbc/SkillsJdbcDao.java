@@ -1,5 +1,10 @@
 package jdbchomework.dao.jdbc;
 
-public class SkillsJdbcDao {
+import jdbchomework.entity.Skill;
 
+public interface SkillsDao extends Dao<Skill> {
+
+    Skill getByName(String name);
+
+    int deleteByName(String name);
 }
