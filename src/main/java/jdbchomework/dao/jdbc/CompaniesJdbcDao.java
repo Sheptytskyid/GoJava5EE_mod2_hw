@@ -1,6 +1,7 @@
 package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.CompaniesDao;
+import jdbchomework.dao.model.ProjectsDao;
 import jdbchomework.entity.Company;
 import jdbchomework.entity.Developer;
 import jdbchomework.entity.Project;
@@ -38,7 +39,7 @@ public class CompaniesJdbcDao implements CompaniesDao {
             statement.executeUpdate();
             System.out.println(name + "Successfully added to DB");
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Cannot add to DB", e);
         } finally {
             try {
                 connection.setAutoCommit(true);
@@ -152,33 +153,8 @@ public class CompaniesJdbcDao implements CompaniesDao {
 
     @Override
     public List<Project> getCompaniesProjects(Company company) {
-        List<Project> result = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement("SELECT projects.name AS project_name, "
-                + "projects.cost AS project_cost FROM "
-                + "projects INNER JOIN companies USING (company_id)"
-                + " WHERE companies.name LIKE ?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            connection.setAutoCommit(false);
-            String name = "%" + company.getName() + "%";
-            statement.setString(1, name);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String name1 = resultSet.getString("project_name");
-                int cost = resultSet.getInt("project_cost");
-                result.add(new Project(name1, cost));
-            }
-            connection.commit();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-        return result;
+        ProjectsDao projectsDao = new ProjectsJdbcDao();
+        return projectsDao.getAllProjects(company.getName());
     }
 
     @Override

@@ -5,13 +5,20 @@ import java.util.List;
 
 public class Developer {
 
+    private int id;
     private String name;
-    private List<String> skills;
+    private List<Skill> skills;
     private int salary;
 
     public Developer(String name) {
         this.name = name;
     }
+
+    public Developer(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
+
 
     public String getName() {
         return name;
@@ -21,11 +28,11 @@ public class Developer {
         this.name = name;
     }
 
-    public List<String> getSkills() {
+    public List<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(List<String> skills) {
+    public void setSkills(List<Skill> skills) {
         this.skills = skills;
     }
 
@@ -40,9 +47,10 @@ public class Developer {
     @Override
     public String toString() {
         return "Developer{"
-            + "name='" + name + '\''
-            + ", skills=" + skills
-            + ", salary=" + salary
-            + '}';
+                + "name='" + name + '\''
+                + ", skills=" + skills
+                + ", salary=" + salary
+                + '}';
     }
 }
+
