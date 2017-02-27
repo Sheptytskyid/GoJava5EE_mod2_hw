@@ -171,6 +171,7 @@ public class SkillsJdbcDao implements SkillsDao {
             }
         }
     }
+
     private Skill createSkill(ResultSet resultSet) throws SQLException {
         return new Skill(resultSet.getString("skill_name"),
                 resultSet.getInt("skill_id"));
