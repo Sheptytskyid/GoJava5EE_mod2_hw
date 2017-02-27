@@ -109,12 +109,12 @@ public class CompaniesJdbcDao implements CompaniesDao {
     }
 
     @Override
-    public Company getByName(String aName) {
+    public Company getByName(String name) {
         Company result = null;
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM "
                 + "companies WHERE name LIKE ?;")) {
-            aName = "%" + aName + "%";
-            statement.setString(1, aName);
+            name = "%" + name + "%";
+            statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 result = createCompany(resultSet);
@@ -162,9 +162,9 @@ public class CompaniesJdbcDao implements CompaniesDao {
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                String aName = resultSet.getString("project_name");
+                String name1 = resultSet.getString("project_name");
                 int cost = resultSet.getInt("project_cost");
-                result.add(new Project(aName, cost));
+                result.add(new Project(name1, cost));
             }
             connection.commit();
 
@@ -181,17 +181,17 @@ public class CompaniesJdbcDao implements CompaniesDao {
     }
 
     @Override
-    public int deleteByName(String aName) {
+    public int deleteByName(String name) {
         int res;
         String sql = "DELETE FROM companies WHERE name LIKE ?;";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             connection.setAutoCommit(false);
-            String name1 = "%" + aName + "%";
+            String name1 = "%" + name + "%";
             statement.setString(1, name1);
             statement.executeUpdate();
             connection.commit();
-            System.out.println(aName + ", Successfully deleted");
+            System.out.println(name + ", Successfully deleted");
             res = 1;
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);

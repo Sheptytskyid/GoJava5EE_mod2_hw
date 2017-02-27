@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface CustomersDao extends Dao<Customer> {
 
-    Customer getByName(String aName);
+    Customer getByName(String name);
 
-    int deleteByName(String aName);
+    int deleteByName(String name);
 
     List<Project> getCustomersProject(Customer customer);
 

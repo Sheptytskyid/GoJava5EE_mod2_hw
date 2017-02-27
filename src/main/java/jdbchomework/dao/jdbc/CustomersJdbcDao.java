@@ -41,12 +41,12 @@ public class CustomersJdbcDao implements CustomersDao {
     }
 
     @Override
-    public Customer getByName(String aName) {
-        Customer customer = null;
+    public Customer getByName(String name) {
+        Customer customer;
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers "
                 + "WHERE name LIKE ?")) {
-            aName = "%" + aName + "%";
-            statement.setString(1, aName);
+            name = "%" + name + "%";
+            statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 customer = createCustomer(resultSet);
@@ -76,17 +76,17 @@ public class CustomersJdbcDao implements CustomersDao {
     }
 
     @Override
-    public int deleteByName(String aName) {
+    public int deleteByName(String name) {
         int res;
         String sql = "DELETE FROM customers WHERE name LIKE ?;";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             connection.setAutoCommit(false);
-            String name1 = "%" + aName + "%";
+            String name1 = "%" + name + "%";
             statement.setString(1, name1);
             statement.executeUpdate();
             connection.commit();
-            System.out.println(aName + ", Successfully deleted");
+            System.out.println(name + ", Successfully deleted");
             res = 1;
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
