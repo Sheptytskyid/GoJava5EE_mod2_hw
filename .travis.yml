@@ -7,7 +7,7 @@ jdk:
 
 notifications:
       slack: gojava5:NHIHdfuSA5H2riwEG9X8dL8V
-
+      email: false
 cache:
   directories:
     - $HOME/.m2

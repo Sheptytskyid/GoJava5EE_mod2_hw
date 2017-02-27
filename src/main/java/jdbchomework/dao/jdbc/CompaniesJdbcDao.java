@@ -129,7 +129,8 @@ public class CompaniesJdbcDao implements CompaniesDao {
 
     @Override
     public void updateById(int id, Company toUpdate) {
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE companies SET name = ? WHERE company_id =?;")) {
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE companies SET name = ? "
+                + "WHERE company_id =?;")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             connection.setAutoCommit(false);
             String name = toUpdate.getName();
