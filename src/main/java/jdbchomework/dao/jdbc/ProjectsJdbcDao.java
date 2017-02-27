@@ -1,7 +1,6 @@
 package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.ProjectsDao;
-import jdbchomework.entity.Company;
 import jdbchomework.entity.Developer;
 import jdbchomework.entity.Project;
 import jdbchomework.utils.ConnectionUtil;
@@ -158,7 +157,7 @@ public class ProjectsJdbcDao implements ProjectsDao {
             String name = toUpdate.getProjectName();
             int cost = toUpdate.getCost();
             statement.setString(1, name);
-            statement.setInt(2,cost);
+            statement.setInt(2, cost);
             statement.setInt(3, id);
             statement.executeUpdate();
             connection.commit();
@@ -177,12 +176,56 @@ public class ProjectsJdbcDao implements ProjectsDao {
 
     @Override
     public List<Project> getAllProjects(String companyName) {
-        return null;
+        List<Project> result = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement("SELECT projects.name, "
+                + "projects.cost FROM "
+                + "projects INNER JOIN companies USING (company_id)"
+                + " WHERE companies.name LIKE ?;")) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            connection.setAutoCommit(false);
+            String name = "%" + companyName + "%";
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Project project = createProject(resultSet);
+                result.add(project);
+            }
+            connection.commit();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot connect to DB", e);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                throw new RuntimeException("Cannot connect to DB", e);
+            }
+        }
+        return result;
     }
 
     @Override
     public List<Developer> getDevelopers(String projectName) {
-        return null;
+        projectName = "%" + projectName + "%";
+        List<Developer> result = new ArrayList<>();
+        try (PreparedStatement statement =
+                     connection.prepareStatement("SELECT developers.name AS dev_name "
+                             + "FROM developers INNER JOIN projects USING (project_id) "
+                             + "WHERE projects.name LIKE ?;")) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+            connection.setAutoCommit(false);
+            statement.setString(1, projectName);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Developer dev = new Developer(resultSet.getString("dev_name"));
+                result.add(dev);
+            }
+            connection.commit();
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot connect to DB", e);
+        }
+        return result;
     }
 
     private Project createProject(ResultSet resultSet) throws SQLException {
