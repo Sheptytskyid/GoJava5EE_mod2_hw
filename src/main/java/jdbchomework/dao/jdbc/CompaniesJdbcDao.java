@@ -37,8 +37,9 @@ public class CompaniesJdbcDao implements CompaniesDao {
             statement.setString(1, name);
             statement.executeUpdate();
             System.out.println(name + "Successfully added to DB");
+            connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Cannot add to DB", e);
         } finally {
             try {
                 connection.setAutoCommit(true);

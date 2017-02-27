@@ -1,5 +1,19 @@
 package jdbchomework.dao.model;
 
-public interface ProjectsDao {
+import jdbchomework.entity.Developer;
+import jdbchomework.entity.Project;
+
+import java.util.List;
+
+public interface ProjectsDao extends Dao<Project> {
+
+    Project getByName(String projectName);
+
+    int deleteByName(String projectName);
+
+    List<Project> getAllProjects(String companyName);
+
+    List<Developer> getDevelopers (String projectName);
+
 
 }
