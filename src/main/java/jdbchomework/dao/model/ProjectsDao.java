@@ -13,7 +13,7 @@ public interface ProjectsDao extends Dao<Project> {
 
     List<Project> getAllProjects(String companyName);
 
-    List<Developer> getDevelopers (String projectName);
+    List<Developer> getDevelopers(String projectName);
 
 
 }
