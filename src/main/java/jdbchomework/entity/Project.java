@@ -1,21 +1,12 @@
 package jdbchomework.entity;
 
-public class Project {
+public class Project extends AbstractEntity {
 
-    private String projectName;
     private int cost;
 
-    public Project(String projectName, int cost) {
-        this.projectName = projectName;
+    public Project(long id, String name, int cost) {
+        super(id, name);
         this.cost = cost;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
     }
 
     public int getCost() {
@@ -28,9 +19,11 @@ public class Project {
 
     @Override
     public String toString() {
-        return "{"
-            + "projectName='" + projectName + '\''
-            + ", cost=" + cost
-            + '}';
+        final StringBuilder sb = new StringBuilder("Project{");
+        sb.append("id=").append(getId()).append(" ");
+        sb.append("name=").append(getName()).append(" ");
+        sb.append("cost=").append(cost).append(" ");
+        sb.append('}');
+        return sb.toString();
     }
 }

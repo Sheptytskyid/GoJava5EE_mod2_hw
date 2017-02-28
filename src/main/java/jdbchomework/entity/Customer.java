@@ -2,34 +2,12 @@ package jdbchomework.entity;
 
 import java.util.List;
 
-public class Customer {
-    private int id;
-    private String name;
+public class Customer extends AbstractEntity {
+
     private List<Project> customersProject;
 
-    public Customer(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Customer(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public Customer(long id, String name) {
+        super(id, name);
     }
 
     public List<Project> getCustomersProject() {
@@ -42,10 +20,11 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + ", customersProject=" + customersProject
-                + '}';
+        final StringBuilder sb = new StringBuilder("Customer{");
+        sb.append("id=").append(getId()).append(" ");
+        sb.append("name=").append(getName()).append(" ");
+        sb.append("customersProject=").append(customersProject).append(" ");
+        sb.append('}');
+        return sb.toString();
     }
 }

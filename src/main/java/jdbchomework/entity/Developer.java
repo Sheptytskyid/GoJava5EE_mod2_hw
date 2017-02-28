@@ -3,29 +3,14 @@ package jdbchomework.entity;
 import java.util.List;
 
 
-public class Developer {
+public class Developer extends AbstractEntity {
 
-    private int id;
-    private String name;
     private List<Skill> skills;
     private int salary;
 
-    public Developer(String name) {
-        this.name = name;
-    }
-
-    public Developer(String name, int id) {
-        this.name = name;
-        this.id = id;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public Developer(long id, String name, int salary) {
+        super(id, name);
+        this.salary = salary;
     }
 
     public List<Skill> getSkills() {
@@ -46,11 +31,13 @@ public class Developer {
 
     @Override
     public String toString() {
-        return "Developer{"
-                + "name='" + name + '\''
-                + ", skills=" + skills
-                + ", salary=" + salary
-                + '}';
+        final StringBuilder sb = new StringBuilder("Developer{");
+        sb.append("id=").append(getId()).append(" ");
+        sb.append("name=").append(getName()).append(" ");
+        sb.append("skills=").append(skills).append(" ");
+        sb.append(", salary=").append(salary).append(" ");
+        sb.append('}');
+        return sb.toString();
     }
 }
 

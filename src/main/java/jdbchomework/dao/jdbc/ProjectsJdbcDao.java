@@ -1,37 +1,32 @@
 package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.ProjectsDao;
-import jdbchomework.entity.Developer;
 import jdbchomework.entity.Project;
-import jdbchomework.utils.ConnectionUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ProjectsJdbcDao implements ProjectsDao {
-    private Connection connection;
+public class ProjectsJdbcDao extends AbstractDao<Project> implements ProjectsDao {
 
-    public ProjectsJdbcDao() {
-        this.connection = ConnectionUtil.getConnection();
+    public ProjectsJdbcDao(Connection connection) {
+        super(connection);
     }
 
     @Override
     public void add(Project toAdd) {
-        String name = toAdd.getProjectName();
+        String name = toAdd.getName();
         int cost = toAdd.getCost();
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO projects "
-                + "(name, cost) VALUES (?,?)")) {
+        try (PreparedStatement statement = connection
+            .prepareStatement("INSERT INTO projects (name, cost) VALUES (?,?)")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             statement.setString(1, name);
             statement.setInt(2, cost);
             statement.executeUpdate();
-            System.out.println(name + "Successfully added to DB");
             connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException("Cannot add to DB", e);
@@ -42,7 +37,6 @@ public class ProjectsJdbcDao implements ProjectsDao {
                 throw new RuntimeException("Cannot connect to DB", e);
             }
         }
-
     }
 
     @Override
@@ -63,16 +57,13 @@ public class ProjectsJdbcDao implements ProjectsDao {
 
     @Override
     public Project getById(int id) {
-        Project project;
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM "
-                + "projects WHERE project_id = ?;")) {
+        Project project = null;
+        try (PreparedStatement statement = connection
+            .prepareStatement("SELECT * FROM projects WHERE project_id = ?;")) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 project = createProject(rs);
-            } else {
-                System.out.println("Cannot find any company with id: " + id);
-                project = new Project("Default", 0);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
@@ -81,6 +72,33 @@ public class ProjectsJdbcDao implements ProjectsDao {
     }
 
     @Override
+    public void updateById(int id, Project toUpdate) {
+        try (PreparedStatement statement = connection
+            .prepareStatement("UPDATE projects SET name = ?, cost =? WHERE project_id =?;")) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            connection.setAutoCommit(false);
+            statement.setString(1, toUpdate.getName());
+            statement.setInt(2, toUpdate.getCost());
+            statement.setInt(3, id);
+            statement.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot connect to DB", e);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                throw new RuntimeException("Cannot connect to DB", e);
+            }
+        }
+    }
+
+    private Project createProject(ResultSet resultSet) throws SQLException {
+        return new Project(resultSet.getInt("project_id"), resultSet.getString("name"),
+            resultSet.getInt("cost"));
+    }
+
+    /*@Override
     public Project getByName(String projectName) {
         Project result = null;
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM "
@@ -97,33 +115,9 @@ public class ProjectsJdbcDao implements ProjectsDao {
             e.printStackTrace();
         }
         return result;
-    }
+    }*/
 
-    @Override
-    public int deleteById(int id) {
-        int res;
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM "
-                + "projects WHERE project_id = ?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            connection.setAutoCommit(false);
-            statement.setInt(1, id);
-            statement.executeUpdate();
-            connection.commit();
-            System.out.println("Successfully deleted");
-            res = 1;
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-        return res;
-    }
-
-    @Override
+    /*@Override
     public int deleteByName(String projectName) {
         int res;
         String sql = "DELETE FROM projects WHERE name LIKE ?;";
@@ -146,35 +140,9 @@ public class ProjectsJdbcDao implements ProjectsDao {
             }
         }
         return res;
-    }
+    }*/
 
-    @Override
-    public void updateById(int id, Project toUpdate) {
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE projects SET name = ?, cost =? "
-                + "WHERE project_id =?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            connection.setAutoCommit(false);
-            String name = toUpdate.getProjectName();
-            int cost = toUpdate.getCost();
-            statement.setString(1, name);
-            statement.setInt(2, cost);
-            statement.setInt(3, id);
-            statement.executeUpdate();
-            connection.commit();
-            System.out.println("Successfully updated");
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-
-    }
-
-    @Override
+    /*@Override
     public List<Project> getAllProjects(String companyName) {
         List<Project> result = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement("SELECT projects.name, "
@@ -191,7 +159,6 @@ public class ProjectsJdbcDao implements ProjectsDao {
                 result.add(project);
             }
             connection.commit();
-
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
         } finally {
@@ -226,10 +193,5 @@ public class ProjectsJdbcDao implements ProjectsDao {
             throw new RuntimeException("Cannot connect to DB", e);
         }
         return result;
-    }
-
-    private Project createProject(ResultSet resultSet) throws SQLException {
-        return new Project(resultSet.getString("name"),
-                resultSet.getInt("cost"));
-    }
+    }*/
 }

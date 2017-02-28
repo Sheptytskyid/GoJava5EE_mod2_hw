@@ -1,41 +1,17 @@
 package jdbchomework.entity;
 
-public class Skill {
+public class Skill extends AbstractEntity {
 
-    private int id;
-    private String name;
-
-    public Skill(String name) {
-        this.name = name;
-    }
-
-    public Skill(String name, int id) {
-        this.id = id;
-        this.name = name;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public Skill(long id, String name) {
+        super(id, name);
     }
 
     @Override
     public String toString() {
-        return "Skill{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + '}';
+        final StringBuilder sb = new StringBuilder("Skill{");
+        sb.append("id=").append(getId()).append(" ");
+        sb.append("name=").append(getName()).append(" ");
+        sb.append('}');
+        return sb.toString();
     }
 }

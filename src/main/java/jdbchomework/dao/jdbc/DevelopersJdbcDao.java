@@ -2,9 +2,6 @@ package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.DevelopersDao;
 import jdbchomework.entity.Developer;
-import jdbchomework.entity.Project;
-import jdbchomework.entity.Skill;
-import jdbchomework.utils.ConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,12 +11,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DevelopersJdbcDao implements DevelopersDao {
+public class DevelopersJdbcDao extends AbstractDao<Developer> implements DevelopersDao {
 
-    private Connection connection;
-
-    public DevelopersJdbcDao() {
-        this.connection = ConnectionUtil.getConnection();
+    public DevelopersJdbcDao(Connection connection) {
+        super(connection);
     }
 
     @Override
@@ -51,11 +46,9 @@ public class DevelopersJdbcDao implements DevelopersDao {
                 Developer developer = createDeveloper(resultSet);
                 result.add(developer);
             }
-            connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
         }
-
         return result;
     }
 
@@ -71,8 +64,6 @@ public class DevelopersJdbcDao implements DevelopersDao {
                 developer = createDeveloper(rs);
                 connection.commit();
             } else {
-                System.out.println("Cannot find any developer with id: " + id);
-                developer = new Developer("Default");
                 connection.rollback();
             }
         } catch (SQLException e) {
@@ -88,41 +79,16 @@ public class DevelopersJdbcDao implements DevelopersDao {
     }
 
     @Override
-    public int deleteById(int id) {
-        int res;
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM "
-                + "developers WHERE developer_id = ?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            connection.setAutoCommit(false);
-            statement.setInt(1, id);
-            statement.executeUpdate();
-            connection.commit();
-            System.out.println("Successfully deleted");
-            res = 1;
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-        return res;
-    }
-
-    @Override
     public void updateById(int id, Developer toUpdate) {
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE developers SET name = ? WHERE "
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE developers SET name = ?, salary = ? WHERE "
                 + "developer_id =?;")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             connection.setAutoCommit(false);
-            String name = toUpdate.getName();
-            statement.setString(1, name);
-            statement.setInt(2, id);
+            statement.setString(1, toUpdate.getName());
+            statement.setInt(2, toUpdate.getSalary());
+            statement.setInt(3, id);
             statement.executeUpdate();
             connection.commit();
-            System.out.println("Successfully updated");
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
         } finally {
@@ -134,7 +100,12 @@ public class DevelopersJdbcDao implements DevelopersDao {
         }
     }
 
-    @Override
+    private Developer createDeveloper(ResultSet resultSet) throws SQLException {
+        return new Developer(resultSet.getLong("developer_id"), resultSet.getString("name"),
+            resultSet.getInt("salary"));
+    }
+
+    /*@Override
     public Developer getByName(String name) {
         Developer result = null;
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM developers "
@@ -245,10 +216,5 @@ public class DevelopersJdbcDao implements DevelopersDao {
             throw new RuntimeException("Cannot connect to DB", e);
         }
         return result;
-    }
-
-    private Developer createDeveloper(ResultSet resultSet) throws SQLException {
-        return new Developer(resultSet.getString("developer_name"),
-                resultSet.getInt("developer_id"));
-    }
+    }*/
 }

@@ -2,37 +2,13 @@ package jdbchomework.entity;
 
 import java.util.List;
 
-public class Company {
+public class Company extends AbstractEntity {
 
-    private int id;
-    private String name;
     private List<Project> projects;
     private List<Developer> developers;
 
-    public Company(String name, int id) {
-        this.name = name;
-        this.id = id;
-    }
-
-    public Company(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Company(String name, long id) {
+        super(id, name);
     }
 
     public List<Project> getProjects() {
@@ -53,8 +29,12 @@ public class Company {
 
     @Override
     public String toString() {
-        return "Company{"
-            + "name='" + name + '\''
-            + '}';
+        final StringBuilder sb = new StringBuilder("Company{");
+        sb.append("id=").append(getId()).append(" ");
+        sb.append("name=").append(getName()).append(" ");
+        sb.append("projects=").append(projects).append(" ");
+        sb.append(", developers=").append(developers).append(" ");
+        sb.append('}');
+        return sb.toString();
     }
 }

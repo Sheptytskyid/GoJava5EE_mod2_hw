@@ -1,12 +1,7 @@
 package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.CompaniesDao;
-import jdbchomework.dao.model.ProjectsDao;
 import jdbchomework.entity.Company;
-import jdbchomework.entity.Developer;
-import jdbchomework.entity.Project;
-import jdbchomework.utils.ConnectionUtil;
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,29 +11,20 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by GetFire on 25.02.2017.
- */
-public class CompaniesJdbcDao implements CompaniesDao {
+public class CompaniesJdbcDao extends AbstractDao<Company> implements CompaniesDao {
 
-
-    private Connection connection;
-
-    public CompaniesJdbcDao() {
-        this.connection = ConnectionUtil.getConnection();
+    public CompaniesJdbcDao(Connection connection) {
+        super(connection);
     }
 
     @Override
     public void add(Company toAdd) {
         String name = toAdd.getName();
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO "
-                + "companies(name) VALUES (?);")) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO companies(name) VALUES (?);")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             connection.setAutoCommit(false);
             statement.setString(1, name);
             statement.executeUpdate();
-            System.out.println(name + "Successfully added to DB");
-            connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException("Cannot add to DB", e);
         } finally {
@@ -63,22 +49,18 @@ public class CompaniesJdbcDao implements CompaniesDao {
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
         }
-
         return result;
     }
 
     @Override
     public Company getById(int id) {
-        Company company;
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM "
-                + "companies WHERE company_id = ?;")) {
+        Company company = null;
+        try (PreparedStatement statement = connection
+            .prepareStatement("SELECT * FROM companies WHERE company_id = ?;")) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 company = createCompany(rs);
-            } else {
-                System.out.println("Cannot find any company with id: " + id);
-                company = new Company("Default");
             }
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
@@ -87,17 +69,16 @@ public class CompaniesJdbcDao implements CompaniesDao {
     }
 
     @Override
-    public int deleteById(int id) {
-        int res;
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM "
-                + "companies WHERE company_id = ?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+    public void updateById(int id, Company toUpdate) {
+        try (PreparedStatement statement = connection
+            .prepareStatement("UPDATE companies SET name = ? WHERE company_id =?;")) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             connection.setAutoCommit(false);
-            statement.setInt(1, id);
+            String name = toUpdate.getName();
+            statement.setString(1, name);
+            statement.setInt(2, id);
             statement.executeUpdate();
             connection.commit();
-            System.out.println("Successfully deleted");
-            res = 1;
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
         } finally {
@@ -107,10 +88,14 @@ public class CompaniesJdbcDao implements CompaniesDao {
                 throw new RuntimeException("Cannot connect to DB", e);
             }
         }
-        return res;
     }
 
-    @Override
+    private Company createCompany(ResultSet resultSet) throws SQLException {
+        return new Company(resultSet.getString("name"),
+            resultSet.getInt("company_id"));
+    }
+
+/*    @Override
     public Company getByName(String name) {
         Company result = null;
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM "
@@ -127,38 +112,15 @@ public class CompaniesJdbcDao implements CompaniesDao {
             e.printStackTrace();
         }
         return result;
-    }
+    }*/
 
-    @Override
-    public void updateById(int id, Company toUpdate) {
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE companies SET name = ? "
-                + "WHERE company_id =?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            connection.setAutoCommit(false);
-            String name = toUpdate.getName();
-            statement.setString(1, name);
-            statement.setInt(2, id);
-            statement.executeUpdate();
-            connection.commit();
-            System.out.println("Successfully updated");
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-    }
-
-    @Override
+/*    @Override
     public List<Project> getCompaniesProjects(Company company) {
         ProjectsDao projectsDao = new ProjectsJdbcDao();
         return projectsDao.getAllProjects(company.getName());
-    }
+    }*/
 
-    @Override
+/*    @Override
     public int deleteByName(String name) {
         int res;
         String sql = "DELETE FROM companies WHERE name LIKE ?;";
@@ -169,7 +131,6 @@ public class CompaniesJdbcDao implements CompaniesDao {
             statement.setString(1, name1);
             statement.executeUpdate();
             connection.commit();
-            System.out.println(name + ", Successfully deleted");
             res = 1;
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
@@ -181,9 +142,9 @@ public class CompaniesJdbcDao implements CompaniesDao {
             }
         }
         return res;
-    }
+    }*/
 
-    @Override
+/*    @Override
     public List<Developer> getAllDevelopers(String companyName) {
         companyName = "%" + companyName + "%";
         List<Developer> developers = new ArrayList<>();
@@ -204,11 +165,5 @@ public class CompaniesJdbcDao implements CompaniesDao {
             throw new RuntimeException("Cannot connect to DB", e);
         }
         return developers;
-    }
-
-    private Company createCompany(ResultSet resultSet) throws SQLException {
-        return new Company(resultSet.getString("name"),
-                resultSet.getInt("company_id"));
-
-    }
+    }*/
 }

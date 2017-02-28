@@ -7,17 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-/**
- * Created by GetFire on 26.02.2017.
- */
 public class ConnectionUtil {
 
-    static {
-        loadDriver("com.mysql.jdbc.Driver");
-    }
-
     private static Connection connection;
-
 
     public static Connection getConnection() {
         FileInputStream fis;
@@ -26,7 +18,6 @@ public class ConnectionUtil {
             fis = new FileInputStream("src/main/resources/config.properties");
             property.load(fis);
             String url = property.getProperty("db.url");
-
             String user = property.getProperty("db.user");
             String password = property.getProperty("db.password");
             connection = DriverManager.getConnection(url, user, password);
@@ -43,14 +34,6 @@ public class ConnectionUtil {
             connection.close();
         } catch (SQLException e) {
             throw new RuntimeException("Cannot close connection", e);
-        }
-    }
-
-    public static void loadDriver(String driver) {
-        try {
-            Class.forName(driver);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Cannot download driver", e);
         }
     }
 }

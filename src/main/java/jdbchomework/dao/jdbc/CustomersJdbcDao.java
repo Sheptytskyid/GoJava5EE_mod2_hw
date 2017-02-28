@@ -2,8 +2,6 @@ package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.CustomersDao;
 import jdbchomework.entity.Customer;
-import jdbchomework.entity.Project;
-import jdbchomework.utils.ConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,11 +11,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomersJdbcDao implements CustomersDao {
-    private Connection connection;
+public class CustomersJdbcDao extends AbstractDao<Customer> implements CustomersDao {
 
-    public CustomersJdbcDao() {
-        this.connection = ConnectionUtil.getConnection();
+    public CustomersJdbcDao(Connection connection) {
+        super(connection);
     }
 
     @Override
@@ -37,26 +34,6 @@ public class CustomersJdbcDao implements CustomersDao {
                 throw new RuntimeException("Cannot connect to DB", e);
             }
         }
-
-    }
-
-    @Override
-    public Customer getByName(String name) {
-        Customer customer;
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers "
-                + "WHERE name LIKE ?")) {
-            name = "%" + name + "%";
-            statement.setString(1, name);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                customer = createCustomer(resultSet);
-            } else {
-                customer = new Customer("Default");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        }
-        return customer;
     }
 
     @Override
@@ -76,6 +53,102 @@ public class CustomersJdbcDao implements CustomersDao {
     }
 
     @Override
+    public Customer getById(int id) {
+        Customer customer = null;
+        try (
+            PreparedStatement statement = connection
+                .prepareStatement("SELECT * FROM customers WHERE customer_id = ?;")) {
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                customer = createCustomer(rs);
+            } else {
+                System.out.println("Cannot find any company with id: " + id);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot connect to DB", e);
+        }
+        return customer;
+    }
+
+    @Override
+    public void updateById(int id, Customer toUpdate) {
+        try (PreparedStatement statement = connection
+            .prepareStatement("UPDATE customers SET name = ? WHERE customer_id =?;")) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            connection.setAutoCommit(false);
+            String name = toUpdate.getName();
+            statement.setString(1, name);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+            connection.commit();
+            System.out.println("Successfully updated");
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot connect to DB", e);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                throw new RuntimeException("Cannot connect to DB", e);
+            }
+        }
+    }
+
+    private Customer createCustomer(ResultSet resultSet) throws SQLException {
+        return new Customer(resultSet.getInt("customer_id"),
+            resultSet.getString("name"));
+    }
+
+    /*@Override
+    public List<Project> getCustomersProject(Customer customer) {
+        List<Project> projects = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement("SELECT projects.name AS project_name, "
+                + "projects.cost AS project_cost FROM "
+                + "projects INNER JOIN customers USING (customer_id) "
+                + "WHERE customers.name LIKE ?;")) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+            connection.setAutoCommit(false);
+            String name = "%" + customer.getName() + "%";
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String aName = resultSet.getString("project_name");
+                int cost = resultSet.getInt("project_cost");
+                projects.add(new Project(aName, cost));
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot connect to DB", e);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                throw new RuntimeException("Cannot connect to DB", e);
+            }
+        }
+        return projects;
+    }*/
+
+    /*@Override
+    public Customer getByName(String name) {
+        Customer customer;
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers "
+                + "WHERE name LIKE ?")) {
+            name = "%" + name + "%";
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                customer = createCustomer(resultSet);
+            } else {
+                customer = new Customer("Default");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot connect to DB", e);
+        }
+        return customer;
+    }*/
+
+    /*@Override
     public int deleteByName(String name) {
         int res;
         String sql = "DELETE FROM customers WHERE name LIKE ?;";
@@ -98,107 +171,5 @@ public class CustomersJdbcDao implements CustomersDao {
             }
         }
         return res;
-    }
-
-    @Override
-    public Customer getById(int id) {
-        Customer customer;
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers WHERE customer_id = ?;")) {
-            statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                customer = createCustomer(rs);
-            } else {
-                System.out.println("Cannot find any company with id: " + id);
-                customer = new Customer("Default");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        }
-        return customer;
-    }
-
-    @Override
-    public int deleteById(int id) {
-        int res;
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM customers "
-                + "WHERE customer_id = ?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            connection.setAutoCommit(false);
-            statement.setInt(1, id);
-            statement.executeUpdate();
-            connection.commit();
-            System.out.println("Successfully deleted");
-            res = 1;
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-        return res;
-    }
-
-    @Override
-    public void updateById(int id, Customer toUpdate) {
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE customers SET name = ? "
-                + "WHERE customer_id =?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            connection.setAutoCommit(false);
-            String name = toUpdate.getName();
-            statement.setString(1, name);
-            statement.setInt(2, id);
-            statement.executeUpdate();
-            connection.commit();
-            System.out.println("Successfully updated");
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-    }
-
-    @Override
-    public List<Project> getCustomersProject(Customer customer) {
-        List<Project> projects = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement("SELECT projects.name AS project_name, "
-                + "projects.cost AS project_cost FROM "
-                + "projects INNER JOIN customers USING (customer_id) "
-                + "WHERE customers.name LIKE ?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            connection.setAutoCommit(false);
-            String name = "%" + customer.getName() + "%";
-            statement.setString(1, name);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String aName = resultSet.getString("project_name");
-                int cost = resultSet.getInt("project_cost");
-                projects.add(new Project(aName, cost));
-            }
-            connection.commit();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-        return projects;
-    }
-
-    private Customer createCustomer(ResultSet resultSet) throws SQLException {
-        return new Customer(resultSet.getInt("customer_id"),
-                resultSet.getString("name"));
-
-    }
+    }*/
 }
