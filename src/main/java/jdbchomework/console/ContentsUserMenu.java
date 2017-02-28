@@ -34,7 +34,7 @@ public class ContentsUserMenu {
 
     public void mainMenu() {
         while (true) {
-            VisualUserMenu.printListInConsole(ListMenu.getServiceHeader(), ListMenu.getServiceMenu());
+            VisualUserMenu.printListInConsole(ListMenu.getServiceHeader(), ListMenu.getServiceMainMenu());
             Integer action;
             action = Integer.parseInt(visualUserMenu.getValidInputFromUser("Choose action: ", InputType.INTEGER));
             switch (action) {
