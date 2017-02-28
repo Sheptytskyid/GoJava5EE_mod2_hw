@@ -24,7 +24,7 @@ public class ProjectsJdbcDao extends AbstractDao<Project> implements ProjectsDao
             statement.setString(1, name);
             statement.setInt(2, cost);
             statement.executeUpdate();
-            connection.commit();
+            System.out.println(toAdd.getName() + " successfully added to DB");
         } catch (SQLException e) {
             throw new RuntimeException("Cannot add to DB", e);
         } finally {

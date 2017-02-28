@@ -1,10 +1,7 @@
 package jdbchomework.controller;
 
-import jdbchomework.Main;
 import jdbchomework.entity.Company;
 import jdbchomework.service.CompanyService;
-
-import java.io.IOException;
 import java.util.List;
 
 public class CompanyController {

@@ -1,10 +1,8 @@
 package jdbchomework.controller;
 
-import jdbchomework.Main;
 import jdbchomework.entity.Skill;
 import jdbchomework.service.SkillService;
 
-import java.io.IOException;
 import java.util.List;
 
 public class SkillController {
@@ -19,48 +17,19 @@ public class SkillController {
         return skillService.getAll();
     }
 
-    public void add() {
-        System.out.println("Please enter skill name: ");
-        try {
-            String name = Main.getReader().readLine();
-            skillService.add(name);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void add(String name) {
+        skillService.add(name);
     }
 
-    public Skill getById() {
-        Skill skill = null;
-        System.out.println("Please enter skill ID: ");
-        try {
-            int id = Integer.valueOf(Main.getReader().readLine());
-            skill = skillService.getById(id);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return skill;
+    public Skill getById(int id) {
+        return skillService.getById(id);
     }
 
-    public void deleteById() {
-        System.out.println("Please enter company ID: ");
-        try {
-            int id = Integer.valueOf(Main.getReader().readLine());
-            skillService.deleteById(id);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void deleteById(int id) {
+        skillService.deleteById(id);
     }
 
-    public void updateById() {
-        try {
-            System.out.println("Please enter company ID: ");
-            int id = Integer.valueOf(Main.getReader().readLine());
-            System.out.println("Please enter company name: ");
-            String name = Main.getReader().readLine();
-            skillService.updateById(id, name);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    public void updateById(int id, String name) {
+        skillService.updateById(id, name);
     }
 }

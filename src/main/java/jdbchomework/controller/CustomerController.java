@@ -19,49 +19,20 @@ public class CustomerController {
         return customerService.getAll();
     }
 
-    public void add() {
-        System.out.println("Please enter company name: ");
-        try {
-            String name = Main.getReader().readLine();
-            customerService.add(name);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void add(String name) {
+        customerService.add(name);
     }
 
-    public Customer getById() {
-        Customer customer = null;
-        System.out.println("Please enter company ID: ");
-        try {
-            int id = Integer.valueOf(Main.getReader().readLine());
-            customer = customerService.getById(id);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return customer;
+    public Customer getById(int id) {
+        return customerService.getById(id);
     }
 
-    public void deleteById() {
-        System.out.println("Please enter company ID: ");
-        try {
-            int id = Integer.valueOf(Main.getReader().readLine());
-            customerService.deleteById(id);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void deleteById(int id) {
+        customerService.deleteById(id);
     }
 
-    public void updateById() {
-        try {
-            System.out.println("Please enter company ID: ");
-
-            int id = Integer.valueOf(Main.getReader().readLine());
-            System.out.println("Please enter company name: ");
-            String name = Main.getReader().readLine();
-            customerService.updateById(id, name);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void updateById(int id, String name) {
+        customerService.updateById(id, name);
     }
 }
 
