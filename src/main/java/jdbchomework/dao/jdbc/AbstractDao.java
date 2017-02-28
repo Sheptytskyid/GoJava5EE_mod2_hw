@@ -111,7 +111,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
             statement.setInt(2, id);
             statement.executeUpdate();
             connection.commit();
-            System.out.println(toUpdate.getName()+ ", successfully updated!");
+            System.out.println(toUpdate.getName() + ", successfully updated!");
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
         } finally {
