@@ -4,7 +4,6 @@ import jdbchomework.dao.model.CompaniesDao;
 import jdbchomework.entity.Company;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,47 +13,6 @@ public class CompaniesJdbcDao extends AbstractDao<Company> implements CompaniesD
         super(connection, table, column);
     }
 
-    @Override
-    public void add(Company toAdd) {
-        String name = toAdd.getName();
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO companies(name) VALUES (?);")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            connection.setAutoCommit(false);
-            statement.setString(1, name);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot add to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-    }
-
-
-    @Override
-    public void updateById(int id, Company toUpdate) {
-        try (PreparedStatement statement = connection
-                .prepareStatement("UPDATE companies SET name = ? WHERE company_id =?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            connection.setAutoCommit(false);
-            String name = toUpdate.getName();
-            statement.setString(1, name);
-            statement.setInt(2, id);
-            statement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-    }
 
     protected Company createT(ResultSet resultSet) throws SQLException {
         return new Company(resultSet.getString("name"),

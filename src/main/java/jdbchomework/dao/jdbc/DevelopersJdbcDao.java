@@ -14,24 +14,6 @@ public class DevelopersJdbcDao extends AbstractDao<Developer> implements Develop
         super(connection, table, column);
     }
 
-    @Override
-    public void add(Developer toAdd) {
-        String name = toAdd.getName();
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO developers(name) VALUES (?);")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            connection.setAutoCommit(false);
-            statement.setString(1, name);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-    }
 
     @Override
     public void updateById(int id, Developer toUpdate) {

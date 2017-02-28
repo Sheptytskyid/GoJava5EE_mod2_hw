@@ -47,7 +47,23 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
         return res;
     }
 
-    public abstract void add(T toAdd);
+    public void add(T toAdd) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT  INTO " + table + " (name)VALUES (?);")) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+            connection.setAutoCommit(false);
+            statement.setString(1, toAdd.getName());
+            connection.commit();
+            System.out.println(toAdd.getName() + " successfully added to DB");
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot connect to DB", e);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                throw new RuntimeException("Cannot connect to DB", e);
+            }
+        }
+    }
 
     public List<T> getAll() {
         List<T> result = new ArrayList<>();
@@ -82,6 +98,28 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
         }
         return result;
     }
+
+    public void updateById(int id, T toUpdate) {
+        try (PreparedStatement statement = connection
+                .prepareStatement("UPDATE " + table + " SET name = ? WHERE " + column + " =?;")) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            connection.setAutoCommit(false);
+            String name = toUpdate.getName();
+            statement.setString(1, name);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot connect to DB", e);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                throw new RuntimeException("Cannot connect to DB", e);
+            }
+        }
+    }
+
 
     protected abstract T createT(ResultSet resultSet) throws SQLException;
 }

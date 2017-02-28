@@ -4,7 +4,6 @@ import jdbchomework.dao.model.CustomersDao;
 import jdbchomework.entity.Customer;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -12,49 +11,6 @@ public class CustomersJdbcDao extends AbstractDao<Customer> implements Customers
 
     public CustomersJdbcDao(Connection connection, String table, String column) {
         super(connection, table, column);
-    }
-
-    @Override
-    public void add(Customer toAdd) {
-        try (PreparedStatement statement = connection.prepareStatement("INSERT  INTO customers(name)VALUES (?);")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            connection.setAutoCommit(false);
-            statement.setString(1, toAdd.getName());
-            connection.commit();
-            System.out.println(toAdd.getName() + " successfully added to DB");
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(false);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-    }
-
-
-    @Override
-    public void updateById(int id, Customer toUpdate) {
-        try (PreparedStatement statement = connection
-                .prepareStatement("UPDATE customers SET name = ? WHERE customer_id =?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            connection.setAutoCommit(false);
-            String name = toUpdate.getName();
-            statement.setString(1, name);
-            statement.setInt(2, id);
-            statement.executeUpdate();
-            connection.commit();
-            System.out.println("Successfully updated");
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
     }
 
     @Override
