@@ -71,14 +71,95 @@ public class ContentsUserMenu {
     }
 
     private void skillMenu() {
+        mark:
+        while (true) {
         VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderSkill(),
                 ListMenu.getServiceSkillsMenu());
+            Integer action;
+            action = Integer.parseInt(visualUserMenu.getValidInputFromUser("Choose action: ", InputType.INTEGER));
+            switch (action) {
+                case 1:
+                    VisualUserMenu.printListInConsole(null, skillController.getAll());
+                    break;
+                case 2:
+                    String name = visualUserMenu.getValidInputFromUser("Please enter skill name: ", InputType.STRING);
+                    skillController.add(name);
+                    break;
+                case 3:
+                    int id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter skill ID: ", InputType.INTEGER));
+                    System.out.println(skillController.getById(id));
+                    break;
+                case 4:
+                    id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter skill ID: ", InputType.INTEGER));
+                    name = visualUserMenu.getValidInputFromUser("Please enter skill name: ", InputType.STRING);
+                    skillController.updateById(id, name);
+                    break;
+                case 5:
+                    id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter skill ID: ", InputType.INTEGER));
+                    skillController.deleteById(id);
+                    break;
+                case (6):
+                    VisualUserMenu.outputSplitLine();
+                    System.out.println("\tThank you! for using our service.");
+                    break mark;
+                default:
+                    VisualUserMenu.outputSplitLine();
+                    System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
+
+            }
+        }
 
     }
 
     private void projectMenu() {
-        VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderProject(),
-                ListMenu.getServiceProjectsMenu());
+        mark:
+        while (true) {
+            VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderProject(),
+                    ListMenu.getServiceProjectsMenu());
+            Integer action;
+            action = Integer.parseInt(visualUserMenu.getValidInputFromUser("Choose action: ", InputType.INTEGER));
+            switch (action) {
+                case 1:
+                    VisualUserMenu.printListInConsole(null, projectController.getAll());
+                    break;
+                case 2:
+                    String name = visualUserMenu
+                            .getValidInputFromUser("Please enter project name: ", InputType.STRING);
+                    int cost = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter project cost: ", InputType.INTEGER));
+                    projectController.add(name, cost);
+                    break;
+                case 3:
+                    int id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter project ID: ", InputType.INTEGER));
+                    System.out.println(projectController.getById(id));
+                    break;
+                case 4:
+                    id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter project ID: ", InputType.INTEGER));
+                    name = visualUserMenu.getValidInputFromUser("Please enter project name: ", InputType.STRING);
+                    cost = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter project cost: ", InputType.INTEGER));
+                    projectController.updateById(id, name, cost);
+                    break;
+                case 5:
+                    id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter project ID: ", InputType.INTEGER));
+                    projectController.deleteById(id);
+                    break;
+                case (6):
+                    VisualUserMenu.outputSplitLine();
+                    System.out.println("\tThank you! for using our service.");
+                    break mark;
+                default:
+                    VisualUserMenu.outputSplitLine();
+                    System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
+
+            }
+        }
     }
 
     public void companyMenu() {
@@ -167,7 +248,44 @@ public class ContentsUserMenu {
     }
 
     public void developerMenu() {
-        VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderDeveloper(),
-                ListMenu.getServiceDevelopersMenu());
+        mark:
+        while (true) {
+            VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderDeveloper(),
+                    ListMenu.getServiceDevelopersMenu());
+            Integer action;
+            action = Integer.parseInt(visualUserMenu.getValidInputFromUser("Choose action: ", InputType.INTEGER));
+            switch (action) {
+                case 1:
+                    VisualUserMenu.printListInConsole(null, developerController.getAll());
+                    break;
+                case 2:
+                    String name = visualUserMenu.getValidInputFromUser("Please enter developer name: ", InputType.STRING);
+                    developerController.add(name);
+                    break;
+                case 3:
+                    int id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter developer ID: ", InputType.INTEGER));
+                    System.out.println(developerController.getById(id));
+                    break;
+                case 4:
+                    id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter developer ID: ", InputType.INTEGER));
+                    name = visualUserMenu.getValidInputFromUser("Please enter developer name: ", InputType.STRING);
+                    developerController.updateById(id, name);
+                    break;
+                case 5:
+                    id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter developer ID: ", InputType.INTEGER));
+                    developerController.deleteById(id);
+                    break;
+                case (6):
+                    VisualUserMenu.outputSplitLine();
+                    System.out.println("\tThank you! for using our service.");
+                    break mark;
+                default:
+                    VisualUserMenu.outputSplitLine();
+                    System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
+            }
+        }
     }
 }
