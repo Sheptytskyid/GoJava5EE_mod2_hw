@@ -19,6 +19,7 @@ public class CompaniesJdbcDao extends AbstractDao<Company> implements CompaniesD
                 resultSet.getInt("company_id"));
     }
 
+
 /*    @Override
     public Company getByName(String name) {
         Company result = null;
