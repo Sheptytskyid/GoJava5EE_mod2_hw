@@ -11,6 +11,11 @@ public class Company extends AbstractEntity {
         super(id, name);
     }
 
+    public Company(String name) {
+        super(name);
+
+    }
+
     public List<Project> getProjects() {
         return projects;
     }

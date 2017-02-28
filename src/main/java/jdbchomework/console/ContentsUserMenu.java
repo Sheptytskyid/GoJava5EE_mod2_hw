@@ -34,29 +34,34 @@ public class ContentsUserMenu {
 
     public void mainMenu() {
         while (true) {
-            VisualUserMenu.printListInConsole(ListMenu.getServiceHeader(), ListMenu.getServiceMenu());
+            VisualUserMenu.printListInConsole(ListMenu.getServiceHeader(), ListMenu.getServiceMainMenu());
             Integer action;
             action = Integer.parseInt(visualUserMenu.getValidInputFromUser("Choose action: ", InputType.INTEGER));
             switch (action) {
                 case (1):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(null, companyController.getAll());
+                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderCompany(),
+                            ListMenu.getServiceCompaniesMenu());
                     break;
                 case (2):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(null, customerController.getAll());
+                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderCustomer(),
+                            ListMenu.getServiceCustomersMenu());
                     break;
                 case (3):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(null, developerController.getAll());
+                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderDeveloper(),
+                            ListMenu.getServiceDevelopersMenu());
                     break;
                 case (4):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(null, projectController.getAll());
+                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderProject(),
+                            ListMenu.getServiceProjectsMenu());
                     break;
                 case (5):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(null, skillController.getAll());
+                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderSkill(),
+                            ListMenu.getServiceSkillsMenu());
                     return;
                 case (6):
                     VisualUserMenu.outputSplitLine();

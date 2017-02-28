@@ -13,6 +13,10 @@ public class Developer extends AbstractEntity {
         this.salary = salary;
     }
 
+    public Developer(String name) {
+        super(name);
+    }
+
     public List<Skill> getSkills() {
         return skills;
     }
