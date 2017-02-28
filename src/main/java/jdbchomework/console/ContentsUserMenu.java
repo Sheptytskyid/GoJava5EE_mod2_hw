@@ -5,6 +5,7 @@ import jdbchomework.controller.CustomerController;
 import jdbchomework.controller.DeveloperController;
 import jdbchomework.controller.ProjectController;
 import jdbchomework.controller.SkillController;
+import jdbchomework.utils.ConnectionUtil;
 import org.slf4j.LoggerFactory;
 
 public class ContentsUserMenu {
@@ -35,6 +36,7 @@ public class ContentsUserMenu {
     }
 
     public void mainMenu() {
+        mark:
         while (true) {
             VisualUserMenu.printListInConsole(ListMenu.getServiceHeader(), ListMenu.getServiceMainMenu());
             Integer action;
@@ -63,8 +65,7 @@ public class ContentsUserMenu {
                 case (6):
                     VisualUserMenu.outputSplitLine();
                     System.out.println("\tThank you for using our service.");
-                    System.exit(0);
-                    break;
+                    break mark;
                 default:
                     VisualUserMenu.outputSplitLine();
                     System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
@@ -102,7 +103,7 @@ public class ContentsUserMenu {
                     } else {
                         System.out.println(SKILL_NOT_FOUND);
                     }
-                        break;
+                    break;
                 case 5:
                     id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter skill ID: ", InputType.INTEGER));
