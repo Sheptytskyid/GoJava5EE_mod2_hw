@@ -96,16 +96,19 @@ public class ContentsUserMenu {
                     companyController.add(name);
                     break;
                 case 3:
-                    int id = Integer.parseInt(visualUserMenu.getValidInputFromUser("Please enter company ID: ", InputType.INTEGER));
+                    int id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter company ID: ", InputType.INTEGER));
                     System.out.println(companyController.getById(id));
                     break;
                 case 4:
-                    id = Integer.parseInt(visualUserMenu.getValidInputFromUser("Please enter company ID: ", InputType.INTEGER));
+                    id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter company ID: ", InputType.INTEGER));
                     name = visualUserMenu.getValidInputFromUser("Please enter company name: ", InputType.STRING);
                     companyController.updateById(id, name);
                     break;
                 case 5:
-                    id = Integer.parseInt(visualUserMenu.getValidInputFromUser("Please enter company ID: ", InputType.INTEGER));
+                    id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter company ID: ", InputType.INTEGER));
                     companyController.deleteById(id);
                     break;
                 case (6):
