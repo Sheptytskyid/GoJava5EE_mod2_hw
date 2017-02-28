@@ -25,11 +25,11 @@ public class SkillController {
         return skillService.getById(id);
     }
 
-    public void deleteById(int id) {
-        skillService.deleteById(id);
+    public boolean deleteById(int id) {
+        return skillService.deleteById(id);
     }
 
-    public void updateById(int id, String name) {
-        skillService.updateById(id, name);
+    public boolean updateById(int id, String name) {
+        return skillService.updateById(id, name);
     }
 }

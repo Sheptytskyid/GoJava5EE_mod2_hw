@@ -26,13 +26,12 @@ public class DeveloperService {
         return developersJdbcDao.getById(id);
     }
 
-    public void deleteById(int id) {
-        developersJdbcDao.deleteById(id);
+    public boolean deleteById(int id) {
+        return developersJdbcDao.deleteById(id);
     }
 
-    public void updateById(int id, String name) {
+    public boolean updateById(int id, String name) {
         Developer developer = new Developer(name);
-        developersJdbcDao.updateById(id, developer);
-
+        return developersJdbcDao.updateById(id, developer);
     }
 }

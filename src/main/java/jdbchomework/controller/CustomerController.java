@@ -1,10 +1,8 @@
 package jdbchomework.controller;
 
-import jdbchomework.Main;
 import jdbchomework.entity.Customer;
 import jdbchomework.service.CustomerService;
 
-import java.io.IOException;
 import java.util.List;
 
 public class CustomerController {
@@ -27,12 +25,12 @@ public class CustomerController {
         return customerService.getById(id);
     }
 
-    public void deleteById(int id) {
-        customerService.deleteById(id);
+    public boolean deleteById(int id) {
+        return customerService.deleteById(id);
     }
 
-    public void updateById(int id, String name) {
-        customerService.updateById(id, name);
+    public boolean updateById(int id, String name) {
+        return customerService.updateById(id, name);
     }
 }
 

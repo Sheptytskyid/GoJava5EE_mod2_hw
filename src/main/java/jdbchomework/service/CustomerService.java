@@ -26,13 +26,12 @@ public class CustomerService {
         return customersJdbcDao.getById(id);
     }
 
-    public void deleteById(int id) {
-        customersJdbcDao.deleteById(id);
+    public boolean deleteById(int id) {
+        return customersJdbcDao.deleteById(id);
     }
 
-    public void updateById(int id, String name) {
+    public boolean updateById(int id, String name) {
         Customer customer = new Customer(name);
-        customersJdbcDao.updateById(id, customer);
-
+        return customersJdbcDao.updateById(id, customer);
     }
 }

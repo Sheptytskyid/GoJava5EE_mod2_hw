@@ -26,14 +26,12 @@ public class CompanyService {
         return companiesJdbcDao.getById(id);
     }
 
-    public void deleteById(int id) {
-        companiesJdbcDao.deleteById(id);
+    public boolean deleteById(int id) {
+        return companiesJdbcDao.deleteById(id);
     }
 
-    public void updateById(int id, String name) {
+    public boolean updateById(int id, String name) {
         Company company = new Company(name);
-        companiesJdbcDao.updateById(id, company);
-
+        return companiesJdbcDao.updateById(id, company);
     }
-
 }

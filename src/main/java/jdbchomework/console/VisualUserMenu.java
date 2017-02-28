@@ -26,22 +26,6 @@ public class VisualUserMenu {
         }
     }
 
-    /* public static <E extends AbstractObject> void printMapInConsole(Map<String, List<E>> map) {
-        int key = 1;
-        for (Map.Entry<String, List<E>> entry : map.entrySet()) {
-            System.out.print(key++);
-            System.out.println(" " + entry.getKey());
-            if (entry.getValue().size() == 0) {
-                System.out.println("\tNo available rooms found.");
-            }
-            for (int item = 0; item < entry.getValue().size(); item++) {
-                System.out.print("\t" + (item + 1));
-                System.out.print(" " + entry.getValue().get(item));
-            }
-        }
-    }
-*/
-
     public String getValidInputFromUser(String message, InputType type) {
         System.out.println(message);
         String input = "";
@@ -52,14 +36,8 @@ public class VisualUserMenu {
                 input = Main.getReader().readLine();
             }
         } catch (IOException e) {
-            log.error(String.format("Error reading user input from console"));
+            log.error(String.format("Error reading user input from console"), e);
         }
         return input;
     }
-
-    public boolean validateIntegerSize(int max, int input) {
-        return input >= 1 && input <= max;
-    }
-
-
 }

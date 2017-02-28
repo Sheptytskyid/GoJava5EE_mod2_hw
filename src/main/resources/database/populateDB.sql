@@ -11,6 +11,7 @@ VALUES
   ('Ministry of Culture'),
   ('Cisco'),
   ('Audi');
+
 -- Fill the project table --
 INSERT INTO projects (name, cost, company_id, customer_id)
 VALUES

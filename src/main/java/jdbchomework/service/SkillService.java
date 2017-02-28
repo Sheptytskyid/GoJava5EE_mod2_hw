@@ -26,13 +26,12 @@ public class SkillService {
         return skillsJdbcDao.getById(id);
     }
 
-    public void deleteById(int id) {
-        skillsJdbcDao.deleteById(id);
+    public boolean deleteById(int id) {
+        return skillsJdbcDao.deleteById(id);
     }
 
-    public void updateById(int id, String name) {
+    public boolean updateById(int id, String name) {
         Skill skill = new Skill(name);
-        skillsJdbcDao.updateById(id, skill);
-
+        return skillsJdbcDao.updateById(id, skill);
     }
 }

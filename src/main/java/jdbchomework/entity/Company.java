@@ -13,7 +13,6 @@ public class Company extends AbstractEntity {
 
     public Company(String name) {
         super(name);
-
     }
 
     public List<Project> getProjects() {
@@ -38,7 +37,7 @@ public class Company extends AbstractEntity {
         sb.append("id = ").append(getId()).append(" ");
         sb.append("name = ").append(getName()).append(" ");
         sb.append("projects = ").append(projects).append(" ");
-        sb.append(", developers = ").append(developers).append(" ");
+        sb.append("developers = ").append(developers).append(" ");
         sb.append('}');
         return sb.toString();
     }

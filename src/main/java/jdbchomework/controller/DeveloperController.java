@@ -25,11 +25,11 @@ public class DeveloperController {
         return developerService.getById(id);
     }
 
-    public void deleteById(int id) {
-        developerService.deleteById(id);
+    public boolean deleteById(int id) {
+        return developerService.deleteById(id);
     }
 
-    public void updateById(int id, String name) {
-        developerService.updateById(id, name);
+    public boolean updateById(int id, String name) {
+        return developerService.updateById(id, name);
     }
 }

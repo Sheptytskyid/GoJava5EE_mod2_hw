@@ -1,14 +1,16 @@
 package jdbchomework.dao.model;
 
+import java.util.List;
+
 public interface GenericDao<T> {
 
-/*    void create();
+    void add(T toAdd);
 
-    T deleteById(int id);
+    List<T> getAll();
 
-    T updateById(int id);
+    T getById(int id);
 
-    T read(int id);
+    boolean deleteById(int id);
 
-    List<T> getAll();*/
+    boolean updateById(int id, T toUpdate);
 }

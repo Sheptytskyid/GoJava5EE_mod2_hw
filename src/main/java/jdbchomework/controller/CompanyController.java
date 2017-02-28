@@ -2,6 +2,7 @@ package jdbchomework.controller;
 
 import jdbchomework.entity.Company;
 import jdbchomework.service.CompanyService;
+
 import java.util.List;
 
 public class CompanyController {
@@ -24,11 +25,11 @@ public class CompanyController {
         return companyService.getById(id);
     }
 
-    public void deleteById(int id) {
-        companyService.deleteById(id);
+    public boolean deleteById(int id) {
+        return companyService.deleteById(id);
     }
 
-    public void updateById(int id, String name) {
-        companyService.updateById(id, name);
+    public boolean updateById(int id, String name) {
+        return companyService.updateById(id, name);
     }
 }

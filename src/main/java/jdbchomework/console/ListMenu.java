@@ -29,7 +29,6 @@ public class ListMenu {
         siteHeader.add("\t\tWelcome to DB manager");
         siteHeader.add("**************************************************************");
         siteHeader.add(" ");
-
         serviceHeader.add("**************************************************************");
         serviceHeader.add("\n\tMain menu");
         serviceHeaderCompany.add("**************************************************************");
@@ -78,8 +77,6 @@ public class ListMenu {
         serviceSkillsMenu.add("Update skill by ID");
         serviceSkillsMenu.add("Delete skill by ID");
         serviceSkillsMenu.add("Go to main menu");
-
-
         selectionHeader.add("**************************************************************");
         selectionMenu.add("Yes");
         selectionMenu.add("No");

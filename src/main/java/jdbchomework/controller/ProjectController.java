@@ -25,13 +25,12 @@ public class ProjectController {
         return projectService.getById(id);
     }
 
-    public void deleteById(int id) {
-        projectService.deleteById(id);
+    public boolean deleteById(int id) {
+        return projectService.deleteById(id);
     }
 
-    public void updateById(int id, String name, int cost) {
+    public boolean updateById(int id, String name, int cost) {
         Project project = new Project(name, cost);
-        projectService.updateById(id, project);
+        return projectService.updateById(id, project);
     }
-
 }

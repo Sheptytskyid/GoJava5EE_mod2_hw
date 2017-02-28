@@ -1,18 +1,20 @@
 package jdbchomework.dao.jdbc;
 
-import jdbchomework.dao.model.Dao;
+import jdbchomework.dao.model.GenericDao;
 import jdbchomework.entity.AbstractEntity;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
+public abstract class AbstractDao<T extends AbstractEntity> implements GenericDao<T> {
+
+    private static org.slf4j.Logger log = LoggerFactory.getLogger(AbstractDao.class);
     private String table;
     private String column;
 
@@ -25,27 +27,19 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
     }
 
     @Override
-    public int deleteById(int id) {
-        int res;
+    public boolean deleteById(int id) {
+        boolean result = false;
         try (PreparedStatement statement = connection
                 .prepareStatement("DELETE FROM " + table + " WHERE " + column + " = ?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            connection.setAutoCommit(false);
             statement.setInt(1, id);
-            statement.executeUpdate();
-            connection.commit();
-            res = 1;
-            System.out.println("Successfully deleted!");
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
+            if (statement.executeUpdate() > 0) {
+                result = true;
             }
+        } catch (SQLException e) {
+            log.error("Cannot connect to DB", e);
+            throw new RuntimeException(e);
         }
-        return res;
+        return result;
     }
 
     public void add(T toAdd) {
@@ -55,13 +49,14 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
             statement.setString(1, toAdd.getName());
             connection.commit();
             statement.executeUpdate();
-            System.out.println(toAdd.getName() + " successfully added to DB");
         } catch (SQLException e) {
+            log.error("Cannot connect to DB", e);
             throw new RuntimeException("Cannot connect to DB", e);
         } finally {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
+                log.error("Cannot connect to DB", e);
                 throw new RuntimeException("Cannot connect to DB", e);
             }
         }
@@ -73,10 +68,11 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
             String sql = "SELECT * FROM " + table;
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                T t = createT(resultSet);
+                T t = createEntity(resultSet);
                 result.add(t);
             }
         } catch (SQLException e) {
+            log.error("Cannot connect to DB", e);
             throw new RuntimeException("Cannot connect to DB", e);
         }
         return result;
@@ -91,38 +87,31 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                result = createT(rs);
-            } else {
-                System.out.println("Cannot find any company with id: " + id);
+                result = createEntity(rs);
             }
         } catch (SQLException e) {
+            log.error("Cannot connect to DB", e);
             throw new RuntimeException("Cannot connect to DB", e);
         }
         return result;
     }
 
-    public void updateById(int id, T toUpdate) {
+    public boolean updateById(int id, T toUpdate) {
+        boolean result = false;
         try (PreparedStatement statement = connection
                 .prepareStatement("UPDATE " + table + " SET name = ? WHERE " + column + " =?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            connection.setAutoCommit(false);
             String name = toUpdate.getName();
             statement.setString(1, name);
             statement.setInt(2, id);
-            statement.executeUpdate();
-            connection.commit();
-            System.out.println(toUpdate.getName() + ", successfully updated!");
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
+            if (statement.executeUpdate() > 0) {
+                result = true;
             }
+        } catch (SQLException e) {
+            log.error("Cannot connect to DB", e);
+            throw new RuntimeException("Cannot connect to DB", e);
         }
+        return result;
     }
 
-
-    protected abstract T createT(ResultSet resultSet) throws SQLException;
+    protected abstract T createEntity(ResultSet resultSet) throws SQLException;
 }

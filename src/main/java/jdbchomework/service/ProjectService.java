@@ -26,13 +26,12 @@ public class ProjectService {
         return projectsJdbcDao.getById(id);
     }
 
-    public void deleteById(int id) {
-        projectsJdbcDao.deleteById(id);
+    public boolean deleteById(int id) {
+        return projectsJdbcDao.deleteById(id);
     }
 
-    public void updateById(int id, Project project) {
-        projectsJdbcDao.updateById(id, project);
-
+    public boolean updateById(int id, Project project) {
+        return projectsJdbcDao.updateById(id, project);
     }
 
 }

@@ -1,5 +1,6 @@
 package jdbchomework;
 
+import jdbchomework.utils.ConnectionUtil;
 import jdbchomework.utils.Injector;
 
 import java.io.BufferedReader;
@@ -17,5 +18,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Injector.getConsoleMain().consoleMain();
         reader.close();
+        ConnectionUtil.closeConnection();
     }
 }
