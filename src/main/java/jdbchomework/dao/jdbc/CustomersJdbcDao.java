@@ -7,14 +7,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CustomersJdbcDao extends AbstractDao<Customer> implements CustomersDao {
 
     public CustomersJdbcDao(Connection connection, String table, String column) {
-        super(connection,table,column);
+        super(connection, table, column);
     }
 
     @Override
@@ -36,40 +33,6 @@ public class CustomersJdbcDao extends AbstractDao<Customer> implements Customers
         }
     }
 
-    @Override
-    public List<Customer> getAll() {
-        List<Customer> customers = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
-            String sql = "SELECT * FROM customers";
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                Customer customer = createCustomer(resultSet);
-                customers.add(customer);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        }
-        return customers;
-    }
-
-    @Override
-    public Customer getById(int id) {
-        Customer customer = null;
-        try (
-                PreparedStatement statement = connection
-                        .prepareStatement("SELECT * FROM customers WHERE customer_id = ?;")) {
-            statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                customer = createCustomer(rs);
-            } else {
-                System.out.println("Cannot find any company with id: " + id);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        }
-        return customer;
-    }
 
     @Override
     public void updateById(int id, Customer toUpdate) {
@@ -94,7 +57,8 @@ public class CustomersJdbcDao extends AbstractDao<Customer> implements Customers
         }
     }
 
-    private Customer createCustomer(ResultSet resultSet) throws SQLException {
+    @Override
+    protected Customer createT(ResultSet resultSet) throws SQLException {
         return new Customer(resultSet.getInt("customer_id"),
                 resultSet.getString("name"));
     }
@@ -138,7 +102,7 @@ public class CustomersJdbcDao extends AbstractDao<Customer> implements Customers
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                customer = createCustomer(resultSet);
+                customer = createT(resultSet);
             } else {
                 customer = new Customer("Default");
             }

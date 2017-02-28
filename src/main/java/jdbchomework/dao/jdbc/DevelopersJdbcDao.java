@@ -7,14 +7,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DevelopersJdbcDao extends AbstractDao<Developer> implements DevelopersDao {
 
     public DevelopersJdbcDao(Connection connection, String table, String column) {
-        super(connection,table,column);
+        super(connection, table, column);
     }
 
     @Override
@@ -34,48 +31,6 @@ public class DevelopersJdbcDao extends AbstractDao<Developer> implements Develop
                 throw new RuntimeException("Cannot connect to DB", e);
             }
         }
-    }
-
-    @Override
-    public List<Developer> getAll() {
-        List<Developer> result = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
-            String sql = "SELECT * FROM developers;";
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                Developer developer = createDeveloper(resultSet);
-                result.add(developer);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        }
-        return result;
-    }
-
-    @Override
-    public Developer getById(int id) {
-        Developer developer = null;
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM developers WHERE developer_id=?;")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            connection.setAutoCommit(false);
-            statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                developer = createDeveloper(rs);
-                connection.commit();
-            } else {
-                connection.rollback();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-        return developer;
     }
 
     @Override
@@ -100,7 +55,8 @@ public class DevelopersJdbcDao extends AbstractDao<Developer> implements Develop
         }
     }
 
-    private Developer createDeveloper(ResultSet resultSet) throws SQLException {
+    @Override
+    protected Developer createT(ResultSet resultSet) throws SQLException {
         return new Developer(resultSet.getLong("developer_id"), resultSet.getString("name"),
                 resultSet.getInt("salary"));
     }
@@ -114,7 +70,7 @@ public class DevelopersJdbcDao extends AbstractDao<Developer> implements Develop
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                result = createDeveloper(resultSet);
+                result = createT(resultSet);
             } else {
                 result = new Developer("Default");
             }
@@ -132,7 +88,7 @@ public class DevelopersJdbcDao extends AbstractDao<Developer> implements Develop
             statement.setInt(1, salary);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Developer dev = createDeveloper(resultSet);
+                Developer dev = createT(resultSet);
                 developers.add(dev);
             }
         } catch (SQLException e) {

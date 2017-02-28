@@ -7,14 +7,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CompaniesJdbcDao extends AbstractDao<Company> implements CompaniesDao {
 
     public CompaniesJdbcDao(Connection connection, String table, String column) {
-        super(connection,table,column);
+        super(connection, table, column);
     }
 
     @Override
@@ -36,42 +33,11 @@ public class CompaniesJdbcDao extends AbstractDao<Company> implements CompaniesD
         }
     }
 
-    @Override
-    public List<Company> getAll() {
-        List<Company> result = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
-            String sql = "SELECT * FROM companies;";
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                Company company = createCompany(resultSet);
-                result.add(company);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        }
-        return result;
-    }
-
-    @Override
-    public Company getById(int id) {
-        Company company = null;
-        try (PreparedStatement statement = connection
-            .prepareStatement("SELECT * FROM companies WHERE company_id = ?;")) {
-            statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                company = createCompany(rs);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to DB", e);
-        }
-        return company;
-    }
 
     @Override
     public void updateById(int id, Company toUpdate) {
         try (PreparedStatement statement = connection
-            .prepareStatement("UPDATE companies SET name = ? WHERE company_id =?;")) {
+                .prepareStatement("UPDATE companies SET name = ? WHERE company_id =?;")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             connection.setAutoCommit(false);
             String name = toUpdate.getName();
@@ -90,9 +56,9 @@ public class CompaniesJdbcDao extends AbstractDao<Company> implements CompaniesD
         }
     }
 
-    private Company createCompany(ResultSet resultSet) throws SQLException {
+    protected Company createT(ResultSet resultSet) throws SQLException {
         return new Company(resultSet.getString("name"),
-            resultSet.getInt("company_id"));
+                resultSet.getInt("company_id"));
     }
 
 /*    @Override
@@ -104,7 +70,7 @@ public class CompaniesJdbcDao extends AbstractDao<Company> implements CompaniesD
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                result = createCompany(resultSet);
+                result = createT(resultSet);
             } else {
                 result = new Company("Default");
             }

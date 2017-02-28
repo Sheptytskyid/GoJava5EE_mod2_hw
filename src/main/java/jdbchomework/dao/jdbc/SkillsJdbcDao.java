@@ -44,7 +44,7 @@ public class SkillsJdbcDao extends AbstractDao<Skill> implements SkillsDao {
             String sql = "SELECT * FROM skills;";
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                Skill skill = createSkill(resultSet);
+                Skill skill = createT(resultSet);
                 result.add(skill);
             }
         } catch (SQLException e) {
@@ -61,7 +61,7 @@ public class SkillsJdbcDao extends AbstractDao<Skill> implements SkillsDao {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                skill = createSkill(rs);
+                skill = createT(rs);
                 connection.commit();
             } else {
                 connection.rollback();
@@ -92,7 +92,8 @@ public class SkillsJdbcDao extends AbstractDao<Skill> implements SkillsDao {
         }
     }
 
-    private Skill createSkill(ResultSet resultSet) throws SQLException {
+    @Override
+    protected Skill createT(ResultSet resultSet) throws SQLException {
         return new Skill(resultSet.getInt("skill_id"), resultSet.getString("name"));
     }
 
@@ -105,7 +106,7 @@ public class SkillsJdbcDao extends AbstractDao<Skill> implements SkillsDao {
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                result = createSkill(resultSet);
+                result = createT(resultSet);
                 connection.commit();
             } else {
                 result = new Skill("Default");
