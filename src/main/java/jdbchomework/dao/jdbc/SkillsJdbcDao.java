@@ -15,25 +15,6 @@ public class SkillsJdbcDao extends AbstractDao<Skill> implements SkillsDao {
     }
 
     @Override
-    public void add(Skill skill) {
-        String name = skill.getName();
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO skills(name) VALUES (?);")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            connection.setAutoCommit(false);
-            statement.setString(1, name);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException("Cannot connect to DB", e);
-            }
-        }
-    }
-
-    @Override
     protected Skill createT(ResultSet resultSet) throws SQLException {
         return new Skill(resultSet.getInt("skill_id"), resultSet.getString("name"));
     }
