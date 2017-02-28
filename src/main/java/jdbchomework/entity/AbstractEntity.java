@@ -10,6 +10,10 @@ public class AbstractEntity {
         this.name = name;
     }
 
+    public AbstractEntity(String name) {
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }

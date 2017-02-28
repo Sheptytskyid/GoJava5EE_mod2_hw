@@ -9,6 +9,11 @@ public class Project extends AbstractEntity {
         this.cost = cost;
     }
 
+    public Project(String name, int cost) {
+        super(name);
+        this.cost = cost;
+    }
+
     public int getCost() {
         return cost;
     }

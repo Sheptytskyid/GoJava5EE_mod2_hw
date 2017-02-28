@@ -7,6 +7,11 @@ public class ListMenu {
 
     private static List<String> siteHeader = new ArrayList<>();
     private static List<String> serviceHeader = new ArrayList<>();
+    private static List<String> serviceHeaderCompany = new ArrayList<>();
+    private static List<String> serviceHeaderCustomer = new ArrayList<>();
+    private static List<String> serviceHeaderDeveloper = new ArrayList<>();
+    private static List<String> serviceHeaderProject = new ArrayList<>();
+    private static List<String> serviceHeaderSkill = new ArrayList<>();
     private static List<String> serviceMainMenu = new ArrayList<>();
     private static List<String> serviceCompaniesMenu = new ArrayList<>();
     private static List<String> serviceCustomersMenu = new ArrayList<>();
@@ -27,6 +32,16 @@ public class ListMenu {
 
         serviceHeader.add("**************************************************************");
         serviceHeader.add("\n\tMain menu");
+        serviceHeaderCompany.add("**************************************************************");
+        serviceHeaderCompany.add("\n\tCompany menu");
+        serviceHeaderCustomer.add("**************************************************************");
+        serviceHeaderCustomer.add("\n\tCustomer menu");
+        serviceHeaderDeveloper.add("**************************************************************");
+        serviceHeaderDeveloper.add("\n\tDeveloper menu");
+        serviceHeaderProject.add("**************************************************************");
+        serviceHeaderProject.add("\n\tProject menu");
+        serviceHeaderSkill.add("**************************************************************");
+        serviceHeaderSkill.add("\n\tSkill menu");
         serviceMainMenu.add("Go to companies");
         serviceMainMenu.add("Go to customers");
         serviceMainMenu.add("Go to developers");
@@ -102,5 +117,25 @@ public class ListMenu {
 
     public static List<String> getSelectionMenu() {
         return selectionMenu;
+    }
+
+    public static List<String> getServiceHeaderCompany() {
+        return serviceHeaderCompany;
+    }
+
+    public static List<String> getServiceHeaderCustomer() {
+        return serviceHeaderCustomer;
+    }
+
+    public static List<String> getServiceHeaderDeveloper() {
+        return serviceHeaderDeveloper;
+    }
+
+    public static List<String> getServiceHeaderProject() {
+        return serviceHeaderProject;
+    }
+
+    public static List<String> getServiceHeaderSkill() {
+        return serviceHeaderSkill;
     }
 }

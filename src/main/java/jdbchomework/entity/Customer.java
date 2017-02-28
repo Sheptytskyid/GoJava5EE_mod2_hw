@@ -10,6 +10,10 @@ public class Customer extends AbstractEntity {
         super(id, name);
     }
 
+    public Customer(String name) {
+        super(name);
+    }
+
     public List<Project> getCustomersProject() {
         return customersProject;
     }

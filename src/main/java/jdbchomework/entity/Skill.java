@@ -6,6 +6,10 @@ public class Skill extends AbstractEntity {
         super(id, name);
     }
 
+    public Skill(String name) {
+        super(name);
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Skill{");
