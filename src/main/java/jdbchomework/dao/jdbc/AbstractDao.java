@@ -35,6 +35,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
             statement.executeUpdate();
             connection.commit();
             res = 1;
+            System.out.println("Successfully deleted!");
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
         } finally {
@@ -53,6 +54,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
             connection.setAutoCommit(false);
             statement.setString(1, toAdd.getName());
             connection.commit();
+            statement.executeUpdate();
             System.out.println(toAdd.getName() + " successfully added to DB");
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
@@ -109,6 +111,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
             statement.setInt(2, id);
             statement.executeUpdate();
             connection.commit();
+            System.out.println(toUpdate.getName()+ ", successfully updated!");
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect to DB", e);
         } finally {
