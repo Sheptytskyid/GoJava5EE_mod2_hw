@@ -13,8 +13,8 @@ import java.util.List;
 
 public class ProjectsJdbcDao extends AbstractDao<Project> implements ProjectsDao {
 
-    public ProjectsJdbcDao(Connection connection) {
-        super(connection);
+    public ProjectsJdbcDao(Connection connection, String table, String column) {
+        super(connection, table, column);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class ProjectsJdbcDao extends AbstractDao<Project> implements ProjectsDao
         String name = toAdd.getName();
         int cost = toAdd.getCost();
         try (PreparedStatement statement = connection
-            .prepareStatement("INSERT INTO projects (name, cost) VALUES (?,?)")) {
+                .prepareStatement("INSERT INTO projects (name, cost) VALUES (?,?)")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             statement.setString(1, name);
             statement.setInt(2, cost);
@@ -59,7 +59,7 @@ public class ProjectsJdbcDao extends AbstractDao<Project> implements ProjectsDao
     public Project getById(int id) {
         Project project = null;
         try (PreparedStatement statement = connection
-            .prepareStatement("SELECT * FROM projects WHERE project_id = ?;")) {
+                .prepareStatement("SELECT * FROM projects WHERE project_id = ?;")) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -74,7 +74,7 @@ public class ProjectsJdbcDao extends AbstractDao<Project> implements ProjectsDao
     @Override
     public void updateById(int id, Project toUpdate) {
         try (PreparedStatement statement = connection
-            .prepareStatement("UPDATE projects SET name = ?, cost =? WHERE project_id =?;")) {
+                .prepareStatement("UPDATE projects SET name = ?, cost =? WHERE project_id =?;")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             connection.setAutoCommit(false);
             statement.setString(1, toUpdate.getName());
@@ -95,7 +95,7 @@ public class ProjectsJdbcDao extends AbstractDao<Project> implements ProjectsDao
 
     private Project createProject(ResultSet resultSet) throws SQLException {
         return new Project(resultSet.getInt("project_id"), resultSet.getString("name"),
-            resultSet.getInt("cost"));
+                resultSet.getInt("cost"));
     }
 
     /*@Override

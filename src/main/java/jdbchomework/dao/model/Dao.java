@@ -10,7 +10,7 @@ public interface Dao<T> {
 
     T getById(int id);
 
-    int deleteById(int id, String table, String column);
+    int deleteById(int id);
 
     void updateById(int id, T toUpdate);
 }

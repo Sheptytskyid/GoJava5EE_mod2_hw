@@ -9,18 +9,22 @@ import java.sql.SQLException;
 import java.util.List;
 
 public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
+    private String table;
+    private String column;
 
     protected Connection connection;
 
-    public AbstractDao(Connection connection) {
+    public AbstractDao(Connection connection, String table, String column) {
         this.connection = connection;
+        this.table = table;
+        this.column = column;
     }
 
     @Override
-    public int deleteById(int id, String table, String column) {
+    public int deleteById(int id) {
         int res;
         try (PreparedStatement statement = connection
-            .prepareStatement("DELETE FROM " + table + " WHERE " + column + " = ?;")) {
+                .prepareStatement("DELETE FROM " + table + " WHERE " + column + " = ?;")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             connection.setAutoCommit(false);
             statement.setInt(1, id);

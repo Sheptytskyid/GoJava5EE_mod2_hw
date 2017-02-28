@@ -13,8 +13,8 @@ import java.util.List;
 
 public class SkillsJdbcDao extends AbstractDao<Skill> implements SkillsDao {
 
-    public SkillsJdbcDao(Connection connection) {
-        super(connection);
+    public SkillsJdbcDao(Connection connection, String table, String column) {
+        super(connection, table, column);
     }
 
     @Override

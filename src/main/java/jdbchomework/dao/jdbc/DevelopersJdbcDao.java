@@ -13,8 +13,8 @@ import java.util.List;
 
 public class DevelopersJdbcDao extends AbstractDao<Developer> implements DevelopersDao {
 
-    public DevelopersJdbcDao(Connection connection) {
-        super(connection);
+    public DevelopersJdbcDao(Connection connection, String table, String column) {
+        super(connection,table,column);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class DevelopersJdbcDao extends AbstractDao<Developer> implements Develop
 
     private Developer createDeveloper(ResultSet resultSet) throws SQLException {
         return new Developer(resultSet.getLong("developer_id"), resultSet.getString("name"),
-            resultSet.getInt("salary"));
+                resultSet.getInt("salary"));
     }
 
     /*@Override

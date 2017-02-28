@@ -13,8 +13,8 @@ import java.util.List;
 
 public class CompaniesJdbcDao extends AbstractDao<Company> implements CompaniesDao {
 
-    public CompaniesJdbcDao(Connection connection) {
-        super(connection);
+    public CompaniesJdbcDao(Connection connection, String table, String column) {
+        super(connection,table,column);
     }
 
     @Override

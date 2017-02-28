@@ -13,8 +13,8 @@ import java.util.List;
 
 public class CustomersJdbcDao extends AbstractDao<Customer> implements CustomersDao {
 
-    public CustomersJdbcDao(Connection connection) {
-        super(connection);
+    public CustomersJdbcDao(Connection connection, String table, String column) {
+        super(connection,table,column);
     }
 
     @Override
@@ -56,8 +56,8 @@ public class CustomersJdbcDao extends AbstractDao<Customer> implements Customers
     public Customer getById(int id) {
         Customer customer = null;
         try (
-            PreparedStatement statement = connection
-                .prepareStatement("SELECT * FROM customers WHERE customer_id = ?;")) {
+                PreparedStatement statement = connection
+                        .prepareStatement("SELECT * FROM customers WHERE customer_id = ?;")) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -74,7 +74,7 @@ public class CustomersJdbcDao extends AbstractDao<Customer> implements Customers
     @Override
     public void updateById(int id, Customer toUpdate) {
         try (PreparedStatement statement = connection
-            .prepareStatement("UPDATE customers SET name = ? WHERE customer_id =?;")) {
+                .prepareStatement("UPDATE customers SET name = ? WHERE customer_id =?;")) {
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             connection.setAutoCommit(false);
             String name = toUpdate.getName();
@@ -96,7 +96,7 @@ public class CustomersJdbcDao extends AbstractDao<Customer> implements Customers
 
     private Customer createCustomer(ResultSet resultSet) throws SQLException {
         return new Customer(resultSet.getInt("customer_id"),
-            resultSet.getString("name"));
+                resultSet.getString("name"));
     }
 
     /*@Override
