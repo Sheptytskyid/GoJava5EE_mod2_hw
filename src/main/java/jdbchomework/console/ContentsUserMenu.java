@@ -124,8 +124,46 @@ public class ContentsUserMenu {
     }
 
     public void customerMenu() {
-        VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderCustomer(),
-                ListMenu.getServiceCustomersMenu());
+        mark:
+        while (true) {
+            VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderCustomer(),
+                    ListMenu.getServiceCustomersMenu());
+            Integer action;
+            action = Integer.parseInt(visualUserMenu.getValidInputFromUser("Choose action: ", InputType.INTEGER));
+            switch (action) {
+                case 1:
+                    VisualUserMenu.printListInConsole(null, customerController.getAll());
+                    break;
+                case 2:
+                    String name = visualUserMenu.getValidInputFromUser("Please enter customer name: ", InputType.STRING);
+                    customerController.add(name);
+                    break;
+                case 3:
+                    int id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter customer ID: ", InputType.INTEGER));
+                    System.out.println(customerController.getById(id));
+                    break;
+                case 4:
+                    id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter customer ID: ", InputType.INTEGER));
+                    name = visualUserMenu.getValidInputFromUser("Please enter customer name: ", InputType.STRING);
+                    customerController.updateById(id, name);
+                    break;
+                case 5:
+                    id = Integer.parseInt(visualUserMenu
+                            .getValidInputFromUser("Please enter customer ID: ", InputType.INTEGER));
+                    customerController.deleteById(id);
+                    break;
+                case (6):
+                    VisualUserMenu.outputSplitLine();
+                    System.out.println("\tThank you! for using our service.");
+                    break mark;
+                default:
+                    VisualUserMenu.outputSplitLine();
+                    System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
+
+            }
+        }
     }
 
     public void developerMenu() {
