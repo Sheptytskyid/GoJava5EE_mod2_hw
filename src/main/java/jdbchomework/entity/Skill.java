@@ -9,8 +9,8 @@ public class Skill extends AbstractEntity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Skill{");
-        sb.append("id=").append(getId()).append(" ");
-        sb.append("name=").append(getName()).append(" ");
+        sb.append("id = ").append(getId()).append(" ");
+        sb.append("name = ").append(getName()).append(" ");
         sb.append('}');
         return sb.toString();
     }

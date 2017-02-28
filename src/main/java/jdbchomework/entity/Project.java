@@ -20,9 +20,9 @@ public class Project extends AbstractEntity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Project{");
-        sb.append("id=").append(getId()).append(" ");
-        sb.append("name=").append(getName()).append(" ");
-        sb.append("cost=").append(cost).append(" ");
+        sb.append("id = ").append(getId()).append(" ");
+        sb.append("name = ").append(getName()).append(" ");
+        sb.append("cost = ").append(cost).append(" ");
         sb.append('}');
         return sb.toString();
     }

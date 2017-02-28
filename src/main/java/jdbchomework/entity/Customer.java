@@ -21,9 +21,9 @@ public class Customer extends AbstractEntity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Customer{");
-        sb.append("id=").append(getId()).append(" ");
-        sb.append("name=").append(getName()).append(" ");
-        sb.append("customersProject=").append(customersProject).append(" ");
+        sb.append("id = ").append(getId()).append(" ");
+        sb.append("name = ").append(getName()).append(" ");
+        sb.append("customersProject = ").append(customersProject).append(" ");
         sb.append('}');
         return sb.toString();
     }

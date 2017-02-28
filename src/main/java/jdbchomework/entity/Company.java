@@ -30,10 +30,10 @@ public class Company extends AbstractEntity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Company{");
-        sb.append("id=").append(getId()).append(" ");
-        sb.append("name=").append(getName()).append(" ");
-        sb.append("projects=").append(projects).append(" ");
-        sb.append(", developers=").append(developers).append(" ");
+        sb.append("id = ").append(getId()).append(" ");
+        sb.append("name = ").append(getName()).append(" ");
+        sb.append("projects = ").append(projects).append(" ");
+        sb.append(", developers = ").append(developers).append(" ");
         sb.append('}');
         return sb.toString();
     }
