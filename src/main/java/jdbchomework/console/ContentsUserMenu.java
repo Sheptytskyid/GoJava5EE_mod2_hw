@@ -40,28 +40,23 @@ public class ContentsUserMenu {
             switch (action) {
                 case (1):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderCompany(),
-                            ListMenu.getServiceCompaniesMenu());
+                    companyMenu();
                     break;
                 case (2):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderCustomer(),
-                            ListMenu.getServiceCustomersMenu());
+                    customerMenu();
                     break;
                 case (3):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderDeveloper(),
-                            ListMenu.getServiceDevelopersMenu());
+                    developerMenu();
                     break;
                 case (4):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderProject(),
-                            ListMenu.getServiceProjectsMenu());
+                    projectMenu();
                     break;
                 case (5):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderSkill(),
-                            ListMenu.getServiceSkillsMenu());
+                    skillMenu();
                     return;
                 case (6):
                     VisualUserMenu.outputSplitLine();
@@ -73,5 +68,65 @@ public class ContentsUserMenu {
                     System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
             }
         }
+    }
+
+    private void skillMenu() {
+        VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderSkill(),
+                ListMenu.getServiceSkillsMenu());
+
+    }
+
+    private void projectMenu() {
+        VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderProject(),
+                ListMenu.getServiceProjectsMenu());
+    }
+
+    public void companyMenu() {
+        mark:
+        while (true) {
+            VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderCompany(), ListMenu.getServiceCompaniesMenu());
+            Integer action;
+            action = Integer.parseInt(visualUserMenu.getValidInputFromUser("Choose action: ", InputType.INTEGER));
+            switch (action) {
+                case 1:
+                    VisualUserMenu.printListInConsole(null, companyController.getAll());
+                    break;
+                case 2:
+                    String name = visualUserMenu.getValidInputFromUser("Please enter company name: ", InputType.STRING);
+                    companyController.add(name);
+                    break;
+                case 3:
+                    int id = Integer.parseInt(visualUserMenu.getValidInputFromUser("Please enter company ID: ", InputType.INTEGER));
+                    System.out.println(companyController.getById(id));
+                    break;
+                case 4:
+                    id = Integer.parseInt(visualUserMenu.getValidInputFromUser("Please enter company ID: ", InputType.INTEGER));
+                    name = visualUserMenu.getValidInputFromUser("Please enter company name: ", InputType.STRING);
+                    companyController.updateById(id, name);
+                    break;
+                case 5:
+                    id = Integer.parseInt(visualUserMenu.getValidInputFromUser("Please enter company ID: ", InputType.INTEGER));
+                    companyController.deleteById(id);
+                    break;
+                case (6):
+                    VisualUserMenu.outputSplitLine();
+                    System.out.println("\tThank you! for using our service.");
+                    break mark;
+                default:
+                    VisualUserMenu.outputSplitLine();
+                    System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
+
+            }
+        }
+    }
+
+    public void customerMenu() {
+        VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderCustomer(),
+                ListMenu.getServiceCustomersMenu());
+    }
+
+    public void developerMenu() {
+        VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderDeveloper(),
+                ListMenu.getServiceDevelopersMenu());
     }
 }

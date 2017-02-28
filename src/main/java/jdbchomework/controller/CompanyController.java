@@ -19,47 +19,19 @@ public class CompanyController {
         return companyService.getAll();
     }
 
-    public void add() {
-        System.out.println("Please enter company name: ");
-        try {
-            String name = Main.getReader().readLine();
-            companyService.add(name);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void add(String name) {
+        companyService.add(name);
     }
 
-    public Company getById() {
-        Company company = null;
-        System.out.println("Please enter company ID: ");
-        try {
-            int id = Integer.valueOf(Main.getReader().readLine());
-            company = companyService.getById(id);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return company;
+    public Company getById(int id) {
+        return companyService.getById(id);
     }
 
-    public void deleteById() {
-        System.out.println("Please enter company ID: ");
-        try {
-            int id = Integer.valueOf(Main.getReader().readLine());
-            companyService.deleteById(id);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void deleteById(int id) {
+        companyService.deleteById(id);
     }
 
-    public void updateById() {
-        try {
-            System.out.println("Please enter company ID: ");
-            int id = Integer.valueOf(Main.getReader().readLine());
-            System.out.println("Please enter company name: ");
-            String name = Main.getReader().readLine();
-            companyService.updateById(id, name);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void updateById(int id, String name) {
+        companyService.updateById(id, name);
     }
 }
