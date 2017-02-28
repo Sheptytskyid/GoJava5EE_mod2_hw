@@ -40,23 +40,28 @@ public class ContentsUserMenu {
             switch (action) {
                 case (1):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderCompany(), ListMenu.getServiceCompaniesMenu());
+                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderCompany(),
+                            ListMenu.getServiceCompaniesMenu());
                     break;
                 case (2):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderCustomer(), ListMenu.getServiceCustomersMenu());
+                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderCustomer(),
+                            ListMenu.getServiceCustomersMenu());
                     break;
                 case (3):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderDeveloper(), ListMenu.getServiceDevelopersMenu());
+                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderDeveloper(),
+                            ListMenu.getServiceDevelopersMenu());
                     break;
                 case (4):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderProject(), ListMenu.getServiceProjectsMenu());
+                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderProject(),
+                            ListMenu.getServiceProjectsMenu());
                     break;
                 case (5):
                     VisualUserMenu.outputSplitLine();
-                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderSkill(), ListMenu.getServiceSkillsMenu());
+                    VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderSkill(),
+                            ListMenu.getServiceSkillsMenu());
                     return;
                 case (6):
                     VisualUserMenu.outputSplitLine();
