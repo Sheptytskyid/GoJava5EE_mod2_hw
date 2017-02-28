@@ -32,10 +32,10 @@ public class Developer extends AbstractEntity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Developer{");
-        sb.append("id=").append(getId()).append(" ");
-        sb.append("name=").append(getName()).append(" ");
-        sb.append("skills=").append(skills).append(" ");
-        sb.append(", salary=").append(salary).append(" ");
+        sb.append("id = ").append(getId()).append(" ");
+        sb.append("name = ").append(getName()).append(" ");
+        sb.append("skills = ").append(skills).append(" ");
+        sb.append(", salary = ").append(salary).append(" ");
         sb.append('}');
         return sb.toString();
     }

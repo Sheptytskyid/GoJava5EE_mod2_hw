@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DeveloperService {
 
-    DevelopersJdbcDao developersJdbcDao;
+    private DevelopersJdbcDao developersJdbcDao;
 
     public DeveloperService(DevelopersJdbcDao developersJdbcDao) {
         this.developersJdbcDao = developersJdbcDao;
