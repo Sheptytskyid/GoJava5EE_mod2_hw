@@ -33,8 +33,7 @@ public class CustomerController {
         Customer customer = null;
         System.out.println("Please enter company ID: ");
         try {
-            String ID = Main.getReader().readLine();
-            int id = Integer.valueOf(ID);
+            int id = Integer.valueOf(Main.getReader().readLine());
             customer = customerService.getById(id);
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,8 +44,7 @@ public class CustomerController {
     public void deleteById() {
         System.out.println("Please enter company ID: ");
         try {
-            String ID = Main.getReader().readLine();
-            int id = Integer.valueOf(ID);
+            int id = Integer.valueOf(Main.getReader().readLine());
             customerService.deleteById(id);
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,10 +54,10 @@ public class CustomerController {
     public void updateById() {
         try {
             System.out.println("Please enter company ID: ");
-            String name = Main.getReader().readLine();
-            int id = Integer.valueOf(name);
+
+            int id = Integer.valueOf(Main.getReader().readLine());
             System.out.println("Please enter company name: ");
-            name = Main.getReader().readLine();
+            String name = Main.getReader().readLine();
             customerService.updateById(id, name);
         } catch (IOException e) {
             e.printStackTrace();

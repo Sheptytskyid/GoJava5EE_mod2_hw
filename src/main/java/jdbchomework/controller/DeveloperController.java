@@ -33,8 +33,7 @@ public class DeveloperController {
         Developer developer = null;
         System.out.println("Please enter company ID: ");
         try {
-            String ID = Main.getReader().readLine();
-            int id = Integer.valueOf(ID);
+            int id = Integer.valueOf(Main.getReader().readLine());
             developer = developerService.getById(id);
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,8 +44,7 @@ public class DeveloperController {
     public void deleteById() {
         System.out.println("Please enter company ID: ");
         try {
-            String ID = Main.getReader().readLine();
-            int id = Integer.valueOf(ID);
+            int id = Integer.valueOf(Main.getReader().readLine());
             developerService.deleteById(id);
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,10 +54,9 @@ public class DeveloperController {
     public void updateById() {
         try {
             System.out.println("Please enter company ID: ");
-            String name = Main.getReader().readLine();
-            int id = Integer.valueOf(name);
+            int id = Integer.valueOf(Main.getReader().readLine());
             System.out.println("Please enter company name: ");
-            name = Main.getReader().readLine();
+            String name = Main.getReader().readLine();
             developerService.updateById(id, name);
         } catch (IOException e) {
             e.printStackTrace();

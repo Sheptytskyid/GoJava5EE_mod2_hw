@@ -21,6 +21,7 @@ public class DeveloperService {
         Developer developer = new Developer(name);
         developersJdbcDao.add(developer);
     }
+
     public Developer getById(int id) {
         return developersJdbcDao.getById(id);
     }
