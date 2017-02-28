@@ -73,8 +73,8 @@ public class ContentsUserMenu {
     private void skillMenu() {
         mark:
         while (true) {
-        VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderSkill(),
-                ListMenu.getServiceSkillsMenu());
+            VisualUserMenu.printListInConsole(ListMenu.getServiceHeaderSkill(),
+                    ListMenu.getServiceSkillsMenu());
             Integer action;
             action = Integer.parseInt(visualUserMenu.getValidInputFromUser("Choose action: ", InputType.INTEGER));
             switch (action) {
