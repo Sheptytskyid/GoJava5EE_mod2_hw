@@ -13,23 +13,23 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    public List<Project> getAll() {
+    public List<Project> getAllProjects() {
         return projectService.getAll();
     }
 
-    public void add(String name, int cost) {
+    public void addProject(String name, int cost) {
         projectService.add(name, cost);
     }
 
-    public Project getById(int id) {
+    public Project getProjectById(int id) {
         return projectService.getById(id);
     }
 
-    public boolean deleteById(int id) {
+    public boolean deleteProjectById(int id) {
         return projectService.deleteById(id);
     }
 
-    public boolean updateById(int id, String name, int cost) {
+    public boolean updateProjectById(int id, String name, int cost) {
         Project project = new Project(name, cost);
         return projectService.updateById(id, project);
     }

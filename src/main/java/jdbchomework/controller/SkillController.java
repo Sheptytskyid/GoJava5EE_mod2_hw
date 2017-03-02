@@ -13,23 +13,23 @@ public class SkillController {
         this.skillService = skillService;
     }
 
-    public List<Skill> getAll() {
+    public List<Skill> getAllSkills() {
         return skillService.getAll();
     }
 
-    public void add(String name) {
+    public void addSkill(String name) {
         skillService.add(name);
     }
 
-    public Skill getById(int id) {
+    public Skill getSkillById(int id) {
         return skillService.getById(id);
     }
 
-    public boolean deleteById(int id) {
+    public boolean deleteSkillById(int id) {
         return skillService.deleteById(id);
     }
 
-    public boolean updateById(int id, String name) {
+    public boolean updateSkillById(int id, String name) {
         return skillService.updateById(id, name);
     }
 }
