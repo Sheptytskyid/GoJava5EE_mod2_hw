@@ -1,15 +1,15 @@
 package jdbchomework.service;
 
-import jdbchomework.dao.jdbc.CompaniesJdbcDao;
+import jdbchomework.dao.model.CompaniesDao;
 import jdbchomework.entity.Company;
 
 import java.util.List;
 
 public class CompanyService {
 
-    private CompaniesJdbcDao companiesJdbcDao;
+    private CompaniesDao companiesJdbcDao;
 
-    public CompanyService(CompaniesJdbcDao companiesJdbcDao) {
+    public CompanyService(CompaniesDao companiesJdbcDao) {
         this.companiesJdbcDao = companiesJdbcDao;
     }
 

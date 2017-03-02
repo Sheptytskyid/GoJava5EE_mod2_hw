@@ -13,23 +13,23 @@ public class DeveloperController {
         this.developerService = developerService;
     }
 
-    public List<Developer> getAll() {
+    public List<Developer> getAllDevelopers() {
         return developerService.getAll();
     }
 
-    public void add(String name) {
+    public void addDeveloper(String name) {
         developerService.add(name);
     }
 
-    public Developer getById(int id) {
+    public Developer getDeveloperById(int id) {
         return developerService.getById(id);
     }
 
-    public boolean deleteById(int id) {
+    public boolean deleteDeveloperById(int id) {
         return developerService.deleteById(id);
     }
 
-    public boolean updateById(int id, String name) {
+    public boolean updateDeveloperById(int id, String name) {
         return developerService.updateById(id, name);
     }
 }

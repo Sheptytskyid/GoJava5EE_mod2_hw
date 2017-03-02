@@ -5,7 +5,6 @@ import jdbchomework.controller.CustomerController;
 import jdbchomework.controller.DeveloperController;
 import jdbchomework.controller.ProjectController;
 import jdbchomework.controller.SkillController;
-import jdbchomework.utils.ConnectionUtil;
 import org.slf4j.LoggerFactory;
 
 public class ContentsUserMenu {
@@ -82,23 +81,23 @@ public class ContentsUserMenu {
             action = Integer.parseInt(visualUserMenu.getValidInputFromUser("Choose action: ", InputType.INTEGER));
             switch (action) {
                 case 1:
-                    VisualUserMenu.printListInConsole(null, skillController.getAll());
+                    VisualUserMenu.printListInConsole(null, skillController.getAllSkills());
                     break;
                 case 2:
                     String name = visualUserMenu.getValidInputFromUser("Please enter skill name: ", InputType.STRING);
-                    skillController.add(name);
+                    skillController.addSkill(name);
                     System.out.println(name + " successfully added");
                     break;
                 case 3:
                     int id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter skill ID: ", InputType.INTEGER));
-                    System.out.println(skillController.getById(id));
+                    System.out.println(skillController.getSkillById(id));
                     break;
                 case 4:
                     id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter skill ID: ", InputType.INTEGER));
                     name = visualUserMenu.getValidInputFromUser("Please enter skill name: ", InputType.STRING);
-                    if (skillController.updateById(id, name)) {
+                    if (skillController.updateSkillById(id, name)) {
                         System.out.println("Skill successfully updated");
                     } else {
                         System.out.println(SKILL_NOT_FOUND);
@@ -107,7 +106,7 @@ public class ContentsUserMenu {
                 case 5:
                     id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter skill ID: ", InputType.INTEGER));
-                    if (skillController.deleteById(id)) {
+                    if (skillController.deleteSkillById(id)) {
                         System.out.println("Skill successfully deleted");
                     } else {
                         System.out.println(SKILL_NOT_FOUND);
@@ -132,20 +131,20 @@ public class ContentsUserMenu {
             action = Integer.parseInt(visualUserMenu.getValidInputFromUser("Choose action: ", InputType.INTEGER));
             switch (action) {
                 case 1:
-                    VisualUserMenu.printListInConsole(null, projectController.getAll());
+                    VisualUserMenu.printListInConsole(null, projectController.getAllProjects());
                     break;
                 case 2:
                     String name = visualUserMenu
                             .getValidInputFromUser("Please enter project name: ", InputType.STRING);
                     int cost = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter project cost: ", InputType.INTEGER));
-                    projectController.add(name, cost);
+                    projectController.addProject(name, cost);
                     System.out.println("Project successfully added");
                     break;
                 case 3:
                     int id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter project ID: ", InputType.INTEGER));
-                    System.out.println(projectController.getById(id));
+                    System.out.println(projectController.getProjectById(id));
                     break;
                 case 4:
                     id = Integer.parseInt(visualUserMenu
@@ -153,7 +152,7 @@ public class ContentsUserMenu {
                     name = visualUserMenu.getValidInputFromUser("Please enter project name: ", InputType.STRING);
                     cost = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter project cost: ", InputType.INTEGER));
-                    if (projectController.updateById(id, name, cost)) {
+                    if (projectController.updateProjectById(id, name, cost)) {
                         System.out.println("Project successfully updated");
                     } else {
                         System.out.println(PROJECT_NOT_FOUND);
@@ -162,7 +161,7 @@ public class ContentsUserMenu {
                 case 5:
                     id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter project ID: ", InputType.INTEGER));
-                    if (projectController.deleteById(id)) {
+                    if (projectController.deleteProjectById(id)) {
                         System.out.println("Project successfully deleted");
                     } else {
                         System.out.println(PROJECT_NOT_FOUND);
@@ -186,23 +185,23 @@ public class ContentsUserMenu {
             action = Integer.parseInt(visualUserMenu.getValidInputFromUser("Choose action: ", InputType.INTEGER));
             switch (action) {
                 case 1:
-                    VisualUserMenu.printListInConsole(null, companyController.getAll());
+                    VisualUserMenu.printListInConsole(null, companyController.getAllCompanies());
                     break;
                 case 2:
                     String name = visualUserMenu.getValidInputFromUser("Please enter company name: ", InputType.STRING);
-                    companyController.add(name);
+                    companyController.addCompany(name);
                     System.out.println("Company successfully added");
                     break;
                 case 3:
                     int id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter company ID: ", InputType.INTEGER));
-                    System.out.println(companyController.getById(id));
+                    System.out.println(companyController.getCompanyById(id));
                     break;
                 case 4:
                     id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter company ID: ", InputType.INTEGER));
                     name = visualUserMenu.getValidInputFromUser("Please enter company name: ", InputType.STRING);
-                    if (companyController.updateById(id, name)) {
+                    if (companyController.updateCompanyById(id, name)) {
                         System.out.println("Company successfully updated");
                     } else {
                         System.out.println(COMPANY_NOT_FOUND);
@@ -211,7 +210,7 @@ public class ContentsUserMenu {
                 case 5:
                     id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter company ID: ", InputType.INTEGER));
-                    if (companyController.deleteById(id)) {
+                    if (companyController.deleteCompanyById(id)) {
                         System.out.println("Company successfully deleted");
                     } else {
                         System.out.println(COMPANY_NOT_FOUND);
@@ -236,23 +235,23 @@ public class ContentsUserMenu {
             action = Integer.parseInt(visualUserMenu.getValidInputFromUser("Choose action: ", InputType.INTEGER));
             switch (action) {
                 case 1:
-                    VisualUserMenu.printListInConsole(null, customerController.getAll());
+                    VisualUserMenu.printListInConsole(null, customerController.getAllCustomers());
                     break;
                 case 2:
                     String name = visualUserMenu.getValidInputFromUser("Please enter customer name: ", InputType.STRING);
-                    customerController.add(name);
+                    customerController.addCustomer(name);
                     System.out.println("Customer successfully added");
                     break;
                 case 3:
                     int id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter customer ID: ", InputType.INTEGER));
-                    System.out.println(customerController.getById(id));
+                    System.out.println(customerController.getCustomerById(id));
                     break;
                 case 4:
                     id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter customer ID: ", InputType.INTEGER));
                     name = visualUserMenu.getValidInputFromUser("Please enter customer name: ", InputType.STRING);
-                    if (customerController.updateById(id, name)) {
+                    if (customerController.updateCustomerById(id, name)) {
                         System.out.println("Customer successfully updated");
                     } else {
                         System.out.println(CUSTOMER_NOT_FOUND);
@@ -261,7 +260,7 @@ public class ContentsUserMenu {
                 case 5:
                     id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter customer ID: ", InputType.INTEGER));
-                    if (customerController.deleteById(id)) {
+                    if (customerController.deleteCustomerById(id)) {
                         System.out.println("Customer successfully deleted");
                     } else {
                         System.out.println(CUSTOMER_NOT_FOUND);
@@ -286,23 +285,23 @@ public class ContentsUserMenu {
             action = Integer.parseInt(visualUserMenu.getValidInputFromUser("Choose action: ", InputType.INTEGER));
             switch (action) {
                 case 1:
-                    VisualUserMenu.printListInConsole(null, developerController.getAll());
+                    VisualUserMenu.printListInConsole(null, developerController.getAllDevelopers());
                     break;
                 case 2:
                     String name = visualUserMenu.getValidInputFromUser("Please enter developer name: ", InputType.STRING);
-                    developerController.add(name);
+                    developerController.addDeveloper(name);
                     System.out.println("Developer successfully added");
                     break;
                 case 3:
                     int id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter developer ID: ", InputType.INTEGER));
-                    System.out.println(developerController.getById(id));
+                    System.out.println(developerController.getDeveloperById(id));
                     break;
                 case 4:
                     id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter developer ID: ", InputType.INTEGER));
                     name = visualUserMenu.getValidInputFromUser("Please enter developer name: ", InputType.STRING);
-                    if (developerController.updateById(id, name)) {
+                    if (developerController.updateDeveloperById(id, name)) {
                         System.out.println("Developer successfully updated");
                     } else {
                         System.out.println("Developer not found");
@@ -311,7 +310,7 @@ public class ContentsUserMenu {
                 case 5:
                     id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser("Please enter developer ID: ", InputType.INTEGER));
-                    if (developerController.deleteById(id)) {
+                    if (developerController.deleteDeveloperById(id)) {
                         System.out.println("Developer successfully deleted");
                     } else {
                         System.out.println("Developer not found");

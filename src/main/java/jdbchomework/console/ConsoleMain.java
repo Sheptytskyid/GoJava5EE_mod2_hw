@@ -10,6 +10,6 @@ public class ConsoleMain {
 
     public void consoleMain() {
         ListMenu.makeMenus();
-            contentsUserMenu.mainMenu();
+        contentsUserMenu.mainMenu();
     }
 }

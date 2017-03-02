@@ -1,15 +1,15 @@
 package jdbchomework.service;
 
-import jdbchomework.dao.jdbc.DevelopersJdbcDao;
+import jdbchomework.dao.model.DevelopersDao;
 import jdbchomework.entity.Developer;
 
 import java.util.List;
 
 public class DeveloperService {
 
-    private DevelopersJdbcDao developersJdbcDao;
+    private DevelopersDao developersJdbcDao;
 
-    public DeveloperService(DevelopersJdbcDao developersJdbcDao) {
+    public DeveloperService(DevelopersDao developersJdbcDao) {
         this.developersJdbcDao = developersJdbcDao;
     }
 

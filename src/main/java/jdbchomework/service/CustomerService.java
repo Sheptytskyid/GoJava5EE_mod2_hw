@@ -1,15 +1,15 @@
 package jdbchomework.service;
 
-import jdbchomework.dao.jdbc.CustomersJdbcDao;
+import jdbchomework.dao.model.CustomersDao;
 import jdbchomework.entity.Customer;
 
 import java.util.List;
 
 public class CustomerService {
 
-    private CustomersJdbcDao customersJdbcDao;
+    private CustomersDao customersJdbcDao;
 
-    public CustomerService(CustomersJdbcDao customersJdbcDao) {
+    public CustomerService(CustomersDao customersJdbcDao) {
         this.customersJdbcDao = customersJdbcDao;
     }
 

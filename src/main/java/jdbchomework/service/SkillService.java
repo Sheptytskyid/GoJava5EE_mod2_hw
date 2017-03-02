@@ -1,15 +1,15 @@
 package jdbchomework.service;
 
-import jdbchomework.dao.jdbc.SkillsJdbcDao;
+import jdbchomework.dao.model.SkillsDao;
 import jdbchomework.entity.Skill;
 
 import java.util.List;
 
 public class SkillService {
 
-    private SkillsJdbcDao skillsJdbcDao;
+    private SkillsDao skillsJdbcDao;
 
-    public SkillService(SkillsJdbcDao skillsJdbcDao) {
+    public SkillService(SkillsDao skillsJdbcDao) {
         this.skillsJdbcDao = skillsJdbcDao;
     }
 

@@ -13,23 +13,23 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
-    public List<Company> getAll() {
+    public List<Company> getAllCompanies() {
         return companyService.getAll();
     }
 
-    public void add(String name) {
+    public void addCompany(String name) {
         companyService.add(name);
     }
 
-    public Company getById(int id) {
+    public Company getCompanyById(int id) {
         return companyService.getById(id);
     }
 
-    public boolean deleteById(int id) {
+    public boolean deleteCompanyById(int id) {
         return companyService.deleteById(id);
     }
 
-    public boolean updateById(int id, String name) {
+    public boolean updateCompanyById(int id, String name) {
         return companyService.updateById(id, name);
     }
 }
