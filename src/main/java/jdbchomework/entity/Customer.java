@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Customer extends AbstractEntity {
 
-    private List<Project> customersProject;
+    private List<Project> projects;
 
     public Customer(long id, String name) {
         super(id, name);
@@ -14,12 +14,12 @@ public class Customer extends AbstractEntity {
         super(name);
     }
 
-    public List<Project> getCustomersProject() {
-        return customersProject;
+    public List<Project> getProjects() {
+        return projects;
     }
 
-    public void setCustomersProject(List<Project> customersProject) {
-        this.customersProject = customersProject;
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class Customer extends AbstractEntity {
         final StringBuilder sb = new StringBuilder("Customer{");
         sb.append("id = ").append(getId()).append(" ");
         sb.append("name = ").append(getName()).append(" ");
-        sb.append("customersProject = ").append(customersProject).append(" ");
+        sb.append("projects = ").append(projects).append(" ");
         sb.append('}');
         return sb.toString();
     }
