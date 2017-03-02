@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class ProjectsJdbcDao extends AbstractDao<Project> implements ProjectsDao {
 
-    private static org.slf4j.Logger log = LoggerFactory.getLogger(AbstractDao.class);
+    private static org.slf4j.Logger log = LoggerFactory.getLogger(ProjectsJdbcDao.class);
 
     public ProjectsJdbcDao(Connection connection, String table, String column) {
         super(connection, table, column);
