@@ -1,15 +1,15 @@
 package jdbchomework.service;
 
-import jdbchomework.dao.jdbc.ProjectsJdbcDao;
+import jdbchomework.dao.model.ProjectsDao;
 import jdbchomework.entity.Project;
 
 import java.util.List;
 
 public class ProjectService {
 
-    private ProjectsJdbcDao projectsJdbcDao;
+    private ProjectsDao projectsJdbcDao;
 
-    public ProjectService(ProjectsJdbcDao projectsJdbcDao) {
+    public ProjectService(ProjectsDao projectsJdbcDao) {
         this.projectsJdbcDao = projectsJdbcDao;
     }
 
