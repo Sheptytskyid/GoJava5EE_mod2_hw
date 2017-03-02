@@ -32,12 +32,22 @@
             <version>1.2.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.2.7.Final</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+
+
 
     <build>
         <plugins>
