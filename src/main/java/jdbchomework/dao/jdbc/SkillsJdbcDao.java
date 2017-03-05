@@ -2,19 +2,11 @@ package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.SkillsDao;
 import jdbchomework.entity.Skill;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import org.hibernate.SessionFactory;
 
 public class SkillsJdbcDao extends AbstractDao<Skill> implements SkillsDao {
 
-    public SkillsJdbcDao(Connection connection, String table, String column) {
-        super(connection, table, column);
-    }
-
-    @Override
-    protected Skill createEntity(ResultSet resultSet) throws SQLException {
-        return new Skill(resultSet.getInt("skill_id"), resultSet.getString("name"));
+    public SkillsJdbcDao(SessionFactory sessionFactory, String entity, Class<Skill> clazz) {
+        super(sessionFactory, entity, clazz);
     }
 }
