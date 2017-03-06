@@ -62,7 +62,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
     }
 
 
-    public T getById(int id) {
+    public T getById(long id) {
         T result = null;
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
@@ -73,14 +73,14 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
             if (transaction != null) {
                 transaction.rollback();
             }
-            log.error("Cannot connect to DB", e);
+            log.error(CANNOT_CONNECT_TO_DB, e);
         } finally {
             session.close();
         }
         return result;
     }
 
-    public boolean updateById(int id, T toUpdate) {
+    public boolean updateById(long id, T toUpdate) {
         boolean result = false;
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
@@ -93,7 +93,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
             if (transaction != null) {
                 transaction.rollback();
             }
-            log.error("Cannot connect to DB", e);
+            log.error(CANNOT_CONNECT_TO_DB, e);
         } finally {
             session.close();
         }
@@ -101,7 +101,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
     }
 
     @Override
-    public boolean deleteById(int id) {
+    public boolean deleteById(long id) {
         boolean result = false;
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
@@ -115,7 +115,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
             if (transaction != null) {
                 transaction.rollback();
             }
-            log.error("Cannot connect to DB", e);
+            log.error(CANNOT_CONNECT_TO_DB, e);
         } finally {
             session.close();
         }

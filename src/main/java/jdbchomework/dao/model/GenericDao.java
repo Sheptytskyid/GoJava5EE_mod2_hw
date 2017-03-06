@@ -8,9 +8,9 @@ public interface GenericDao<T> {
 
     List<T> getAll();
 
-    T getById(int id);
+    T getById(long id);
 
-    boolean deleteById(int id);
+    boolean deleteById(long id);
 
-    boolean updateById(int id, T toUpdate);
+    boolean updateById(long id, T toUpdate);
 }
