@@ -25,4 +25,3 @@ script:
     - mvn clean test jacoco:report coveralls:report
     - sonar-scanner
 
-
