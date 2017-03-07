@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">
+            org.hibernate.dialect.MySQLDialect
+        </property>
+        <property name="hibernate.connection.driver_class">
+            com.mysql.jdbc.Driver
+        </property>
+        <property name="hibernate.connection.url">
+            jdbc:mysql://localhost:3306/test123?autoReconnect=true&amp;useSSL=false
+        </property>
+        <property name="hibernate.connection.username">
+            root
+        </property>
+        <property name="hibernate.connection.password">
+            admin
+        </property>
+        <property name="hibernate.jdbc.batch_size">
+            50
+        </property>
+        <property name="show_sql">
+            true
+        </property>
+        <property name="hibernate.connection.autocommit">true</property>
+
+
+        <!--<property name="hibernate.id.new_generator_mappings">false</property>-->
+
+        <mapping package="jdbchomework.entity"/>
+        <mapping class="jdbchomework.entity.AbstractEntity"/>
+        <mapping class="jdbchomework.entity.Test"/>
+        <mapping class="jdbchomework.entity.Company"/>
+        <mapping class="jdbchomework.entity.Customer"/>
+        <mapping class="jdbchomework.entity.Developer"/>
+        <mapping class="jdbchomework.entity.Project"/>
+        <mapping class="jdbchomework.entity.Skill"/>
+
+    </session-factory>
+</hibernate-configuration>

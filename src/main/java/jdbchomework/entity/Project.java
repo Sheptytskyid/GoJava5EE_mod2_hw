@@ -1,8 +1,17 @@
 package jdbchomework.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "projects")
 public class Project extends AbstractEntity {
 
     private int cost;
+
+    public Project() {
+    }
 
     public Project(long id, String name, int cost) {
         super(id, name);
@@ -13,7 +22,7 @@ public class Project extends AbstractEntity {
         super(name);
         this.cost = cost;
     }
-
+    @Column(name = "cost")
     public int getCost() {
         return cost;
     }

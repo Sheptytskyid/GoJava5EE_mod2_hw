@@ -79,20 +79,20 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
     }
 
 
-    public T getById(int id) {
+    public T getById(long id) {
         T result = null;
-        try (
-                PreparedStatement statement = connection
-                        .prepareStatement("SELECT * FROM " + table + " WHERE " + column + " = ?;")) {
-            statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                result = createEntity(rs);
-            }
-        } catch (SQLException e) {
-            log.error("Cannot connect to DB", e);
-            throw new RuntimeException("Cannot connect to DB", e);
-        }
+//        try (
+//                PreparedStatement statement = connection
+//                        .prepareStatement("SELECT * FROM " + table + " WHERE " + column + " = ?;")) {
+//            statement.setInt(1, id);
+//            ResultSet rs = statement.executeQuery();
+//            if (rs.next()) {
+//                result = createEntity(rs);
+//            }
+//        } catch (SQLException e) {
+//            log.error("Cannot connect to DB", e);
+//            throw new RuntimeException("Cannot connect to DB", e);
+//        }
         return result;
     }
 

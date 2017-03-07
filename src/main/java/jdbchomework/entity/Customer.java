@@ -1,10 +1,18 @@
 package jdbchomework.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
+@Entity
+@Table(name = "customers")
 public class Customer extends AbstractEntity {
 
     private List<Project> projects;
+
+    public Customer() {
+    }
 
     public Customer(long id, String name) {
         super(id, name);
@@ -14,6 +22,7 @@ public class Customer extends AbstractEntity {
         super(name);
     }
 
+    @OneToMany
     public List<Project> getProjects() {
         return projects;
     }

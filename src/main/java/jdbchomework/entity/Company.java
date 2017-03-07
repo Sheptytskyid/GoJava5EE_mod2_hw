@@ -1,11 +1,19 @@
 package jdbchomework.entity;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "companies")
 public class Company extends AbstractEntity {
-
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id")
     private List<Project> projects;
+
     private List<Developer> developers;
+
+    public Company() {
+    }
 
     public Company(String name, long id) {
         super(id, name);
@@ -22,7 +30,11 @@ public class Company extends AbstractEntity {
     public void setProjects(List<Project> projects) {
         this.projects = projects;
     }
-
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "projects",
+            joinColumns = {@JoinColumn(name = "company_id")},
+            inverseJoinColumns = {@JoinColumn(name = "id")}
+    )
     public List<Developer> getDevelopers() {
         return developers;
     }
@@ -30,6 +42,7 @@ public class Company extends AbstractEntity {
     public void setDevelopers(List<Developer> developers) {
         this.developers = developers;
     }
+
 
     @Override
     public String toString() {

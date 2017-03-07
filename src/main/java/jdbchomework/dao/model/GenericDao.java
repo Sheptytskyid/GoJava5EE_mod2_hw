@@ -8,7 +8,7 @@ public interface GenericDao<T> {
 
     List<T> getAll();
 
-    T getById(int id);
+    T getById(long id);
 
     boolean deleteById(int id);
 
