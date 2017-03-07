@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HibAbstractDao<T extends AbstractEntity> implements GenericDao<T> {
+public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
     protected SessionFactory sessionFactory;
     private String entityName;
     private Class<T> aClass;
 
-    public HibAbstractDao(String entityName, SessionFactory sessionFactory, Class<T> aClass) {
+    public AbstractHibDao(String entityName, SessionFactory sessionFactory, Class<T> aClass) {
         this.entityName = entityName;
         this.sessionFactory = sessionFactory;
         this.aClass = aClass;
@@ -28,11 +28,10 @@ public class HibAbstractDao<T extends AbstractEntity> implements GenericDao<T> {
     public void add(T toAdd) {
 
         Transaction transaction = null;
-        Long devId;
 
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            devId = (Long) session.save(toAdd);
+            session.save(toAdd);
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
@@ -67,13 +66,7 @@ public class HibAbstractDao<T extends AbstractEntity> implements GenericDao<T> {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-//            String hql = "from " + entityName + " where  = :id";
-//            Query query = session.createQuery(hql);
-//            query.setParameter("id", id);
-//            result = (T) query.list().get(0);
-
-
-            result = (T) session.get(aClass, id);
+            result = session.get(aClass, id);
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {

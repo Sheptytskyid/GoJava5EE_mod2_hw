@@ -1,17 +1,11 @@
 package jdbchomework.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.List;
 
 @Entity
-@Table (name = "skills")
+@Table(name = "skills")
 public class Skill extends AbstractEntity {
-
-//    private List<Developer> developers;
-
-
 
     public Skill(long id, String name) {
         super(id, name);
@@ -42,9 +36,4 @@ public class Skill extends AbstractEntity {
         sb.append('}');
         return sb.toString();
     }
-
-
-//    public void setDevelopers(List<Developer> developers) {
-//        this.developers = developers;
-//    }
 }

@@ -1,6 +1,5 @@
 package jdbchomework.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -22,7 +21,7 @@ public class Project extends AbstractEntity {
         super(name);
         this.cost = cost;
     }
-    @Column(name = "cost")
+
     public int getCost() {
         return cost;
     }

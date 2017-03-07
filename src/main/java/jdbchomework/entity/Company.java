@@ -10,7 +10,7 @@ public class Company extends AbstractEntity {
     @JoinColumn(name = "company_id")
     private List<Project> projects;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "projects",
             joinColumns = {@JoinColumn(name = "company_id")},
             inverseJoinColumns = {@JoinColumn(name = "id")}
