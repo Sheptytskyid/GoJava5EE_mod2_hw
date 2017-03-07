@@ -9,7 +9,7 @@ import java.util.List;
 @Table (name = "skills")
 public class Skill extends AbstractEntity {
 
-    private List<Developer> developers;
+//    private List<Developer> developers;
 
 
 
@@ -42,12 +42,9 @@ public class Skill extends AbstractEntity {
         sb.append('}');
         return sb.toString();
     }
-    @ManyToMany(mappedBy = "skills")
-    public List<Developer> getDevelopers() {
-        return developers;
-    }
 
-    public void setDevelopers(List<Developer> developers) {
-        this.developers = developers;
-    }
+
+//    public void setDevelopers(List<Developer> developers) {
+//        this.developers = developers;
+//    }
 }

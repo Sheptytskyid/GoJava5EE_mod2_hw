@@ -10,6 +10,11 @@ public class Company extends AbstractEntity {
     @JoinColumn(name = "company_id")
     private List<Project> projects;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "projects",
+            joinColumns = {@JoinColumn(name = "company_id")},
+            inverseJoinColumns = {@JoinColumn(name = "id")}
+    )
     private List<Developer> developers;
 
     public Company() {
@@ -30,11 +35,8 @@ public class Company extends AbstractEntity {
     public void setProjects(List<Project> projects) {
         this.projects = projects;
     }
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "projects",
-            joinColumns = {@JoinColumn(name = "company_id")},
-            inverseJoinColumns = {@JoinColumn(name = "id")}
-    )
+
+
     public List<Developer> getDevelopers() {
         return developers;
     }
