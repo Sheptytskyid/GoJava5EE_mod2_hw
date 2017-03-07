@@ -23,6 +23,7 @@ public class CompaniesHibDao extends AbstractHibDao<Company> implements Companie
 //    public List<Developer> getDeveloper(long id) {
 //        Company company = getById(id);
 //        return company.getDevelopers();
+
 //    }
 
     public List<Developer> getCompanyDevelopers(long id) {
