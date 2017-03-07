@@ -1,12 +1,24 @@
 package jdbchomework.entity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
 
-
+@Entity
+@Table(name = "developers")
 public class Developer extends AbstractEntity {
-
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "developers_skills")
     private List<Skill> skills;
+    @Column(name = "salary")
     private int salary;
+
+    public Developer() {}
 
     public Developer(long id, String name, int salary) {
         super(id, name);

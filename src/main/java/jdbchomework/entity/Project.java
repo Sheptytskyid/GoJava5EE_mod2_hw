@@ -1,8 +1,16 @@
 package jdbchomework.entity;
 
-public class Project extends AbstractEntity {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "projects")
+public class Project extends AbstractEntity {
+    @Column(name = "cost")
     private int cost;
+
+    public Project() {}
 
     public Project(long id, String name, int cost) {
         super(id, name);
