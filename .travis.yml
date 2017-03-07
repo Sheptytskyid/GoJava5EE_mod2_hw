@@ -8,10 +8,20 @@ jdk:
 notifications:
       slack: gojava5:NHIHdfuSA5H2riwEG9X8dL8V
       email: false
+
+addons:
+    sonarqube:
+      token:
+        secure: hbTvoCnFEF2kwBGbGOtUHVEI90A985IDH1lrF/Uwy9YPR9vl1XwmC/NNkkVXgqHXdm2IuHjFOqkkQH5TcVcus880KPX3T7OtvzJaTDKbQzxttx904wB2fBcJcbGuqGc1WN9+wxwXIRLXecgISYFWfkI4Po6FrWwT0aY1wrBGgDzGRwNedvV+NT4bSo2AAg8BCgHgfZpWAdC7Wdf9L7HqEhTRM30fGD+Ry5LKvumNmhMvTKIiHKanj84sv7joxC8zvItqjx7bdulc7DRxChxSt0t4w3Iy3k9zxyOaGcyWxnTHxBqKNZJgzTnmLxnc9VSwLZkwf0t3tm88tl37te5R5T8NPPBO4pGo41Qz5/nvmZF3nvQdEqzr4LXeRNyClDTurf7t1o9/bJYgfCUIxToufIE8RdAeOoMdYtsj5DgBs6HZ5XKkLlXhkdmtfPsHtXXO1h6uZr/AliD0xuH561mPZ5ZeVwktlNUXqi+nzBOvwSeTUh9o+44s9Rug0UGaRqZ5YGaEQgIjTmyqnRFHzLqkohg2X6hNQVnm2YoAP4OCg9bXLkySY6RcWF0t9/ak+b0AvHAh2YJLOpN7McCCa6/tzbLKeidyuPw3Yrpyz2Nay4q5zQoyi0h+zKa1ZigiVOaisgTIjdf3vEHBBHDAu/AyhNrjCTqDWcoBA3F7eDXyiWs=
+      github_token:
+        secure: SjAHsOtGFcUzqVg4MFtpbj2gEtLXnNVeH4tCk4h9WQsN5L37wf21594wJx0mv3TPpJIr/iNwqVATxUgM5CIIZ7fU+izT/TMIeW1F9zCx9sACmxesZWHT1tn1mJZf+BOiG0VtjhVXqc7ZDj8X4DrSTH9XfWFB84xOiQRSE7Yv0/KW1fn/75WGWGcBbw54zQGwA5f646R7x9D9XQsF7/peIbnyI5mHqr57O6YawJ21AhTv0qWamM+7Bs30eSdPt8FjNnuWMknvOggocUIApBbPcyBzbGL2Mqwk70aILsb0CaZY8hpxU54Kq9K/Eg1zHH89Hx4kMhNav3LPOxhHgobrjAh4TxraeVwRCOIb4IbtaVujuSnNU5hTDN3msi8yoAqb8H03g20zc+lVpTJGeHQl4uQ0ONfvmSKRkwRDGpqO4WKLVGqvStmwMr+kkIfP3GVT/a4VbAI2a4Cp2rUL8R5KAZaT4Ra7/SnM5kXbocTmSRU849xzzTbJdhaQtThf43Vy4ZwOZls/rUu9UpH4uJwcjk1gX+gJZoFMapxE42bWWcNR5UiXuI8EyNfnzB2588JANeaKaOzpnD/GXul1OzH1SFGo4z2l7MLWstuheLsWhM2EPJrlTAtvaulECiVOaxi25mqySDMEGxeOrM5KW7WK7X4pLcQnP94ckf5csqk199A=
+
 cache:
   directories:
     - $HOME/.m2
+    - $HOME/.sonar
 
 script:
-  - mvn clean test
+    - mvn clean test jacoco:report coveralls:report
+    - sonar-scanner
 
