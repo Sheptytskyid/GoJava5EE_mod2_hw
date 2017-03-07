@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "customers")
 public class Customer extends AbstractEntity {
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private List<Project> projects;
 

@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "developers")
 public class Developer extends AbstractEntity {
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "developers_skills")
     private List<Skill> skills;
     @Column(name = "salary")
