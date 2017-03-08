@@ -20,8 +20,4 @@ public class Main {
         reader.close();
         HibernateUtil.closeSessionFactory();
     }
-
-    public static int some() {
-        return 1;
-    }
 }
