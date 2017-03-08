@@ -113,10 +113,6 @@
                         <exclude>**/*Main.java</exclude>
                         <exclude>**/console/**</exclude>
                         <exclude>**/utils/**</exclude>
-                        <!--
-                        Jacoco cannot calculate coverage for classes stubbed with PowerMock @PrepareForTest annotation
-                        https://github.com/powermock/powermock/wiki/Code-coverage-with-JaCoCo
-                        -->
                     </excludes>
                 </configuration>
                 <executions>
