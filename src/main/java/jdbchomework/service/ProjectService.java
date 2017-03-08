@@ -7,31 +7,31 @@ import java.util.List;
 
 public class ProjectService {
 
-    private ProjectsDao projectsJdbcDao;
+    private ProjectsDao projectsDao;
 
-    public ProjectService(ProjectsDao projectsJdbcDao) {
-        this.projectsJdbcDao = projectsJdbcDao;
+    public ProjectService(ProjectsDao projectsDao) {
+        this.projectsDao = projectsDao;
     }
 
-    public List<Project> getAll() {
-        return projectsJdbcDao.getAll();
+    public List<Project> getAllProjects() {
+        return projectsDao.getAll();
     }
 
-    public void add(String name, int cost) {
+    public void addProject(String name, int cost) {
         Project project = new Project(name, cost);
-        projectsJdbcDao.add(project);
+        projectsDao.add(project);
     }
 
-    public Project getById(int id) {
-        return projectsJdbcDao.getById(id);
+    public Project getProjectById(int id) {
+        return projectsDao.getById(id);
     }
 
-    public boolean deleteById(int id) {
-        return projectsJdbcDao.deleteById(id);
+    public boolean deleteProjectById(int id) {
+        return projectsDao.deleteById(id);
     }
 
-    public boolean updateById(int id, Project project) {
-        return projectsJdbcDao.updateById(id, project);
+    public boolean updateProjectById(int id, Project project) {
+        return projectsDao.updateById(id, project);
     }
 
 }

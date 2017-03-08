@@ -14,22 +14,22 @@ public class DeveloperController {
     }
 
     public List<Developer> getAllDevelopers() {
-        return developerService.getAll();
+        return developerService.getAllDevelopers();
     }
 
     public void addDeveloper(String name) {
-        developerService.add(name);
+        developerService.addDeveloper(name);
     }
 
     public Developer getDeveloperById(int id) {
-        return developerService.getById(id);
+        return developerService.getDeveloperById(id);
     }
 
     public boolean deleteDeveloperById(int id) {
-        return developerService.deleteById(id);
+        return developerService.deleteDeveloperById(id);
     }
 
     public boolean updateDeveloperById(int id, String name) {
-        return developerService.updateById(id, name);
+        return developerService.updateDeveloperById(id, name);
     }
 }

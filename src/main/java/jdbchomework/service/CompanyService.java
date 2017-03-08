@@ -7,31 +7,31 @@ import java.util.List;
 
 public class CompanyService {
 
-    private CompaniesDao companiesJdbcDao;
+    private CompaniesDao companiesDao;
 
-    public CompanyService(CompaniesDao companiesJdbcDao) {
-        this.companiesJdbcDao = companiesJdbcDao;
+    public CompanyService(CompaniesDao companiesDao) {
+        this.companiesDao = companiesDao;
     }
 
-    public List<Company> getAll() {
-        return companiesJdbcDao.getAll();
+    public List<Company> getAllCompanies() {
+        return companiesDao.getAll();
     }
 
-    public void add(String name) {
+    public void addCompany(String name) {
         Company company = new Company(name);
-        companiesJdbcDao.add(company);
+        companiesDao.add(company);
     }
 
-    public Company getById(int id) {
-        return companiesJdbcDao.getById(id);
+    public Company getCompanyById(int id) {
+        return companiesDao.getById(id);
     }
 
-    public boolean deleteById(int id) {
-        return companiesJdbcDao.deleteById(id);
+    public boolean deleteCompanyById(int id) {
+        return companiesDao.deleteById(id);
     }
 
-    public boolean updateById(int id, String name) {
+    public boolean updateCompanyById(int id, String name) {
         Company company = new Company(name);
-        return companiesJdbcDao.updateById(id, company);
+        return companiesDao.updateById(id, company);
     }
 }

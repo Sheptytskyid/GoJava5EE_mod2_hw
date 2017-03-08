@@ -7,31 +7,31 @@ import java.util.List;
 
 public class SkillService {
 
-    private SkillsDao skillsJdbcDao;
+    private SkillsDao skillsDao;
 
-    public SkillService(SkillsDao skillsJdbcDao) {
-        this.skillsJdbcDao = skillsJdbcDao;
+    public SkillService(SkillsDao skillsDao) {
+        this.skillsDao = skillsDao;
     }
 
-    public List<Skill> getAll() {
-        return skillsJdbcDao.getAll();
+    public List<Skill> getAllSkills() {
+        return skillsDao.getAll();
     }
 
-    public void add(String name) {
+    public void addSkill(String name) {
         Skill skill = new Skill(name);
-        skillsJdbcDao.add(skill);
+        skillsDao.add(skill);
     }
 
-    public Skill getById(int id) {
-        return skillsJdbcDao.getById(id);
+    public Skill getSkillById(int id) {
+        return skillsDao.getById(id);
     }
 
-    public boolean deleteById(int id) {
-        return skillsJdbcDao.deleteById(id);
+    public boolean deleteSkillById(int id) {
+        return skillsDao.deleteById(id);
     }
 
-    public boolean updateById(int id, String name) {
+    public boolean updateSkillById(int id, String name) {
         Skill skill = new Skill(name);
-        return skillsJdbcDao.updateById(id, skill);
+        return skillsDao.updateById(id, skill);
     }
 }

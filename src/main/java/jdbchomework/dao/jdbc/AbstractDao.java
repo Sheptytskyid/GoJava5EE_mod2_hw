@@ -14,8 +14,8 @@ import java.util.List;
 public abstract class AbstractDao<T extends AbstractEntity> implements GenericDao<T> {
 
     public static final String CANNOT_CONNECT_TO_DB = "Cannot connect to DB";
-    protected static org.slf4j.Logger log = LoggerFactory.getLogger(AbstractDao.class);
-    protected static SessionFactory sessionFactory;
+    private org.slf4j.Logger log = LoggerFactory.getLogger(AbstractDao.class);
+    private SessionFactory sessionFactory;
     private String entity;
     private Class<T> clazz;
 
@@ -26,7 +26,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
     }
 
     public void add(T toAdd) {
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
@@ -37,14 +37,12 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
     public List<T> getAll() {
         List<T> result = new ArrayList<>();
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
@@ -55,8 +53,6 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-        } finally {
-            session.close();
         }
         return result;
     }
@@ -64,25 +60,24 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
 
     public T getById(long id) {
         T result = null;
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
             result = session.get(clazz, id);
+            transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-        } finally {
-            session.close();
         }
         return result;
     }
 
     public boolean updateById(long id, T toUpdate) {
         boolean result = false;
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
@@ -94,8 +89,6 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-        } finally {
-            session.close();
         }
         return result;
     }
@@ -103,7 +96,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
     @Override
     public boolean deleteById(long id) {
         boolean result = false;
-        Session session = sessionFactory.openSession();
+        Session session = getSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
@@ -116,9 +109,11 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-        } finally {
-            session.close();
         }
         return result;
+    }
+
+    public Session getSession() {
+        return sessionFactory.getCurrentSession();
     }
 }
