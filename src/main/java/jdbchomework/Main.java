@@ -21,7 +21,7 @@ public class Main {
         HibernateUtil.closeSessionFactory();
     }
 
-    public static int some(){
+    public static int some() {
         return 1;
     }
 }
