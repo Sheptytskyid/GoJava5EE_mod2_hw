@@ -7,31 +7,31 @@ import java.util.List;
 
 public class DeveloperService {
 
-    private DevelopersDao developersJdbcDao;
+    private DevelopersDao developersDao;
 
     public DeveloperService(DevelopersDao developersJdbcDao) {
-        this.developersJdbcDao = developersJdbcDao;
+        this.developersDao = developersJdbcDao;
     }
 
-    public List<Developer> getAll() {
-        return developersJdbcDao.getAll();
+    public List<Developer> getAllDevelopers() {
+        return developersDao.getAll();
     }
 
-    public void add(String name) {
+    public void addDeveloper(String name) {
         Developer developer = new Developer(name);
-        developersJdbcDao.add(developer);
+        developersDao.add(developer);
     }
 
-    public Developer getById(int id) {
-        return developersJdbcDao.getById(id);
+    public Developer getDeveloperById(int id) {
+        return developersDao.getById(id);
     }
 
-    public boolean deleteById(int id) {
-        return developersJdbcDao.deleteById(id);
+    public boolean deleteDeveloperById(int id) {
+        return developersDao.deleteById(id);
     }
 
-    public boolean updateById(int id, String name) {
+    public boolean updateDeveloperById(int id, String name) {
         Developer developer = new Developer(name);
-        return developersJdbcDao.updateById(id, developer);
+        return developersDao.updateById(id, developer);
     }
 }

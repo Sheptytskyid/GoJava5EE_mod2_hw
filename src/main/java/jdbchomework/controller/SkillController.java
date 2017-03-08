@@ -14,22 +14,22 @@ public class SkillController {
     }
 
     public List<Skill> getAllSkills() {
-        return skillService.getAll();
+        return skillService.getAllSkills();
     }
 
     public void addSkill(String name) {
-        skillService.add(name);
+        skillService.addSkill(name);
     }
 
     public Skill getSkillById(int id) {
-        return skillService.getById(id);
+        return skillService.getSkillById(id);
     }
 
     public boolean deleteSkillById(int id) {
-        return skillService.deleteById(id);
+        return skillService.deleteSkillById(id);
     }
 
     public boolean updateSkillById(int id, String name) {
-        return skillService.updateById(id, name);
+        return skillService.updateSkillById(id, name);
     }
 }

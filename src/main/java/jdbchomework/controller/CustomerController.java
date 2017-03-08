@@ -14,23 +14,23 @@ public class CustomerController {
     }
 
     public List<Customer> getAllCustomers() {
-        return customerService.getAll();
+        return customerService.getAllCustomers();
     }
 
     public void addCustomer(String name) {
-        customerService.add(name);
+        customerService.addCustomer(name);
     }
 
     public Customer getCustomerById(int id) {
-        return customerService.getById(id);
+        return customerService.getCustomerById(id);
     }
 
     public boolean deleteCustomerById(int id) {
-        return customerService.deleteById(id);
+        return customerService.deleteCustomerById(id);
     }
 
     public boolean updateCustomerById(int id, String name) {
-        return customerService.updateById(id, name);
+        return customerService.updateCustomerById(id, name);
     }
 }
 

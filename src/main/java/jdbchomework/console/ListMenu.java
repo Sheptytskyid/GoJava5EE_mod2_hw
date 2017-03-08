@@ -28,18 +28,11 @@ public class ListMenu {
         siteHeader.add("**************************************************************");
         siteHeader.add("\t\tWelcome to DB manager");
         siteHeader.add("**************************************************************");
-        siteHeader.add(" ");
-        serviceHeader.add("**************************************************************");
         serviceHeader.add("\n\tMain menu");
-        serviceHeaderCompany.add("**************************************************************");
         serviceHeaderCompany.add("\n\tCompany menu");
-        serviceHeaderCustomer.add("**************************************************************");
         serviceHeaderCustomer.add("\n\tCustomer menu");
-        serviceHeaderDeveloper.add("**************************************************************");
         serviceHeaderDeveloper.add("\n\tDeveloper menu");
-        serviceHeaderProject.add("**************************************************************");
         serviceHeaderProject.add("\n\tProject menu");
-        serviceHeaderSkill.add("**************************************************************");
         serviceHeaderSkill.add("\n\tSkill menu");
         serviceMainMenu.add("Go to companies");
         serviceMainMenu.add("Go to customers");

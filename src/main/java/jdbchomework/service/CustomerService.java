@@ -7,31 +7,31 @@ import java.util.List;
 
 public class CustomerService {
 
-    private CustomersDao customersJdbcDao;
+    private CustomersDao customersDao;
 
-    public CustomerService(CustomersDao customersJdbcDao) {
-        this.customersJdbcDao = customersJdbcDao;
+    public CustomerService(CustomersDao customersDao) {
+        this.customersDao = customersDao;
     }
 
-    public List<Customer> getAll() {
-        return customersJdbcDao.getAll();
+    public List<Customer> getAllCustomers() {
+        return customersDao.getAll();
     }
 
-    public void add(String name) {
+    public void addCustomer(String name) {
         Customer customer = new Customer(name);
-        customersJdbcDao.add(customer);
+        customersDao.add(customer);
     }
 
-    public Customer getById(int id) {
-        return customersJdbcDao.getById(id);
+    public Customer getCustomerById(int id) {
+        return customersDao.getById(id);
     }
 
-    public boolean deleteById(int id) {
-        return customersJdbcDao.deleteById(id);
+    public boolean deleteCustomerById(int id) {
+        return customersDao.deleteById(id);
     }
 
-    public boolean updateById(int id, String name) {
+    public boolean updateCustomerById(int id, String name) {
         Customer customer = new Customer(name);
-        return customersJdbcDao.updateById(id, customer);
+        return customersDao.updateById(id, customer);
     }
 }
