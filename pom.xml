@@ -117,7 +117,7 @@
                         Jacoco cannot calculate coverage for classes stubbed with PowerMock @PrepareForTest annotation
                         https://github.com/powermock/powermock/wiki/Code-coverage-with-JaCoCo
                         -->
-                        <exclude>**/dao/**</exclude>
+                        <exclude>**/dao/model/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>
