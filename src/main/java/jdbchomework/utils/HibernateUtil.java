@@ -19,7 +19,7 @@ public class HibernateUtil {
         return sessionFactory;
     }
 
-    public static void closeFactory() {
+    public static void closeSessionFactory() {
         try {
             sessionFactory.close();
         } catch (HibernateException e) {

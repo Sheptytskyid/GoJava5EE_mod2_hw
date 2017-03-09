@@ -21,7 +21,7 @@ import jdbchomework.service.SkillService;
 
 import java.sql.Connection;
 
-public class Injector {
+public class InjectorJdbc {
 
     private static Connection connection = ConnectionUtil.getConnection();
     private static CompaniesJdbcDao companiesJdbcDao = new CompaniesJdbcDao(connection, "companies","company_id");

@@ -5,7 +5,10 @@ import jdbchomework.controller.CustomerController;
 import jdbchomework.controller.DeveloperController;
 import jdbchomework.controller.ProjectController;
 import jdbchomework.controller.SkillController;
+import jdbchomework.entity.Developer;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class ContentsUserMenu {
 
@@ -211,7 +214,12 @@ public class ContentsUserMenu {
                             .getValidInputFromUser(PLEASE_ENTER_COMPANY_ID, InputType.INTEGER));
                     System.out.println(companyController.getCompanyById(id));
                     break;
+
                 case 4:
+                    id = Integer.parseInt(visualUserMenu.getValidInputFromUser(PLEASE_ENTER_COMPANY_ID, InputType.INTEGER));
+                    companyController.getAllCompanyDevelopers(id).forEach(System.out::println);
+                    break;
+                case 5:
                     id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser(PLEASE_ENTER_COMPANY_ID, InputType.INTEGER));
                     name = visualUserMenu.getValidInputFromUser(PLEASE_ENTER_COMPANY_NAME, InputType.STRING);
@@ -221,7 +229,7 @@ public class ContentsUserMenu {
                         System.out.println(COMPANY_NOT_FOUND);
                     }
                     break;
-                case 5:
+                case 6:
                     id = Integer.parseInt(visualUserMenu
                             .getValidInputFromUser(PLEASE_ENTER_COMPANY_ID, InputType.INTEGER));
                     if (companyController.deleteCompanyById(id)) {
@@ -230,7 +238,7 @@ public class ContentsUserMenu {
                         System.out.println(COMPANY_NOT_FOUND);
                     }
                     break;
-                case (6):
+                case (7):
                     VisualUserMenu.outputSplitLine();
                     break mark;
                 default:

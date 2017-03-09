@@ -6,12 +6,15 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
+    public static final String CANNOT_CONNECT_TO_DB = "Cannot connect to DB";
+    private org.slf4j.Logger log = LoggerFactory.getLogger(AbstractHibDao.class);
     protected SessionFactory sessionFactory;
     private String entityName;
     private Class<T> clazz;
@@ -35,7 +38,8 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Cannot save to DB", e);
+            log.error(CANNOT_CONNECT_TO_DB, e);
+            throw new RuntimeException(CANNOT_CONNECT_TO_DB, e);
         }
 
     }
@@ -52,7 +56,8 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Cannot connect to DB", e);
+            log.error(CANNOT_CONNECT_TO_DB, e);
+            throw new RuntimeException(CANNOT_CONNECT_TO_DB, e);
         }
         return result;
     }
@@ -69,7 +74,8 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Cannot connect to DB", e);
+            log.error(CANNOT_CONNECT_TO_DB, e);
+            throw new RuntimeException(CANNOT_CONNECT_TO_DB, e);
         }
         return result;
     }
@@ -88,7 +94,8 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Cannot connect to DB", e);
+            log.error(CANNOT_CONNECT_TO_DB, e);
+            throw new RuntimeException(CANNOT_CONNECT_TO_DB, e);
         }
         return res;
     }
@@ -107,7 +114,8 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Cannot connect to DB", e);
+            log.error(CANNOT_CONNECT_TO_DB, e);
+            throw new RuntimeException(CANNOT_CONNECT_TO_DB, e);
         }
         return res;
     }

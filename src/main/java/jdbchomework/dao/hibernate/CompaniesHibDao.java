@@ -8,6 +8,7 @@ import org.hibernate.query.NativeQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
+import org.slf4j.LoggerFactory;
 
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 
 
 public class CompaniesHibDao extends AbstractHibDao<Company> implements CompaniesDao {
+    private org.slf4j.Logger log = LoggerFactory.getLogger(CompaniesHibDao.class);
 
     public CompaniesHibDao(String entityName, SessionFactory sessionFactory, Class<Company> clazz) {
         super(entityName, sessionFactory, clazz);
@@ -45,7 +47,8 @@ public class CompaniesHibDao extends AbstractHibDao<Company> implements Companie
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Cannot save to DB", e);
+            log.error(CANNOT_CONNECT_TO_DB, e);
+            throw new RuntimeException(CANNOT_CONNECT_TO_DB, e);
         }
         return result;
     }
