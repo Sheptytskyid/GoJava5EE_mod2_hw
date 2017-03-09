@@ -51,7 +51,7 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
             statement.executeUpdate();
         } catch (SQLException e) {
             log.error(ERROR_MESSAGE, e);
-            throw new RuntimeException(ERROR_MESSAGE, e);
+            throw new MyOwnException(ERROR_MESSAGE, e);
         }
     }
 
