@@ -18,7 +18,7 @@ public class CompanyController {
         return companyService.getAllCompanies();
     }
 
-    public List<Developer> getAllCompanyDevelopers(int id){
+    public List<Developer> getAllCompanyDevelopers(int id) {
         return companyService.getCompanyDevelopers(id);
     }
 

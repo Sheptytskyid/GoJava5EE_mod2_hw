@@ -16,7 +16,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-//        InjectorJdbc.getConsoleMain().consoleMain();
+        InjectorJdbc.getConsoleMain().consoleMain();
         reader.close();
         HibernateUtil.closeSessionFactory();
     }
