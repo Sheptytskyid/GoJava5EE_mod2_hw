@@ -9,11 +9,11 @@ import java.util.Properties;
 
 public class ConnectionUtil {
 
+    private static Connection connection;
+
     private ConnectionUtil() {
         throw new IllegalAccessError("Utility class");
     }
-
-    private static Connection connection;
 
     public static Connection getConnection() {
         FileInputStream fis;

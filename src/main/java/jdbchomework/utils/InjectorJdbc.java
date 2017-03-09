@@ -23,10 +23,6 @@ import java.sql.Connection;
 
 public class InjectorJdbc {
 
-    private InjectorJdbc() {
-        throw new IllegalAccessError("Utility class");
-    }
-
     private static Connection connection = ConnectionUtil.getConnection();
     private static CompaniesJdbcDao companiesJdbcDao = new CompaniesJdbcDao(connection, "companies", "company_id");
     private static CustomersJdbcDao customersJdbcDao = new CustomersJdbcDao(connection, "customers", "customer_id");
@@ -47,6 +43,10 @@ public class InjectorJdbc {
     private static ContentsUserMenu contentsUserMenu = new ContentsUserMenu(companyController, customerController,
             developerController, projectController, skillController, visualUserMenu);
     private static ConsoleMain consoleMain = new ConsoleMain(contentsUserMenu);
+
+    private InjectorJdbc() {
+        throw new IllegalAccessError("Utility class");
+    }
 
     public static ConsoleMain getConsoleMain() {
         return consoleMain;

@@ -27,10 +27,6 @@ import org.hibernate.SessionFactory;
 
 public class InjectorHibTest {
 
-    private InjectorHibTest() {
-        throw new IllegalAccessError("Utility class");
-    }
-
     private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private static CompaniesHibDao companiesHibDao = new CompaniesHibDao("Company", sessionFactory, Company.class);
     private static CustomersHibDao customersHibDao = new CustomersHibDao("Customer", sessionFactory, Customer.class);
@@ -52,6 +48,10 @@ public class InjectorHibTest {
     private static ContentsUserMenu contentsUserMenu = new ContentsUserMenu(companyController, customerController,
             developerController, projectController, skillController, visualUserMenu);
     private static ConsoleMain consoleMain = new ConsoleMain(contentsUserMenu);
+
+    private InjectorHibTest() {
+        throw new IllegalAccessError("Utility class");
+    }
 
     public static ConsoleMain getConsoleMain() {
         return consoleMain;
