@@ -40,7 +40,7 @@ public class CompanyService {
     }
 
     public boolean deleteCompanyById(int id) {
-        return companiesDao.deleteById(id);
+        return companiesHibDao.deleteById(id);
     }
 
     public boolean updateCompanyById(int id, String name) {
