@@ -46,21 +46,12 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
 
     public void add(T toAdd) {
         try (PreparedStatement statement = connection.prepareStatement("INSERT  INTO " + table + " (name)VALUES (?);")) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-            connection.setAutoCommit(false);
             statement.setString(1, toAdd.getName());
             connection.commit();
             statement.executeUpdate();
         } catch (SQLException e) {
             log.error(ERROR_MESSAGE, e);
             throw new RuntimeException(ERROR_MESSAGE, e);
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                log.error(ERROR_MESSAGE, e);
-                throw new MyOwnExceprion(ERROR_MESSAGE, e);
-            }
         }
     }
 

@@ -3,8 +3,10 @@ package jdbchomework.dao.model;
 /**
  * Created by GetFire on 09.03.2017.
  */
-public class MyOwnExceprion extends RuntimeException{
+public class MyOwnExceprion extends RuntimeException {
+
     public MyOwnExceprion() {
+        super();
     }
 
     public MyOwnExceprion(String message) {

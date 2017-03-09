@@ -1,5 +1,6 @@
 package jdbchomework.utils;
 
+import jdbchomework.dao.model.MyOwnExceprion;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -14,7 +15,7 @@ public class HibernateUtil {
         try {
             sessionFactory = new Configuration().configure().buildSessionFactory();
         } catch (HibernateException e) {
-            throw new RuntimeException("Cannot create Session Factory", e);
+            throw new MyOwnExceprion("Cannot create Session Factory", e);
         }
     }
 
@@ -31,7 +32,7 @@ public class HibernateUtil {
             sessionFactory.close();
         } catch (HibernateException e) {
             log.error("Cannot close sessionFactory", e);
-            throw new RuntimeException("Cannot close sessionFactory", e);
+            throw new MyOwnExceprion("Cannot close sessionFactory", e);
         }
     }
 }

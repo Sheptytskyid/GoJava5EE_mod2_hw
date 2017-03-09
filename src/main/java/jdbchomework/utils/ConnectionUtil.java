@@ -1,5 +1,7 @@
 package jdbchomework.utils;
 
+import jdbchomework.dao.model.MyOwnExceprion;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -26,9 +28,9 @@ public class ConnectionUtil {
             String password = property.getProperty("db.password");
             connection = DriverManager.getConnection(url, user, password);
         } catch (IOException e) {
-            throw new RuntimeException("Cannot find file ", e);
+            throw new MyOwnExceprion("Cannot find file ", e);
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot get connection to db", e);
+            throw new MyOwnExceprion("Cannot get connection to db", e);
         }
         return connection;
     }
@@ -37,7 +39,7 @@ public class ConnectionUtil {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot close connection", e);
+            throw new MyOwnExceprion("Cannot close connection", e);
         }
     }
 }
