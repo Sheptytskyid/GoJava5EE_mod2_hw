@@ -16,8 +16,8 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        Injector.getConsoleMain().consoleMain();
-        reader.close();
-        HibernateUtil.closeSessionFactory();
+//        Injector.getConsoleMain().consoleMain();
+//        reader.close();
+////        HibernateUtil.closeSessionFactory();
     }
 }
