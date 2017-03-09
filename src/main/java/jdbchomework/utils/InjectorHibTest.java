@@ -26,6 +26,11 @@ import jdbchomework.service.SkillService;
 import org.hibernate.SessionFactory;
 
 public class InjectorHibTest {
+
+    private InjectorHibTest() {
+        throw new IllegalAccessError("Utility class");
+    }
+
     private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private static CompaniesHibDao companiesHibDao = new CompaniesHibDao("Company", sessionFactory, Company.class);
     private static CustomersHibDao customersHibDao = new CustomersHibDao("Customer", sessionFactory, Customer.class);

@@ -64,14 +64,12 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
 
     public List<T> getAll() {
         List<T> result = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
-            String sql = "SELECT * FROM " + table;
-            ResultSet resultSet = statement.executeQuery(sql);
+        try (Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM " + table)) {
             while (resultSet.next()) {
                 T t = createEntity(resultSet);
                 result.add(t);
             }
-            resultSet.close();
         } catch (SQLException e) {
             log.error("Cannot connect to DB", e);
             throw new RuntimeException("Cannot connect to DB", e);

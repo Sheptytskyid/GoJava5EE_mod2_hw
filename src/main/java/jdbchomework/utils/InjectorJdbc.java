@@ -23,12 +23,16 @@ import java.sql.Connection;
 
 public class InjectorJdbc {
 
+    private InjectorJdbc() {
+        throw new IllegalAccessError("Utility class");
+    }
+
     private static Connection connection = ConnectionUtil.getConnection();
-    private static CompaniesJdbcDao companiesJdbcDao = new CompaniesJdbcDao(connection, "companies","company_id");
-    private static CustomersJdbcDao customersJdbcDao = new CustomersJdbcDao(connection,"customers","customer_id");
-    private static DevelopersJdbcDao developersJdbcDao = new DevelopersJdbcDao(connection,"developers","developer_id");
+    private static CompaniesJdbcDao companiesJdbcDao = new CompaniesJdbcDao(connection, "companies", "company_id");
+    private static CustomersJdbcDao customersJdbcDao = new CustomersJdbcDao(connection, "customers", "customer_id");
+    private static DevelopersJdbcDao developersJdbcDao = new DevelopersJdbcDao(connection, "developers", "developer_id");
     private static ProjectsJdbcDao projectsJdbcDao = new ProjectsJdbcDao(connection, "projects", "project_id");
-    private static SkillsJdbcDao skillsJdbcDao = new SkillsJdbcDao(connection,"skills","skill_id");
+    private static SkillsJdbcDao skillsJdbcDao = new SkillsJdbcDao(connection, "skills", "skill_id");
     private static CompanyService companyService = new CompanyService(companiesJdbcDao);
     private static CustomerService customerService = new CustomerService(customersJdbcDao);
     private static DeveloperService developerService = new DeveloperService(developersJdbcDao);

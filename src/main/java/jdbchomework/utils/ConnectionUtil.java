@@ -9,6 +9,10 @@ import java.util.Properties;
 
 public class ConnectionUtil {
 
+    private ConnectionUtil() {
+        throw new IllegalAccessError("Utility class");
+    }
+
     private static Connection connection;
 
     public static Connection getConnection() {

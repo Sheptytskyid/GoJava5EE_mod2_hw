@@ -6,6 +6,10 @@ import org.hibernate.cfg.Configuration;
 import org.slf4j.LoggerFactory;
 
 public class HibernateUtil {
+    private HibernateUtil() {
+        throw new IllegalAccessError("Utility class");
+    }
+
     private static org.slf4j.Logger log = LoggerFactory.getLogger(HibernateUtil.class);
     private static SessionFactory sessionFactory;
 
