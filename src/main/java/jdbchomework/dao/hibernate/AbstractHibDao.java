@@ -1,7 +1,7 @@
 package jdbchomework.dao.hibernate;
 
 import jdbchomework.dao.model.GenericDao;
-import jdbchomework.dao.model.MyOwnException;
+import jdbchomework.dao.model.ProblemDbConnection;
 import jdbchomework.entity.AbstractEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -39,7 +39,7 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-            throw new MyOwnException(CANNOT_CONNECT_TO_DB, e);
+            throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
 
     }
@@ -57,7 +57,7 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-            throw new MyOwnException(CANNOT_CONNECT_TO_DB, e);
+            throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
         return result;
     }
@@ -75,7 +75,7 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-            throw new MyOwnException(CANNOT_CONNECT_TO_DB, e);
+            throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
         return result;
     }
@@ -95,7 +95,7 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-            throw new MyOwnException(CANNOT_CONNECT_TO_DB, e);
+            throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
         return res;
     }
@@ -103,19 +103,20 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
     @Override
     public boolean updateById(long id, T toUpdate) {
         Transaction transaction = null;
-        boolean res = false;
+        boolean res;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             T t = (T) getById(id);
             t.setName(toUpdate.getName());
             session.update(t);
             transaction.commit();
+            res = true;
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-            throw new MyOwnException(CANNOT_CONNECT_TO_DB, e);
+            throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
         return res;
     }

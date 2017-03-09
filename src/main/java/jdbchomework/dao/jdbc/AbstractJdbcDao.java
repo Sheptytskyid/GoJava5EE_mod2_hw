@@ -1,7 +1,7 @@
 package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.GenericDao;
-import jdbchomework.dao.model.MyOwnException;
+import jdbchomework.dao.model.ProblemDbConnection;
 import jdbchomework.entity.AbstractEntity;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +39,7 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
             }
         } catch (SQLException e) {
             log.error(ERROR_MESSAGE, e);
-            throw new MyOwnException(ERROR_MESSAGE, e);
+            throw new ProblemDbConnection(ERROR_MESSAGE, e);
         }
         return result;
     }
@@ -51,7 +51,7 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
             statement.executeUpdate();
         } catch (SQLException e) {
             log.error(ERROR_MESSAGE, e);
-            throw new MyOwnException(ERROR_MESSAGE, e);
+            throw new ProblemDbConnection(ERROR_MESSAGE, e);
         }
     }
 
@@ -65,7 +65,7 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
             }
         } catch (SQLException e) {
             log.error(ERROR_MESSAGE, e);
-            throw new MyOwnException(ERROR_MESSAGE, e);
+            throw new ProblemDbConnection(ERROR_MESSAGE, e);
         }
         return result;
     }
@@ -83,7 +83,7 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
             }
         } catch (SQLException e) {
             log.error(ERROR_MESSAGE, e);
-            throw new MyOwnException(ERROR_MESSAGE, e);
+            throw new ProblemDbConnection(ERROR_MESSAGE, e);
         }
         return result;
     }
@@ -100,7 +100,7 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
             }
         } catch (SQLException e) {
             log.error(ERROR_MESSAGE, e);
-            throw new MyOwnException(ERROR_MESSAGE, e);
+            throw new ProblemDbConnection(ERROR_MESSAGE, e);
         }
         return result;
     }
