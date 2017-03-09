@@ -13,26 +13,22 @@ import jdbchomework.dao.jdbc.CustomersJdbcDao;
 import jdbchomework.dao.jdbc.DevelopersJdbcDao;
 import jdbchomework.dao.jdbc.ProjectsJdbcDao;
 import jdbchomework.dao.jdbc.SkillsJdbcDao;
-import jdbchomework.entity.Company;
-import jdbchomework.entity.Customer;
-import jdbchomework.entity.Developer;
-import jdbchomework.entity.Project;
-import jdbchomework.entity.Skill;
 import jdbchomework.service.CompanyService;
 import jdbchomework.service.CustomerService;
 import jdbchomework.service.DeveloperService;
 import jdbchomework.service.ProjectService;
 import jdbchomework.service.SkillService;
-import org.hibernate.SessionFactory;
+
+import java.sql.Connection;
 
 public class Injector {
 
-    private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-    private static CompaniesJdbcDao companiesJdbcDao = new CompaniesJdbcDao(sessionFactory, "Company", Company.class);
-    private static CustomersJdbcDao customersJdbcDao = new CustomersJdbcDao(sessionFactory,"Customer", Customer.class);
-    private static DevelopersJdbcDao developersJdbcDao = new DevelopersJdbcDao(sessionFactory,"Developer", Developer.class);
-    private static ProjectsJdbcDao projectsJdbcDao = new ProjectsJdbcDao(sessionFactory, "Project", Project.class);
-    private static SkillsJdbcDao skillsJdbcDao = new SkillsJdbcDao(sessionFactory,"Skill", Skill.class);
+    private static Connection connection = ConnectionUtil.getConnection();
+    private static CompaniesJdbcDao companiesJdbcDao = new CompaniesJdbcDao(connection, "companies","company_id");
+    private static CustomersJdbcDao customersJdbcDao = new CustomersJdbcDao(connection,"customers","customer_id");
+    private static DevelopersJdbcDao developersJdbcDao = new DevelopersJdbcDao(connection,"developers","developer_id");
+    private static ProjectsJdbcDao projectsJdbcDao = new ProjectsJdbcDao(connection, "projects", "project_id");
+    private static SkillsJdbcDao skillsJdbcDao = new SkillsJdbcDao(connection,"skills","skill_id");
     private static CompanyService companyService = new CompanyService(companiesJdbcDao);
     private static CustomerService customerService = new CustomerService(customersJdbcDao);
     private static DeveloperService developerService = new DeveloperService(developersJdbcDao);
@@ -45,7 +41,7 @@ public class Injector {
     private static SkillController skillController = new SkillController(skillService);
     private static VisualUserMenu visualUserMenu = new VisualUserMenu();
     private static ContentsUserMenu contentsUserMenu = new ContentsUserMenu(companyController, customerController,
-        developerController, projectController, skillController, visualUserMenu);
+            developerController, projectController, skillController, visualUserMenu);
     private static ConsoleMain consoleMain = new ConsoleMain(contentsUserMenu);
 
     public static ConsoleMain getConsoleMain() {

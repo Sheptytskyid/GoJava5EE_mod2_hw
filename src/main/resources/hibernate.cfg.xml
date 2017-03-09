@@ -11,7 +11,7 @@
             com.mysql.jdbc.Driver
         </property>
         <property name="hibernate.connection.url">
-            jdbc:mysql://localhost:3306/test123
+            jdbc:mysql://localhost:3306/test123?autoReconnect=true&amp;useSSL=false
         </property>
         <property name="hibernate.connection.username">
             root

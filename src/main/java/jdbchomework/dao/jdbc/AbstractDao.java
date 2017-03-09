@@ -2,57 +2,78 @@ package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.GenericDao;
 import jdbchomework.entity.AbstractEntity;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractDao<T extends AbstractEntity> implements GenericDao<T> {
 
-    public static final String CANNOT_CONNECT_TO_DB = "Cannot connect to DB";
-    private org.slf4j.Logger log = LoggerFactory.getLogger(AbstractDao.class);
-    private SessionFactory sessionFactory;
-    private String entity;
-    private Class<T> clazz;
+    private static org.slf4j.Logger log = LoggerFactory.getLogger(AbstractDao.class);
+    private String table;
+    private String column;
 
-    public AbstractDao(SessionFactory sessionFactory, String entity, Class<T> clazz) {
-        this.sessionFactory = sessionFactory;
-        this.entity = entity;
-        this.clazz = clazz;
+    protected Connection connection;
+
+    public AbstractDao(Connection connection, String table, String column) {
+        this.connection = connection;
+        this.table = table;
+        this.column = column;
+    }
+
+    @Override
+    public boolean deleteById(long id) {
+        boolean result = false;
+        try (PreparedStatement statement = connection
+                .prepareStatement("DELETE FROM " + table + " WHERE " + column + " = ?;")) {
+            statement.setLong(1, id);
+            if (statement.executeUpdate() > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            log.error("Cannot connect to DB", e);
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 
     public void add(T toAdd) {
-        Session session = getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            session.save(toAdd);
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
+        try (PreparedStatement statement = connection.prepareStatement("INSERT  INTO " + table + " (name)VALUES (?);")) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+            connection.setAutoCommit(false);
+            statement.setString(1, toAdd.getName());
+            connection.commit();
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            log.error("Cannot connect to DB", e);
+            throw new RuntimeException("Cannot connect to DB", e);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                log.error("Cannot connect to DB", e);
+                throw new RuntimeException("Cannot connect to DB", e);
             }
-            e.printStackTrace();
         }
     }
 
     public List<T> getAll() {
         List<T> result = new ArrayList<>();
-        Session session = getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            result = session.createQuery("FROM " + entity).list();
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
+        try (Statement statement = connection.createStatement()) {
+            String sql = "SELECT * FROM " + table;
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                T t = createEntity(resultSet);
+                result.add(t);
             }
-            log.error(CANNOT_CONNECT_TO_DB, e);
+        } catch (SQLException e) {
+            log.error("Cannot connect to DB", e);
+            throw new RuntimeException("Cannot connect to DB", e);
         }
         return result;
     }
@@ -60,60 +81,37 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
 
     public T getById(long id) {
         T result = null;
-        Session session = getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            result = session.get(clazz, id);
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
+        try (
+                PreparedStatement statement = connection
+                        .prepareStatement("SELECT * FROM " + table + " WHERE " + column + " = ?;")) {
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                result = createEntity(rs);
             }
-            log.error(CANNOT_CONNECT_TO_DB, e);
+        } catch (SQLException e) {
+            log.error("Cannot connect to DB", e);
+            throw new RuntimeException("Cannot connect to DB", e);
         }
         return result;
     }
 
-    public boolean updateById(long id, T toUpdate) {
+    public boolean updateById( long id, T toUpdate) {
         boolean result = false;
-        Session session = getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            toUpdate.setId(id);
-            session.update(toUpdate);
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
+        try (PreparedStatement statement = connection
+                .prepareStatement("UPDATE " + table + " SET name = ? WHERE " + column + " =?;")) {
+            String name = toUpdate.getName();
+            statement.setString(1, name);
+            statement.setLong(2, id);
+            if (statement.executeUpdate() > 0) {
+                result = true;
             }
-            log.error(CANNOT_CONNECT_TO_DB, e);
+        } catch (SQLException e) {
+            log.error("Cannot connect to DB", e);
+            throw new RuntimeException("Cannot connect to DB", e);
         }
         return result;
     }
 
-    @Override
-    public boolean deleteById(long id) {
-        boolean result = false;
-        Session session = getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            T entity = session.get(clazz, id);
-            session.delete(entity);
-            transaction.commit();
-            result = true;
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            log.error(CANNOT_CONNECT_TO_DB, e);
-        }
-        return result;
-    }
-
-    public Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+    protected abstract T createEntity(ResultSet resultSet) throws SQLException;
 }
