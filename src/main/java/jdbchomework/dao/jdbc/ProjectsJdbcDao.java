@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProjectsJdbcDao extends AbstractJdbcDao<Project> implements ProjectsDao {
-    private final String ERROR_MESSAGE = "Cannot connect to DB";
+    private static final String ERROR_MESSAGE = "Cannot connect to DB";
 
     private static org.slf4j.Logger log = LoggerFactory.getLogger(ProjectsJdbcDao.class);
 
