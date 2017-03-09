@@ -65,7 +65,7 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
     public List<T> getAll() {
         List<T> result = new ArrayList<>();
         try (Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM " + table)) {
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM " + table)) {
             while (resultSet.next()) {
                 T t = createEntity(resultSet);
                 result.add(t);
@@ -95,7 +95,7 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
         return result;
     }
 
-    public boolean updateById( long id, T toUpdate) {
+    public boolean updateById(long id, T toUpdate) {
         boolean result = false;
         try (PreparedStatement statement = connection
                 .prepareStatement("UPDATE " + table + " SET name = ? WHERE " + column + " =?;")) {
