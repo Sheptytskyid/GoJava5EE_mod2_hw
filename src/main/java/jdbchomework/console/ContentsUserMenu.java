@@ -5,10 +5,7 @@ import jdbchomework.controller.CustomerController;
 import jdbchomework.controller.DeveloperController;
 import jdbchomework.controller.ProjectController;
 import jdbchomework.controller.SkillController;
-import jdbchomework.entity.Developer;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 public class ContentsUserMenu {
 

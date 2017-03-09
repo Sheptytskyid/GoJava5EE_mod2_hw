@@ -22,13 +22,6 @@ public class CompaniesHibDao extends AbstractHibDao<Company> implements Companie
         super(entityName, sessionFactory, clazz);
     }
 
-    /*
-     * public List<Developer> getDeveloper(long id) {
-     * Company company = getById(id);
-     * return company.getDevelopers();
-     * }
-     */
-
     public List<Developer> getCompanyDevelopers(long id) {
         List result = new ArrayList<>();
         Transaction transaction = null;

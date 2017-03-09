@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DevelopersJdbcDao extends AbstractDao<Developer> implements DevelopersDao {
+public class DevelopersJdbcDao extends AbstractJdbcDao<Developer> implements DevelopersDao {
 
     private static org.slf4j.Logger log = LoggerFactory.getLogger(DevelopersJdbcDao.class);
 

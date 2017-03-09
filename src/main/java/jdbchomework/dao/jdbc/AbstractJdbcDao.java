@@ -12,15 +12,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractDao<T extends AbstractEntity> implements GenericDao<T> {
+public abstract class AbstractJdbcDao<T extends AbstractEntity> implements GenericDao<T> {
 
-    private static org.slf4j.Logger log = LoggerFactory.getLogger(AbstractDao.class);
+    private static org.slf4j.Logger log = LoggerFactory.getLogger(AbstractJdbcDao.class);
     private String table;
     private String column;
 
     protected Connection connection;
 
-    public AbstractDao(Connection connection, String table, String column) {
+    public AbstractJdbcDao(Connection connection, String table, String column) {
         this.connection = connection;
         this.table = table;
         this.column = column;
@@ -71,6 +71,7 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
                 T t = createEntity(resultSet);
                 result.add(t);
             }
+            resultSet.close();
         } catch (SQLException e) {
             log.error("Cannot connect to DB", e);
             throw new RuntimeException("Cannot connect to DB", e);

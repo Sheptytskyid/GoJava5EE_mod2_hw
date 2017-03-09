@@ -3,8 +3,10 @@ package jdbchomework.utils;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.slf4j.LoggerFactory;
 
 public class HibernateUtil {
+    private static org.slf4j.Logger log = LoggerFactory.getLogger(HibernateUtil.class);
     private static SessionFactory sessionFactory;
 
     static {
@@ -23,7 +25,8 @@ public class HibernateUtil {
         try {
             sessionFactory.close();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            log.error("Cannot close sessionFactory", e);
+            throw new RuntimeException("Cannot close sessionFactory", e);
         }
     }
 }

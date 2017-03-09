@@ -46,7 +46,7 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
 
     @Override
     public List<T> getAll() {
-        List<T> result = new ArrayList<T>();
+        List<T> result;
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();

@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SkillsJdbcDao extends AbstractDao<Skill> implements SkillsDao {
+public class SkillsJdbcDao extends AbstractJdbcDao<Skill> implements SkillsDao {
 
     public SkillsJdbcDao(Connection connection, String table, String column) {
         super(connection, table, column);
