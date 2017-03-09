@@ -1,6 +1,7 @@
 package jdbchomework.dao.hibernate;
 
 import jdbchomework.dao.model.GenericDao;
+import jdbchomework.dao.model.MyOwnExceprion;
 import jdbchomework.entity.AbstractEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -39,7 +40,7 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-            throw new RuntimeException(CANNOT_CONNECT_TO_DB, e);
+            throw new MyOwnExceprion(CANNOT_CONNECT_TO_DB, e);
         }
 
     }
@@ -57,7 +58,7 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-            throw new RuntimeException(CANNOT_CONNECT_TO_DB, e);
+            throw new MyOwnExceprion(CANNOT_CONNECT_TO_DB, e);
         }
         return result;
     }
@@ -75,7 +76,7 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-            throw new RuntimeException(CANNOT_CONNECT_TO_DB, e);
+            throw new MyOwnExceprion(CANNOT_CONNECT_TO_DB, e);
         }
         return result;
     }
@@ -95,7 +96,7 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-            throw new RuntimeException(CANNOT_CONNECT_TO_DB, e);
+            throw new MyOwnExceprion(CANNOT_CONNECT_TO_DB, e);
         }
         return res;
     }
@@ -115,7 +116,7 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-            throw new RuntimeException(CANNOT_CONNECT_TO_DB, e);
+            throw new MyOwnExceprion(CANNOT_CONNECT_TO_DB, e);
         }
         return res;
     }

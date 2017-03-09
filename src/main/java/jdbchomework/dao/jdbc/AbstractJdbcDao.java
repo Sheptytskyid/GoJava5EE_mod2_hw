@@ -1,6 +1,7 @@
 package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.GenericDao;
+import jdbchomework.dao.model.MyOwnExceprion;
 import jdbchomework.entity.AbstractEntity;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +18,7 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
     private static org.slf4j.Logger log = LoggerFactory.getLogger(AbstractJdbcDao.class);
     private String table;
     private String column;
+    private static final String ERROR_MESSAGE = "Cannot connect to DB";
 
     protected Connection connection;
 
@@ -36,8 +38,8 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
                 result = true;
             }
         } catch (SQLException e) {
-            log.error("Cannot connect to DB", e);
-            throw new RuntimeException(e);
+            log.error(ERROR_MESSAGE, e);
+            throw new MyOwnExceprion(ERROR_MESSAGE, e);
         }
         return result;
     }
@@ -50,14 +52,14 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
             connection.commit();
             statement.executeUpdate();
         } catch (SQLException e) {
-            log.error("Cannot connect to DB", e);
-            throw new RuntimeException("Cannot connect to DB", e);
+            log.error(ERROR_MESSAGE, e);
+            throw new RuntimeException(ERROR_MESSAGE, e);
         } finally {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
-                log.error("Cannot connect to DB", e);
-                throw new RuntimeException("Cannot connect to DB", e);
+                log.error(ERROR_MESSAGE, e);
+                throw new MyOwnExceprion(ERROR_MESSAGE, e);
             }
         }
     }
@@ -71,8 +73,8 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
                 result.add(t);
             }
         } catch (SQLException e) {
-            log.error("Cannot connect to DB", e);
-            throw new RuntimeException("Cannot connect to DB", e);
+            log.error(ERROR_MESSAGE, e);
+            throw new MyOwnExceprion(ERROR_MESSAGE, e);
         }
         return result;
     }
@@ -89,8 +91,8 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
                 result = createEntity(rs);
             }
         } catch (SQLException e) {
-            log.error("Cannot connect to DB", e);
-            throw new RuntimeException("Cannot connect to DB", e);
+            log.error(ERROR_MESSAGE, e);
+            throw new MyOwnExceprion(ERROR_MESSAGE, e);
         }
         return result;
     }
@@ -106,8 +108,8 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
                 result = true;
             }
         } catch (SQLException e) {
-            log.error("Cannot connect to DB", e);
-            throw new RuntimeException("Cannot connect to DB", e);
+            log.error(ERROR_MESSAGE, e);
+            throw new MyOwnExceprion(ERROR_MESSAGE, e);
         }
         return result;
     }
