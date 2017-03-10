@@ -1,71 +1,58 @@
 package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.GenericDao;
-import jdbchomework.dao.model.ProblemDbConnection;
 import jdbchomework.entity.AbstractEntity;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractJdbcDao<T extends AbstractEntity> implements GenericDao<T> {
 
-    private static org.slf4j.Logger log = LoggerFactory.getLogger(AbstractJdbcDao.class);
-    private String table;
-    private String column;
-    private static final String ERROR_MESSAGE = "Cannot connect to DB";
+    public static final String CANNOT_CONNECT_TO_DB = "Cannot connect to DB";
+    private org.slf4j.Logger log = LoggerFactory.getLogger(AbstractJdbcDao.class);
+    private SessionFactory sessionFactory;
+    private String entity;
+    private Class<T> clazz;
 
-    protected Connection connection;
-
-    public AbstractJdbcDao(Connection connection, String table, String column) {
-        this.connection = connection;
-        this.table = table;
-        this.column = column;
-    }
-
-    @Override
-    public boolean deleteById(long id) {
-        boolean result = false;
-        try (PreparedStatement statement = connection
-                .prepareStatement("DELETE FROM " + table + " WHERE " + column + " = ?;")) {
-            statement.setLong(1, id);
-            if (statement.executeUpdate() > 0) {
-                result = true;
-            }
-        } catch (SQLException e) {
-            log.error(ERROR_MESSAGE, e);
-            throw new ProblemDbConnection(ERROR_MESSAGE, e);
-        }
-        return result;
+    public AbstractJdbcDao(SessionFactory sessionFactory, String entity, Class<T> clazz) {
+        this.sessionFactory = sessionFactory;
+        this.entity = entity;
+        this.clazz = clazz;
     }
 
     public void add(T toAdd) {
-        try (PreparedStatement statement = connection.prepareStatement("INSERT  INTO " + table + " (name)VALUES (?);")) {
-            statement.setString(1, toAdd.getName());
-            connection.commit();
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            log.error(ERROR_MESSAGE, e);
-            throw new ProblemDbConnection(ERROR_MESSAGE, e);
+        Session session = getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.save(toAdd);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
         }
     }
 
     public List<T> getAll() {
         List<T> result = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM " + table)) {
-            while (resultSet.next()) {
-                T t = createEntity(resultSet);
-                result.add(t);
+        Session session = getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            result = session.createQuery("FROM " + entity).list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
             }
-        } catch (SQLException e) {
-            log.error(ERROR_MESSAGE, e);
-            throw new ProblemDbConnection(ERROR_MESSAGE, e);
+            log.error(CANNOT_CONNECT_TO_DB, e);
         }
         return result;
     }
@@ -73,37 +60,60 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
 
     public T getById(long id) {
         T result = null;
-        try (
-                PreparedStatement statement = connection
-                        .prepareStatement("SELECT * FROM " + table + " WHERE " + column + " = ?;")) {
-            statement.setLong(1, id);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                result = createEntity(rs);
+        Session session = getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            result = session.get(clazz, id);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
             }
-        } catch (SQLException e) {
-            log.error(ERROR_MESSAGE, e);
-            throw new ProblemDbConnection(ERROR_MESSAGE, e);
+            log.error(CANNOT_CONNECT_TO_DB, e);
         }
         return result;
     }
 
     public boolean updateById(long id, T toUpdate) {
         boolean result = false;
-        try (PreparedStatement statement = connection
-                .prepareStatement("UPDATE " + table + " SET name = ? WHERE " + column + " =?;")) {
-            String name = toUpdate.getName();
-            statement.setString(1, name);
-            statement.setLong(2, id);
-            if (statement.executeUpdate() > 0) {
-                result = true;
+        Session session = getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            toUpdate.setId(id);
+            session.update(toUpdate);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
             }
-        } catch (SQLException e) {
-            log.error(ERROR_MESSAGE, e);
-            throw new ProblemDbConnection(ERROR_MESSAGE, e);
+            log.error(CANNOT_CONNECT_TO_DB, e);
         }
         return result;
     }
 
-    protected abstract T createEntity(ResultSet resultSet) throws SQLException;
+    @Override
+    public boolean deleteById(long id) {
+        boolean result = false;
+        Session session = getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            T entity = session.get(clazz, id);
+            session.delete(entity);
+            transaction.commit();
+            result = true;
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            log.error(CANNOT_CONNECT_TO_DB, e);
+        }
+        return result;
+    }
+
+    public Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
 }
