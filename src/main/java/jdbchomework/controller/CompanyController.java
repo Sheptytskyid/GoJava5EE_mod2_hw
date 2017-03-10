@@ -1,6 +1,7 @@
 package jdbchomework.controller;
 
 import jdbchomework.entity.Company;
+import jdbchomework.entity.Developer;
 import jdbchomework.service.CompanyService;
 
 import java.util.List;
@@ -15,6 +16,10 @@ public class CompanyController {
 
     public List<Company> getAllCompanies() {
         return companyService.getAllCompanies();
+    }
+
+    public List<Developer> getAllCompanyDevelopers(int id) {
+        return companyService.getCompanyDevelopers(id);
     }
 
     public void addCompany(String name) {

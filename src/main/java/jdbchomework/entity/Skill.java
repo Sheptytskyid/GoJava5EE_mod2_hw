@@ -1,18 +1,11 @@
 package jdbchomework.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.List;
 
 @Entity
 @Table(name = "skills")
 public class Skill extends AbstractEntity {
-
-    @ManyToMany(mappedBy = "skills")
-    private List<Developer> developers;
-
-    public Skill() {}
 
     public Skill(long id, String name) {
         super(id, name);
@@ -20,6 +13,19 @@ public class Skill extends AbstractEntity {
 
     public Skill(String name) {
         super(name);
+    }
+
+    public Skill() {
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 
     @Override

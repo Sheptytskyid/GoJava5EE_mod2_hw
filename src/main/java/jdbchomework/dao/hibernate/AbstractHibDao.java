@@ -1,6 +1,7 @@
-package jdbchomework.dao.jdbc;
+package jdbchomework.dao.hibernate;
 
 import jdbchomework.dao.model.GenericDao;
+import jdbchomework.dao.model.ProblemDbConnection;
 import jdbchomework.entity.AbstractEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -8,27 +9,28 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractDao<T extends AbstractEntity> implements GenericDao<T> {
 
+public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
     public static final String CANNOT_CONNECT_TO_DB = "Cannot connect to DB";
-    private org.slf4j.Logger log = LoggerFactory.getLogger(AbstractDao.class);
-    private SessionFactory sessionFactory;
-    private String entity;
+    private org.slf4j.Logger log = LoggerFactory.getLogger(AbstractHibDao.class);
+    protected SessionFactory sessionFactory;
+    private String entityName;
     private Class<T> clazz;
 
-    public AbstractDao(SessionFactory sessionFactory, String entity, Class<T> clazz) {
+    public AbstractHibDao(String entityName, SessionFactory sessionFactory, Class<T> clazz) {
+        this.entityName = entityName;
         this.sessionFactory = sessionFactory;
-        this.entity = entity;
         this.clazz = clazz;
+
     }
 
+    @Override
     public void add(T toAdd) {
-        Session session = getSession();
         Transaction transaction = null;
-        try {
+
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.save(toAdd);
             transaction.commit();
@@ -36,33 +38,35 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
+            log.error(CANNOT_CONNECT_TO_DB, e);
+            throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
+
     }
 
+    @Override
     public List<T> getAll() {
-        List<T> result = new ArrayList<>();
-        Session session = getSession();
+        List<T> result;
         Transaction transaction = null;
-        try {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            result = session.createQuery("FROM " + entity).list();
+            result = session.createQuery("from " + entityName).list();
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
+            throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
         return result;
     }
 
-
+    @Override
     public T getById(long id) {
         T result = null;
-        Session session = getSession();
         Transaction transaction = null;
-        try {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             result = session.get(clazz, id);
             transaction.commit();
@@ -71,49 +75,49 @@ public abstract class AbstractDao<T extends AbstractEntity> implements GenericDa
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-        }
-        return result;
-    }
-
-    public boolean updateById(long id, T toUpdate) {
-        boolean result = false;
-        Session session = getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            toUpdate.setId(id);
-            session.update(toUpdate);
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            log.error(CANNOT_CONNECT_TO_DB, e);
+            throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
         return result;
     }
 
     @Override
     public boolean deleteById(long id) {
-        boolean result = false;
-        Session session = getSession();
         Transaction transaction = null;
-        try {
+        boolean res = false;
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            T entity = session.get(clazz, id);
-            session.delete(entity);
+            T t = getById(id);
+            session.delete(t);
             transaction.commit();
-            result = true;
+            res = true;
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
+            throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
-        return result;
+        return res;
     }
 
-    public Session getSession() {
-        return sessionFactory.getCurrentSession();
+    @Override
+    public boolean updateById(long id, T toUpdate) {
+        Transaction transaction = null;
+        boolean res;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            T t = (T) getById(id);
+            t.setName(toUpdate.getName());
+            session.update(t);
+            transaction.commit();
+            res = true;
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            log.error(CANNOT_CONNECT_TO_DB, e);
+            throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
+        }
+        return res;
     }
 }

@@ -1,29 +1,35 @@
 package jdbchomework.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+
+
 import java.util.List;
 
 @Entity
 @Table(name = "developers")
 public class Developer extends AbstractEntity {
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "developers_skills")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "developers_skills",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private List<Skill> skills;
-    @Column(name = "salary")
+
     private int salary;
 
-    public Developer() {}
+    public Developer() {
+    }
 
     public Developer(long id, String name, int salary) {
         super(id, name);
         this.salary = salary;
     }
+
 
     public Developer(String name) {
         super(name);
@@ -46,6 +52,30 @@ public class Developer extends AbstractEntity {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Developer developer = (Developer) obj;
+
+        if (salary != developer.salary) {
+            return false;
+        }
+        return skills != null ? skills.equals(developer.skills) : developer.skills == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = skills != null ? skills.hashCode() : 0;
+        result = 31 * result + salary;
+        return result;
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Developer{");
         sb.append("id = ").append(getId()).append(" ");
@@ -56,4 +86,3 @@ public class Developer extends AbstractEntity {
         return sb.toString();
     }
 }
-

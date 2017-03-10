@@ -1,21 +1,22 @@
 package jdbchomework.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import java.util.List;
 
 @Entity
 @Table(name = "customers")
 public class Customer extends AbstractEntity {
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private List<Project> projects;
 
-    public Customer() {}
+    public Customer() {
+    }
 
     public Customer(long id, String name) {
         super(id, name);
@@ -24,6 +25,7 @@ public class Customer extends AbstractEntity {
     public Customer(String name) {
         super(name);
     }
+
 
     public List<Project> getProjects() {
         return projects;
