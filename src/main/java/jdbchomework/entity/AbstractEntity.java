@@ -39,10 +39,16 @@ public class AbstractEntity {
     }
 
     public void setName(String name) {
+        if (name == null || name.equals("")) {
+            throw new IllegalArgumentException("Wrong name");
+        }
         this.name = name;
     }
 
     public void setId(long id) {
+        if (id == 0) {
+            throw new IllegalArgumentException("Wrong id");
+        }
         this.id = id;
     }
 }
