@@ -6,6 +6,7 @@ import jdbchomework.entity.AbstractEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
@@ -27,9 +28,16 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
 
     @Override
     public void add(T toAdd) {
+        Transaction transaction = null;
+
         try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             session.save(toAdd);
+            transaction.commit();
         } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             log.error(CANNOT_CONNECT_TO_DB, e);
             throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
@@ -39,9 +47,15 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
     @Override
     public List<T> getAll() {
         List<T> result;
+        Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             result = session.createQuery("from " + entityName).list();
+            transaction.commit();
         } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             log.error(CANNOT_CONNECT_TO_DB, e);
             throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
@@ -51,9 +65,15 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
     @Override
     public T getById(long id) {
         T result = null;
+        Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             result = session.get(clazz, id);
+            transaction.commit();
         } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             log.error(CANNOT_CONNECT_TO_DB, e);
             throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
@@ -62,12 +82,18 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
 
     @Override
     public boolean deleteById(long id) {
+        Transaction transaction = null;
         boolean res = false;
         try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             T t = getById(id);
             session.delete(t);
+            transaction.commit();
             res = true;
         } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             log.error(CANNOT_CONNECT_TO_DB, e);
             throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
@@ -76,13 +102,19 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
 
     @Override
     public boolean updateById(long id, T toUpdate) {
+        Transaction transaction = null;
         boolean res;
         try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             T t = (T) getById(id);
             t.setName(toUpdate.getName());
             session.update(t);
+            transaction.commit();
             res = true;
         } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             log.error(CANNOT_CONNECT_TO_DB, e);
             throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
