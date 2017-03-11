@@ -1,7 +1,7 @@
 package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.DevelopersDao;
-import jdbchomework.dao.model.ProblemDbConnection;
+import jdbchomework.dao.model.DbConnectionException;
 import jdbchomework.entity.Developer;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +31,7 @@ public class DevelopersJdbcDao extends AbstractJdbcDao<Developer> implements Dev
             }
         } catch (SQLException e) {
             log.error("Cannot connect to DB", e);
-            throw new ProblemDbConnection("Cannot connect to DB", e);
+            throw new DbConnectionException("Cannot connect to DB", e);
         }
         return result;
     }
