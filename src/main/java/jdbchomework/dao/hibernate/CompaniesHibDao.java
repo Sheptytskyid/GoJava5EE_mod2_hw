@@ -1,7 +1,7 @@
 package jdbchomework.dao.hibernate;
 
 import jdbchomework.dao.model.CompaniesDao;
-import jdbchomework.dao.model.ProblemDbConnection;
+import jdbchomework.exceptions.ProblemDbConnection;
 import jdbchomework.entity.Company;
 import jdbchomework.entity.Developer;
 import org.hibernate.HibernateException;
