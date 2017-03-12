@@ -22,11 +22,20 @@ public class AbstractEntity {
     }
 
     public AbstractEntity(long id, String name) {
+        if (name == null || name.equals("")) {
+            name = "DEFAULT";
+        }
+        if (id == 0) {
+            throw new IllegalArgumentException("Id must be > 0");
+        }
         this.id = id;
         this.name = name;
     }
 
     public AbstractEntity(String name) {
+        if (name == null || name.equals("")) {
+            name = "DEFAULT";
+        }
         this.name = name;
     }
 
@@ -40,7 +49,7 @@ public class AbstractEntity {
 
     public void setName(String name) {
         if (name == null || name.equals("")) {
-            throw new IllegalArgumentException("Wrong name");
+            name = "DEFAULT";
         }
         this.name = name;
     }

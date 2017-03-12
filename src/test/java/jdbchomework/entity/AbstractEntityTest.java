@@ -14,7 +14,7 @@ public class AbstractEntityTest {
     private static final long VALID_ID = 123;
     private AbstractEntity abstractEntity;
 
-    private static final Object[] getRightValues() {
+    public Object[] getRightValues() {
         return new Object[]{
                 new Object[]{"Nick", 45},
                 new Object[]{"Joe", 55},
@@ -22,11 +22,11 @@ public class AbstractEntityTest {
         };
     }
 
-    private static final Object[] getWrongId() {
+    public Object[] getWrongId() {
         return new Object[]{0, 0, null};
     }
 
-    private static final Object[] getWrongName() {
+    public Object[] getWrongName() {
         return new Object[]{"", null, ""};
     }
 
@@ -43,16 +43,30 @@ public class AbstractEntityTest {
         assertNotNull("Entity wasn't create in right way", entity);
     }
 
+    @Test
+    @Parameters(method = "getWrongName")
+    public void constructorShouldSetWrongName(String name) {
+        AbstractEntity entity = new AbstractEntity(VALID_ID, name);
+        assertEquals("DEFAULT", entity.getName());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    @Parameters(method = "getWrongId")
+    public void constructorShouldSetWrongId(long id) {
+        AbstractEntity entity = new AbstractEntity(id, VALID_NAME);
+    }
+
     @Test(expected = IllegalArgumentException.class)
     @Parameters(method = "getWrongId")
     public void setWrongId(long id) {
         abstractEntity.setId(id);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     @Parameters(method = "getWrongName")
-    public void setWtongName(String name) {
+    public void setWrongName(String name) {
         abstractEntity.setName(name);
+        assertEquals("DEFAULT",abstractEntity.getName());
     }
 
 }
