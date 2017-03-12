@@ -16,7 +16,7 @@ import java.util.List;
 public class Developer extends AbstractEntity {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "developers_skills",
-            joinColumns = @JoinColumn(name = "id"),
+            joinColumns = @JoinColumn(name = "developer_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private List<Skill> skills;
 

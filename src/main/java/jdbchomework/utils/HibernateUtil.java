@@ -1,6 +1,6 @@
 package jdbchomework.utils;
 
-import jdbchomework.dao.model.DbConnectionException;
+import jdbchomework.exceptions.DbConnectionException;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
