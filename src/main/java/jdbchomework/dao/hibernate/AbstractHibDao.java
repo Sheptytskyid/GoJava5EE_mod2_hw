@@ -13,6 +13,7 @@ import java.util.List;
 
 
 public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
+
     public static final String CANNOT_CONNECT_TO_DB = "Cannot connect to DB";
     private org.slf4j.Logger log = LoggerFactory.getLogger(AbstractHibDao.class);
     protected SessionFactory sessionFactory;
@@ -28,9 +29,9 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
 
     @Override
     public void add(T toAdd) {
+        Session session = getSession();
         Transaction transaction = null;
-
-        try (Session session = sessionFactory.openSession()) {
+        try {
             transaction = session.beginTransaction();
             session.save(toAdd);
             transaction.commit();
@@ -47,8 +48,9 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
     @Override
     public List<T> getAll() {
         List<T> result;
+        Session session = getSession();
         Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
+        try {
             transaction = session.beginTransaction();
             result = session.createQuery("from " + entityName).list();
             transaction.commit();
@@ -65,8 +67,9 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
     @Override
     public T getById(long id) {
         T result = null;
+        Session session = getSession();
         Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
+        try {
             transaction = session.beginTransaction();
             result = session.get(clazz, id);
             transaction.commit();
@@ -82,9 +85,10 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
 
     @Override
     public boolean deleteById(long id) {
+        Session session = getSession();
         Transaction transaction = null;
         boolean res = false;
-        try (Session session = sessionFactory.openSession()) {
+        try {
             transaction = session.beginTransaction();
             T t = getById(id);
             session.delete(t);
@@ -102,9 +106,10 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
 
     @Override
     public boolean updateById(long id, T toUpdate) {
+        Session session = getSession();
         Transaction transaction = null;
         boolean res;
-        try (Session session = sessionFactory.openSession()) {
+        try {
             transaction = session.beginTransaction();
             T t = (T) getById(id);
             t.setName(toUpdate.getName());
@@ -119,5 +124,9 @@ public class AbstractHibDao<T extends AbstractEntity> implements GenericDao<T> {
             throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
         }
         return res;
+    }
+
+    public Session getSession() {
+        return sessionFactory.getCurrentSession();
     }
 }
