@@ -1,6 +1,10 @@
 package jdbchomework.utils;
 
-import jdbchomework.entity.*;
+import jdbchomework.entity.Company;
+import jdbchomework.entity.Customer;
+import jdbchomework.entity.Developer;
+import jdbchomework.entity.Project;
+import jdbchomework.entity.Skill;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +25,7 @@ public class TestUtils {
     public static final List<Customer> ALL_CUSTOMERS = Arrays.asList(new Customer(NAME),
             new Customer(NAME), new Customer(NAME));
 
-//    private jdbchomework.utils.TestUtils() {
-//        throw new IllegalAccessError("Utility class");
-//    }
+    private TestUtils() {
+        throw new IllegalAccessError("Utility class");
+    }
 }
