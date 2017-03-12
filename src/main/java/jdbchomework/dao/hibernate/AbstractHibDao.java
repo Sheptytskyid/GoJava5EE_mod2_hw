@@ -1,7 +1,7 @@
 package jdbchomework.dao.hibernate;
 
 import jdbchomework.dao.model.GenericDao;
-import jdbchomework.dao.model.ProblemDbConnection;
+import jdbchomework.exceptions.ProblemDbConnection;
 import jdbchomework.entity.AbstractEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

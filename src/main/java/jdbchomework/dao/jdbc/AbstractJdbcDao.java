@@ -1,7 +1,7 @@
 package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.GenericDao;
-import jdbchomework.dao.model.ProblemDbConnection;
+import jdbchomework.exceptions.ProblemDbConnection;
 import jdbchomework.entity.AbstractEntity;
 import org.slf4j.LoggerFactory;
 

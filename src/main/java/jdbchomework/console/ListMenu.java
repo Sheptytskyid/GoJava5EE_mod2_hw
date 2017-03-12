@@ -28,7 +28,7 @@ public class ListMenu {
         siteHeader.add("**************************************************************");
         siteHeader.add("\t\tWelcome to DB manager");
         siteHeader.add("**************************************************************");
-        serviceHeader.add("\n\tMain menu");
+        serviceHeader.add("\n\tMainWithJdbc menu");
         serviceHeaderCompany.add("\n\tCompany menu");
         serviceHeaderCustomer.add("\n\tCustomer menu");
         serviceHeaderDeveloper.add("\n\tDeveloper menu");
