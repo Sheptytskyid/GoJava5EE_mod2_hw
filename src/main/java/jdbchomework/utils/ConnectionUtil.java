@@ -1,6 +1,6 @@
 package jdbchomework.utils;
 
-import jdbchomework.dao.model.DbConnectionException;
+import jdbchomework.exceptions.DbConnectionException;
 
 import java.io.FileInputStream;
 import java.io.IOException;

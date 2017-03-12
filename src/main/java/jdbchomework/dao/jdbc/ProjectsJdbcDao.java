@@ -1,6 +1,6 @@
 package jdbchomework.dao.jdbc;
 
-import jdbchomework.dao.model.DbConnectionException;
+import jdbchomework.exceptions.DbConnectionException;
 import jdbchomework.dao.model.ProjectsDao;
 import jdbchomework.entity.Project;
 import org.slf4j.LoggerFactory;
