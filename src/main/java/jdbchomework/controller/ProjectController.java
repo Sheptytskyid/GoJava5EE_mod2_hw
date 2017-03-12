@@ -30,7 +30,6 @@ public class ProjectController {
     }
 
     public boolean updateProjectById(int id, String name, int cost) {
-        Project project = new Project(name, cost);
-        return projectService.updateProjectById(id, project);
+        return projectService.updateProjectById(id, name, cost);
     }
 }

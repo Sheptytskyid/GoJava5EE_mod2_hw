@@ -27,9 +27,9 @@ public class CompanyControllerTest {
     @Test
     public void shouldGetAllCompanies() {
         when(companyService.getAllCompanies()).thenReturn(ALL_COMPANIES);
-        companyController.getAllCompanies();
-        verify(companyService).getAllCompanies();
         assertEquals(ALL_COMPANIES, companyController.getAllCompanies());
+        verify(companyService).getAllCompanies();
+
     }
 
     @Test
@@ -54,9 +54,9 @@ public class CompanyControllerTest {
     @Test
     public void shouldDeleteCompanyById() {
         when(companyService.deleteCompanyById(ID)).thenReturn(true);
-        companyController.deleteCompanyById(ID);
-        verify(companyService).deleteCompanyById(ID);
         assertTrue(companyController.deleteCompanyById(ID));
+        verify(companyService).deleteCompanyById(ID);
+
     }
 
     @Test

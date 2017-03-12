@@ -2,6 +2,7 @@ package jdbchomework.controller;
 
 
 import static jdbchomework.utils.TestUtils.ID;
+import static jdbchomework.utils.TestUtils.NAME;
 import static jdbchomework.utils.TestUtils.ALL_CUSTOMERS;
 import static jdbchomework.utils.TestUtils.CUSTOMER_RESULT;
 
@@ -9,7 +10,6 @@ import jdbchomework.service.CustomerService;
 import org.junit.Before;
 import org.junit.Test;
 
-import static jdbchomework.utils.TestUtils.NAME;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -26,9 +26,9 @@ public class CustomerControllerTest {
     @Test
     public void shouldGetAllCustomers() {
         when(customerService.getAllCustomers()).thenReturn(ALL_CUSTOMERS);
-        customerController.getAllCustomers();
-        verify(customerService).getAllCustomers();
         assertEquals(ALL_CUSTOMERS, customerController.getAllCustomers());
+        verify(customerService).getAllCustomers();
+
     }
 
     @Test
@@ -46,9 +46,9 @@ public class CustomerControllerTest {
     @Test
     public void shouldDeleteCustomerById() {
         when(customerController.deleteCustomerById(ID)).thenReturn(true);
-        customerController.deleteCustomerById(ID);
-        verify(customerService).deleteCustomerById(ID);
         assertTrue(customerController.deleteCustomerById(ID));
+        verify(customerService).deleteCustomerById(ID);
+
     }
 
     @Test

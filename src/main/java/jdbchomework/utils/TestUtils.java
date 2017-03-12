@@ -24,6 +24,13 @@ public class TestUtils {
             new Company(NAME), new Company(NAME));
     public static final List<Customer> ALL_CUSTOMERS = Arrays.asList(new Customer(NAME),
             new Customer(NAME), new Customer(NAME));
+    public static final List<Developer> ALL_DEVELOPERS = Arrays.asList(new Developer(NAME),
+            new Developer(NAME), new Developer(NAME));
+    public static final List<Project> ALL_PROJECTS = Arrays.asList(new Project(NAME, COST),
+            new Project(NAME, COST), new Project(NAME, COST));
+
+    public static final List<Skill> ALL_SKILLS = Arrays.asList(new Skill(NAME),
+            new Skill(NAME), new Skill(NAME));
 
     private TestUtils() {
         throw new IllegalAccessError("Utility class");
