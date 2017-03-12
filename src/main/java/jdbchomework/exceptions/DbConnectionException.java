@@ -1,4 +1,4 @@
-package jdbchomework.dao.model;
+package jdbchomework.exceptions;
 
 public class DbConnectionException extends RuntimeException {
 
