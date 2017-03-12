@@ -48,7 +48,6 @@ public class ProjectControllerTest {
         when(projectService.deleteProjectById(ID)).thenReturn(true);
         assertTrue(projectController.deleteProjectById(ID));
         verify(projectService, times(1)).deleteProjectById(ID);
-
     }
 
     @Test
@@ -56,7 +55,6 @@ public class ProjectControllerTest {
         when(projectService.updateProjectById(ID, NAME, COST)).thenReturn(true);
         assertTrue(projectController.updateProjectById(ID, NAME, COST));
         verify(projectService, times(1)).updateProjectById(ID, NAME, COST);
-
     }
 
 }

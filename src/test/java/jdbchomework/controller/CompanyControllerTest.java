@@ -29,7 +29,6 @@ public class CompanyControllerTest {
         when(companyService.getAllCompanies()).thenReturn(ALL_COMPANIES);
         assertEquals(ALL_COMPANIES, companyController.getAllCompanies());
         verify(companyService, times(1)).getAllCompanies();
-
     }
 
     @Test
@@ -48,7 +47,6 @@ public class CompanyControllerTest {
     public void shouldGetCompanyById() {
         when(companyService.getCompanyById(ID)).thenReturn(COMPANY_RESULT);
         assertEquals(COMPANY_RESULT, companyController.getCompanyById(ID));
-
     }
 
     @Test
@@ -56,14 +54,12 @@ public class CompanyControllerTest {
         when(companyService.deleteCompanyById(ID)).thenReturn(true);
         assertTrue(companyController.deleteCompanyById(ID));
         verify(companyService, times(1)).deleteCompanyById(ID);
-
     }
 
     @Test
     public void shouldUpdateCompanyById() {
         when(companyService.updateCompanyById(ID, NAME)).thenReturn(true);
         assertTrue(companyController.updateCompanyById(ID, NAME));
-
     }
 
 }

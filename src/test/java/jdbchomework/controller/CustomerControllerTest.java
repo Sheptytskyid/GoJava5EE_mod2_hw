@@ -28,7 +28,6 @@ public class CustomerControllerTest {
         when(customerService.getAllCustomers()).thenReturn(ALL_CUSTOMERS);
         assertEquals(ALL_CUSTOMERS, customerController.getAllCustomers());
         verify(customerService, times(1)).getAllCustomers();
-
     }
 
     @Test
@@ -48,7 +47,6 @@ public class CustomerControllerTest {
         when(customerController.deleteCustomerById(ID)).thenReturn(true);
         assertTrue(customerController.deleteCustomerById(ID));
         verify(customerService, times(1)).deleteCustomerById(ID);
-
     }
 
     @Test
