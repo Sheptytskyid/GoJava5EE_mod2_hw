@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS skills (
 CREATE TABLE IF NOT EXISTS developers_skills (
   developer_id INT NOT NULL,
   skill_id     INT NOT NULL,
-  PRIMARY KEY (developers_id, skills_id),
-  FOREIGN KEY (developers_id) REFERENCES developers (id),
-  FOREIGN KEY (skills_id) REFERENCES skills (id)
+  PRIMARY KEY (developer_id, skill_id),
+  FOREIGN KEY (developer_id) REFERENCES developers (id),
+  FOREIGN KEY (skill_id) REFERENCES skills (id)
 );
