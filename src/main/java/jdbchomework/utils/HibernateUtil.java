@@ -1,6 +1,6 @@
 package jdbchomework.utils;
 
-import jdbchomework.dao.model.ProblemDbConnection;
+import jdbchomework.exceptions.DbConnectionException;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -15,7 +15,7 @@ public class HibernateUtil {
         try {
             sessionFactory = new Configuration().configure().buildSessionFactory();
         } catch (HibernateException e) {
-            throw new ProblemDbConnection("Cannot create Session Factory", e);
+            throw new DbConnectionException("Cannot create Session Factory", e);
         }
     }
 
@@ -32,7 +32,7 @@ public class HibernateUtil {
             sessionFactory.close();
         } catch (HibernateException e) {
             log.error("Cannot close sessionFactory", e);
-            throw new ProblemDbConnection("Cannot close sessionFactory", e);
+            throw new DbConnectionException("Cannot close sessionFactory", e);
         }
     }
 }
