@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 public class CompanyControllerTest {
     private CompanyService companyService = mock(CompanyService.class);
-    private  CompanyController companyController;
+    private CompanyController companyController;
 
 
     @Before
@@ -28,20 +28,20 @@ public class CompanyControllerTest {
     public void shouldGetAllCompanies() {
         when(companyService.getAllCompanies()).thenReturn(ALL_COMPANIES);
         assertEquals(ALL_COMPANIES, companyController.getAllCompanies());
-        verify(companyService).getAllCompanies();
+        verify(companyService, times(1)).getAllCompanies();
 
     }
 
     @Test
     public void shouldGetAllCompanyDevelopers() {
         companyController.getAllCompanyDevelopers(ID);
-        verify(companyService).getCompanyDevelopers(ID);
+        verify(companyService, times(1)).getCompanyDevelopers(ID);
     }
 
     @Test
     public void shouldAddCompanyToDb() {
         companyController.addCompany(NAME);
-        verify(companyService).addCompany(NAME);
+        verify(companyService, times(1)).addCompany(NAME);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class CompanyControllerTest {
     public void shouldDeleteCompanyById() {
         when(companyService.deleteCompanyById(ID)).thenReturn(true);
         assertTrue(companyController.deleteCompanyById(ID));
-        verify(companyService).deleteCompanyById(ID);
+        verify(companyService, times(1)).deleteCompanyById(ID);
 
     }
 

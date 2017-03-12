@@ -27,27 +27,27 @@ public class ProjectControllerTest {
     public void shouldGetAllProjects() {
         when(projectService.getAllProjects()).thenReturn(ALL_PROJECTS);
         assertEquals(ALL_PROJECTS, projectController.getAllProjects());
-        verify(projectService).getAllProjects();
+        verify(projectService, times(1)).getAllProjects();
     }
 
     @Test
     public void shouldAddProjectToDb() {
         projectController.addProject(NAME, COST);
-        verify(projectService).addProject(NAME, COST);
+        verify(projectService, times(1)).addProject(NAME, COST);
     }
 
     @Test
     public void shouldGetProjectById() {
         when(projectService.getProjectById(ID)).thenReturn(PROJECT_RESULT);
         assertEquals(PROJECT_RESULT, projectController.getProjectById(ID));
-        verify(projectService).getProjectById(ID);
+        verify(projectService, times(1)).getProjectById(ID);
     }
 
     @Test
     public void shouldDeleteProjectById() {
         when(projectService.deleteProjectById(ID)).thenReturn(true);
         assertTrue(projectController.deleteProjectById(ID));
-        verify(projectService).deleteProjectById(ID);
+        verify(projectService, times(1)).deleteProjectById(ID);
 
     }
 
@@ -55,7 +55,7 @@ public class ProjectControllerTest {
     public void shouldUpdateProjectById() {
         when(projectService.updateProjectById(ID, NAME, COST)).thenReturn(true);
         assertTrue(projectController.updateProjectById(ID, NAME, COST));
-        verify(projectService).updateProjectById(ID, NAME, COST);
+        verify(projectService, times(1)).updateProjectById(ID, NAME, COST);
 
     }
 

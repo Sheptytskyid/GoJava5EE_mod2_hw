@@ -27,14 +27,14 @@ public class CustomerControllerTest {
     public void shouldGetAllCustomers() {
         when(customerService.getAllCustomers()).thenReturn(ALL_CUSTOMERS);
         assertEquals(ALL_CUSTOMERS, customerController.getAllCustomers());
-        verify(customerService).getAllCustomers();
+        verify(customerService, times(1)).getAllCustomers();
 
     }
 
     @Test
     public void shouldAddCustomerToDb() {
         customerController.addCustomer(NAME);
-        verify(customerService).addCustomer(NAME);
+        verify(customerService, times(1)).addCustomer(NAME);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class CustomerControllerTest {
     public void shouldDeleteCustomerById() {
         when(customerController.deleteCustomerById(ID)).thenReturn(true);
         assertTrue(customerController.deleteCustomerById(ID));
-        verify(customerService).deleteCustomerById(ID);
+        verify(customerService, times(1)).deleteCustomerById(ID);
 
     }
 
@@ -55,7 +55,7 @@ public class CustomerControllerTest {
     public void updateCustomerById() {
         when(customerService.updateCustomerById(ID, NAME)).thenReturn(true);
         assertTrue(customerController.updateCustomerById(ID, NAME));
-        verify(customerService).updateCustomerById(ID, NAME);
+        verify(customerService, times(1)).updateCustomerById(ID, NAME);
     }
 
 }

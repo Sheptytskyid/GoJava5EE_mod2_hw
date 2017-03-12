@@ -25,7 +25,7 @@ public class DeveloperControllerTest {
     public void shouldGetAllDevelopers() {
         when(developerService.getAllDevelopers()).thenReturn(ALL_DEVELOPERS);
         assertEquals(ALL_DEVELOPERS, developerController.getAllDevelopers());
-        verify(developerService).getAllDevelopers();
+        verify(developerService, times(1)).getAllDevelopers();
 
 
     }
@@ -33,21 +33,21 @@ public class DeveloperControllerTest {
     @Test
     public void shouldAddDeveloperToDB() {
         developerController.addDeveloper(NAME);
-        verify(developerService).addDeveloper(NAME);
+        verify(developerService, times(1)).addDeveloper(NAME);
     }
 
     @Test
     public void shouldGetDeveloperById() {
         when(developerService.getDeveloperById(ID)).thenReturn(DEVELOPER_RESULT);
         assertEquals(DEVELOPER_RESULT, developerController.getDeveloperById(ID));
-        verify(developerService).getDeveloperById(ID);
+        verify(developerService, times(1)).getDeveloperById(ID);
     }
 
     @Test
     public void shouldDeleteDeveloperById() {
         when(developerService.deleteDeveloperById(ID)).thenReturn(true);
         assertTrue(developerController.deleteDeveloperById(ID));
-        verify(developerService).deleteDeveloperById(ID);
+        verify(developerService, times(1)).deleteDeveloperById(ID);
 
     }
 
@@ -55,7 +55,7 @@ public class DeveloperControllerTest {
     public void shouldUpdateDeveloperById() {
         when(developerService.updateDeveloperById(ID, NAME)).thenReturn(true);
         assertTrue(developerController.updateDeveloperById(ID, NAME));
-        verify(developerService).updateDeveloperById(ID, NAME);
+        verify(developerService, times(1)).updateDeveloperById(ID, NAME);
     }
 
 }
