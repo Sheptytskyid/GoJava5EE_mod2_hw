@@ -52,7 +52,7 @@ VALUES
   ('Tomcat');
 
 -- Fill the developers skills table--
-INSERT INTO developers_skills (developers_id, skills_id)
+INSERT INTO developers_skills (developer_id, skill_id)
 VALUES
   (1, 1),
   (1, 4),
