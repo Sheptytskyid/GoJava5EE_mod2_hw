@@ -1,6 +1,6 @@
 package jdbchomework.dao.jdbc;
 
-import jdbchomework.exceptions.ProblemDbConnection;
+import jdbchomework.exceptions.DbConnectionException;
 import jdbchomework.dao.model.ProjectsDao;
 import jdbchomework.entity.Project;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public class ProjectsJdbcDao extends AbstractJdbcDao<Project> implements Project
             statement.executeUpdate();
         } catch (SQLException e) {
             log.error(ERROR_MESSAGE, e);
-            throw new ProblemDbConnection(ERROR_MESSAGE, e);
+            throw new DbConnectionException(ERROR_MESSAGE, e);
         }
     }
 
@@ -47,7 +47,7 @@ public class ProjectsJdbcDao extends AbstractJdbcDao<Project> implements Project
             }
         } catch (SQLException e) {
             log.error(ERROR_MESSAGE, e);
-            throw new ProblemDbConnection(ERROR_MESSAGE, e);
+            throw new DbConnectionException(ERROR_MESSAGE, e);
         }
         return result;
     }

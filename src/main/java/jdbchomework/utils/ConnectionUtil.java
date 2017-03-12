@@ -1,6 +1,6 @@
 package jdbchomework.utils;
 
-import jdbchomework.exceptions.ProblemDbConnection;
+import jdbchomework.exceptions.DbConnectionException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,9 +28,9 @@ public class ConnectionUtil {
             String password = property.getProperty("db.password");
             connection = DriverManager.getConnection(url, user, password);
         } catch (IOException e) {
-            throw new ProblemDbConnection("Cannot find file ", e);
+            throw new DbConnectionException("Cannot find file ", e);
         } catch (SQLException e) {
-            throw new ProblemDbConnection("Cannot get connection to db", e);
+            throw new DbConnectionException("Cannot get connection to db", e);
         }
         return connection;
     }
@@ -39,7 +39,7 @@ public class ConnectionUtil {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new ProblemDbConnection("Cannot close connection", e);
+            throw new DbConnectionException("Cannot close connection", e);
         }
     }
 }

@@ -1,7 +1,7 @@
 package jdbchomework.dao.hibernate;
 
 import jdbchomework.dao.model.CompaniesDao;
-import jdbchomework.exceptions.ProblemDbConnection;
+import jdbchomework.exceptions.DbConnectionException;
 import jdbchomework.entity.Company;
 import jdbchomework.entity.Developer;
 import org.hibernate.HibernateException;
@@ -42,7 +42,7 @@ public class CompaniesHibDao extends AbstractHibDao<Company> implements Companie
                 transaction.rollback();
             }
             log.error(CANNOT_CONNECT_TO_DB, e);
-            throw new ProblemDbConnection(CANNOT_CONNECT_TO_DB, e);
+            throw new DbConnectionException(CANNOT_CONNECT_TO_DB, e);
         }
         return result;
     }
