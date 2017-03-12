@@ -18,15 +18,26 @@ public class AbstractEntity {
     @Column(nullable = false)
     private String name;
 
+    private static final String DEFAULT_NAME = "DEFAULT_NAME";
+
     public AbstractEntity() {
     }
 
     public AbstractEntity(long id, String name) {
+        if (name == null || name.equals("")) {
+            name = DEFAULT_NAME;
+        }
+        if (id == 0) {
+            throw new IllegalArgumentException("Id must be > 0");
+        }
         this.id = id;
         this.name = name;
     }
 
     public AbstractEntity(String name) {
+        if (name == null || name.equals("")) {
+            name = DEFAULT_NAME;
+        }
         this.name = name;
     }
 
@@ -39,10 +50,16 @@ public class AbstractEntity {
     }
 
     public void setName(String name) {
+        if (name == null || name.equals("")) {
+            name = DEFAULT_NAME;
+        }
         this.name = name;
     }
 
     public void setId(long id) {
+        if (id == 0) {
+            throw new IllegalArgumentException("Wrong id");
+        }
         this.id = id;
     }
 }
