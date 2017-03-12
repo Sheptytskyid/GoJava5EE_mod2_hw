@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static jdbchomework.utils.TestUtils.ALL_COMPANIES;
 import static jdbchomework.utils.TestUtils.ID;
-import static jdbchomework.utils.TestUtils.COMPANY_NAME;
+import static jdbchomework.utils.TestUtils.NAME;
 import static jdbchomework.utils.TestUtils.COMPANY_RESULT;
 
 
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 public class CompanyControllerTest {
     private CompanyService companyService = mock(CompanyService.class);
-    private static CompanyController companyController;
+    private  CompanyController companyController;
 
 
     @Before
@@ -40,8 +40,8 @@ public class CompanyControllerTest {
 
     @Test
     public void shouldAddCompanyToDb() {
-        companyController.addCompany(COMPANY_NAME);
-        verify(companyService).addCompany(COMPANY_NAME);
+        companyController.addCompany(NAME);
+        verify(companyService).addCompany(NAME);
     }
 
     @Test
@@ -53,14 +53,16 @@ public class CompanyControllerTest {
 
     @Test
     public void shouldDeleteCompanyById() {
+        when(companyService.deleteCompanyById(ID)).thenReturn(true);
         companyController.deleteCompanyById(ID);
         verify(companyService).deleteCompanyById(ID);
+        assertTrue(companyController.deleteCompanyById(ID));
     }
 
     @Test
     public void shouldUpdateCompanyById() {
-        when(companyService.updateCompanyById(ID, COMPANY_NAME)).thenReturn(true);
-        assertTrue(companyController.updateCompanyById(ID, COMPANY_NAME));
+        when(companyService.updateCompanyById(ID, NAME)).thenReturn(true);
+        assertTrue(companyController.updateCompanyById(ID, NAME));
 
     }
 
