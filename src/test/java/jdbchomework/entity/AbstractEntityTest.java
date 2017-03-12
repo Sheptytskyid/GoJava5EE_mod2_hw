@@ -38,7 +38,7 @@ public class AbstractEntityTest {
 
     @Test
     @Parameters(method = "getRightValues")
-    public void constructorShouldSetIdAndName(String name, long id) {
+    public void constructorShouldSetRightIdAndName(String name, long id) {
         AbstractEntity entity = new AbstractEntity(id, name);
         assertNotNull("Entity wasn't create in right way", entity);
     }
@@ -47,7 +47,8 @@ public class AbstractEntityTest {
     @Parameters(method = "getWrongName")
     public void constructorShouldSetWrongName(String name) {
         AbstractEntity entity = new AbstractEntity(VALID_ID, name);
-        assertEquals("DEFAULT_NAME", entity.getName());
+        assertEquals("You have chosen the wrong name, and " + abstractEntity.getName()
+                + " does not match to default name", "DEFAULT_NAME", entity.getName());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -66,7 +67,7 @@ public class AbstractEntityTest {
     @Parameters(method = "getWrongName")
     public void setWrongName(String name) {
         abstractEntity.setName(name);
-        assertEquals("DEFAULT_NAME",abstractEntity.getName());
+        assertEquals("DEFAULT_NAME", abstractEntity.getName());
     }
 
 }
