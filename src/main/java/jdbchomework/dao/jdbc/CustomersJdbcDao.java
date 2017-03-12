@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class CustomersJdbcDao extends AbstractJdbcDao<Customer> implements CustomersDao {
 
-    public CustomersJdbcDao(Connection connection, String table, String column) {
-        super(connection, table, column);
+    public CustomersJdbcDao(Connection connection, String table) {
+        super(connection, table);
     }
 
     @Override

@@ -17,22 +17,20 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
 
     private static org.slf4j.Logger log = LoggerFactory.getLogger(AbstractJdbcDao.class);
     private String table;
-    private String column;
     private static final String ERROR_MESSAGE = "Cannot connect to DB";
 
     protected Connection connection;
 
-    public AbstractJdbcDao(Connection connection, String table, String column) {
+    public AbstractJdbcDao(Connection connection, String table) {
         this.connection = connection;
         this.table = table;
-        this.column = column;
     }
 
     @Override
     public boolean deleteById(long id) {
         boolean result = false;
         try (PreparedStatement statement = connection
-                .prepareStatement("DELETE FROM " + table + " WHERE " + column + " = ?;")) {
+                .prepareStatement("DELETE FROM " + table + " WHERE id  = ?;")) {
             statement.setLong(1, id);
             if (statement.executeUpdate() > 0) {
                 result = true;
@@ -47,7 +45,6 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
     public void add(T toAdd) {
         try (PreparedStatement statement = connection.prepareStatement("INSERT  INTO " + table + " (name)VALUES (?);")) {
             statement.setString(1, toAdd.getName());
-            connection.commit();
             statement.executeUpdate();
         } catch (SQLException e) {
             log.error(ERROR_MESSAGE, e);
@@ -75,7 +72,7 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
         T result = null;
         try (
                 PreparedStatement statement = connection
-                        .prepareStatement("SELECT * FROM " + table + " WHERE " + column + " = ?;")) {
+                        .prepareStatement("SELECT * FROM " + table + " WHERE id  = ?;")) {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -91,7 +88,7 @@ public abstract class AbstractJdbcDao<T extends AbstractEntity> implements Gener
     public boolean updateById(long id, T toUpdate) {
         boolean result = false;
         try (PreparedStatement statement = connection
-                .prepareStatement("UPDATE " + table + " SET name = ? WHERE " + column + " =?;")) {
+                .prepareStatement("UPDATE " + table + " SET name = ?  WHERE id  = ?;")) {
             String name = toUpdate.getName();
             statement.setString(1, name);
             statement.setLong(2, id);
