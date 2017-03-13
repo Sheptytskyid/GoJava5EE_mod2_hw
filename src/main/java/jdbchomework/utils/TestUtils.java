@@ -11,7 +11,6 @@ import java.util.List;
 
 public class TestUtils {
 
-
     public static final int ID = 111;
     public static final int COST = 12345;
     public static final String NAME = "Name for all cases";

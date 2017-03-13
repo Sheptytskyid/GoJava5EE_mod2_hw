@@ -27,7 +27,6 @@ public class SkillControllerTest {
     public void shouldGetAllSkills() {
         when(skillService.getAllSkills()).thenReturn(ALL_SKILLS);
         assertEquals(ALL_SKILLS, skillController.getAllSkills());
-        verify(skillService, times(1)).getAllSkills();
     }
 
     @Test
@@ -40,21 +39,18 @@ public class SkillControllerTest {
     public void shouldGetSkillById() {
         when(skillService.getSkillById(ID)).thenReturn(SKILL_RESULT);
         assertEquals(SKILL_RESULT, skillController.getSkillById(ID));
-        verify(skillService, times(1)).getSkillById(ID);
     }
 
     @Test
     public void shouldDeleteSkillById() {
         when(skillService.deleteSkillById(ID)).thenReturn(true);
         assertTrue(skillController.deleteSkillById(ID));
-        verify(skillService, times(1)).deleteSkillById(ID);
     }
 
     @Test
     public void shouldUpdateSkillById() {
         when(skillService.updateSkillById(ID, NAME)).thenReturn(true);
         assertTrue(skillController.updateSkillById(ID, NAME));
-        verify(skillService, times(1)).updateSkillById(ID, NAME);
     }
 
 }
