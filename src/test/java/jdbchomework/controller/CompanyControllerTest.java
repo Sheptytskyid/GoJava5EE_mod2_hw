@@ -6,13 +6,12 @@ import org.junit.Test;
 
 import static jdbchomework.utils.TestUtils.ALL_COMPANIES;
 import static jdbchomework.utils.TestUtils.ID;
-import static jdbchomework.utils.TestUtils.NAME;
+import static jdbchomework.utils.TestUtils.SOME_NAME;
 import static jdbchomework.utils.TestUtils.COMPANY_RESULT;
 
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-
 
 public class CompanyControllerTest {
     private CompanyService companyService = mock(CompanyService.class);
@@ -63,7 +62,7 @@ public class CompanyControllerTest {
     @Test
     public void shouldUpdateCompanyById() {
         when(companyService.updateCompanyById(anyInt(), anyString())).thenReturn(true);
-        assertTrue(companyController.updateCompanyById(ID,NAME));
+        assertTrue(companyController.updateCompanyById(ID, SOME_NAME));
         assertTrue(companyController.updateCompanyById(anyInt(), anyString()));
         verify(companyService, times(2)).updateCompanyById(anyInt(),anyString());
     }

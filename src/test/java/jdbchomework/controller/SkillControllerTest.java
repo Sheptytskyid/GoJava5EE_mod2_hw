@@ -1,7 +1,7 @@
 package jdbchomework.controller;
 
 import static jdbchomework.utils.TestUtils.ID;
-import static jdbchomework.utils.TestUtils.NAME;
+import static jdbchomework.utils.TestUtils.SOME_NAME;
 import static jdbchomework.utils.TestUtils.ALL_SKILLS;
 import static jdbchomework.utils.TestUtils.SKILL_RESULT;
 
@@ -31,8 +31,8 @@ public class SkillControllerTest {
 
     @Test
     public void shouldAddSkillToDb() {
-        skillController.addSkill(NAME);
-        verify(skillService, times(1)).addSkill(NAME);
+        skillController.addSkill(SOME_NAME);
+        verify(skillService, times(1)).addSkill(SOME_NAME);
     }
 
     @Test
@@ -49,8 +49,8 @@ public class SkillControllerTest {
 
     @Test
     public void shouldUpdateSkillById() {
-        when(skillService.updateSkillById(ID, NAME)).thenReturn(true);
-        assertTrue(skillController.updateSkillById(ID, NAME));
+        when(skillService.updateSkillById(ID, SOME_NAME)).thenReturn(true);
+        assertTrue(skillController.updateSkillById(ID, SOME_NAME));
     }
 
 }

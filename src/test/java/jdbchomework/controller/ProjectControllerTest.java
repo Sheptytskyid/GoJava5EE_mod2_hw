@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static jdbchomework.utils.TestUtils.ALL_PROJECTS;
 import static jdbchomework.utils.TestUtils.ID;
-import static jdbchomework.utils.TestUtils.NAME;
+import static jdbchomework.utils.TestUtils.SOME_NAME;
 import static jdbchomework.utils.TestUtils.COST;
 import static jdbchomework.utils.TestUtils.PROJECT_RESULT;
 
@@ -31,8 +31,8 @@ public class ProjectControllerTest {
 
     @Test
     public void shouldAddProjectToDb() {
-        projectController.addProject(NAME, COST);
-        verify(projectService, times(1)).addProject(NAME, COST);
+        projectController.addProject(SOME_NAME, COST);
+        verify(projectService, times(1)).addProject(SOME_NAME, COST);
     }
 
     @Test
@@ -49,8 +49,8 @@ public class ProjectControllerTest {
 
     @Test
     public void shouldUpdateProjectById() {
-        when(projectService.updateProjectById(ID, NAME, COST)).thenReturn(true);
-        assertTrue(projectController.updateProjectById(ID, NAME, COST));
+        when(projectService.updateProjectById(ID, SOME_NAME, COST)).thenReturn(true);
+        assertTrue(projectController.updateProjectById(ID, SOME_NAME, COST));
     }
 
 }
