@@ -32,32 +32,40 @@ public class CompanyControllerTest {
 
     @Test
     public void shouldGetAllCompanyDevelopers() {
-        companyController.getAllCompanyDevelopers(ID);
-        verify(companyService, times(1)).getCompanyDevelopers(ID);
+        companyController.getAllCompanyDevelopers(anyInt());
+        verify(companyService, times(1)).getCompanyDevelopers(anyInt());
     }
 
     @Test
     public void shouldAddCompanyToDb() {
-        companyController.addCompany(NAME);
-        verify(companyService, times(1)).addCompany(NAME);
+        companyController.addCompany(anyString());
+        verify(companyService, times(1)).addCompany(anyString());
     }
 
     @Test
     public void shouldGetCompanyById() {
-        when(companyService.getCompanyById(ID)).thenReturn(COMPANY_RESULT);
+        when(companyService.getCompanyById(anyInt())).thenReturn(COMPANY_RESULT);
         assertEquals(COMPANY_RESULT, companyController.getCompanyById(ID));
+        assertEquals(COMPANY_RESULT, companyController.getCompanyById(12));
+        assertEquals(COMPANY_RESULT, companyController.getCompanyById(153));
+        verify(companyService, times(3)).getCompanyById(anyInt());
     }
 
     @Test
     public void shouldDeleteCompanyById() {
-        when(companyService.deleteCompanyById(ID)).thenReturn(true);
+        when(companyService.deleteCompanyById(anyInt())).thenReturn(true);
+        assertTrue(companyController.deleteCompanyById(anyInt()));
         assertTrue(companyController.deleteCompanyById(ID));
+        assertTrue(companyController.deleteCompanyById(3354));
+        verify(companyService, times(3)).deleteCompanyById(anyInt());
     }
 
     @Test
     public void shouldUpdateCompanyById() {
-        when(companyService.updateCompanyById(ID, NAME)).thenReturn(true);
-        assertTrue(companyController.updateCompanyById(ID, NAME));
+        when(companyService.updateCompanyById(anyInt(), anyString())).thenReturn(true);
+        assertTrue(companyController.updateCompanyById(ID,NAME));
+        assertTrue(companyController.updateCompanyById(anyInt(), anyString()));
+        verify(companyService, times(2)).updateCompanyById(anyInt(),anyString());
     }
 
 }
