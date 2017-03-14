@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static jdbchomework.utils.TestUtils.ALL_COMPANIES;
 import static jdbchomework.utils.TestUtils.ID;
-import static jdbchomework.utils.TestUtils.SOME_NAME;
+import static jdbchomework.utils.TestUtils.COMPANY_NAME;
 import static jdbchomework.utils.TestUtils.COMPANY_RESULT;
 
 
@@ -62,9 +62,9 @@ public class CompanyControllerTest {
     @Test
     public void shouldUpdateCompanyById() {
         when(companyService.updateCompanyById(anyInt(), anyString())).thenReturn(true);
-        assertTrue(companyController.updateCompanyById(ID, SOME_NAME));
+        assertTrue(companyController.updateCompanyById(ID, COMPANY_NAME));
         assertTrue(companyController.updateCompanyById(anyInt(), anyString()));
-        verify(companyService, times(2)).updateCompanyById(anyInt(),anyString());
+        verify(companyService, times(2)).updateCompanyById(anyInt(), anyString());
     }
 
 }

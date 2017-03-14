@@ -2,7 +2,7 @@ package jdbchomework.controller;
 
 
 import static jdbchomework.utils.TestUtils.ID;
-import static jdbchomework.utils.TestUtils.SOME_NAME;
+import static jdbchomework.utils.TestUtils.CUSTOMER_NAME;
 import static jdbchomework.utils.TestUtils.ALL_CUSTOMERS;
 import static jdbchomework.utils.TestUtils.CUSTOMER_RESULT;
 
@@ -31,8 +31,8 @@ public class CustomerControllerTest {
 
     @Test
     public void shouldAddCustomerToDb() {
-        customerController.addCustomer(SOME_NAME);
-        verify(customerService, times(1)).addCustomer(SOME_NAME);
+        customerController.addCustomer(CUSTOMER_NAME);
+        verify(customerService, times(1)).addCustomer(CUSTOMER_NAME);
     }
 
     @Test
@@ -49,8 +49,8 @@ public class CustomerControllerTest {
 
     @Test
     public void updateCustomerById() {
-        when(customerService.updateCustomerById(ID, SOME_NAME)).thenReturn(true);
-        assertTrue(customerController.updateCustomerById(ID, SOME_NAME));
+        when(customerService.updateCustomerById(ID, CUSTOMER_NAME)).thenReturn(true);
+        assertTrue(customerController.updateCustomerById(ID, CUSTOMER_NAME));
     }
 
 }
