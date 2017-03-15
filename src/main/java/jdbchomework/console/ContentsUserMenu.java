@@ -79,7 +79,7 @@ public class ContentsUserMenu {
                 case (5):
                     VisualUserMenu.outputSplitLine();
                     skillMenu();
-                    return;
+                    break;
                 case (6):
                     VisualUserMenu.outputSplitLine();
                     System.out.println("\tThank you for using our service.");
