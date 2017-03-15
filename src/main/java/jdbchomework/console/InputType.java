@@ -6,7 +6,8 @@ import java.util.function.Predicate;
 
 public enum InputType {
     STRING(input -> true, ""),
-    INTEGER(StringUtils::isNumeric, "Error! Please enter a number");
+    INTEGER(StringUtils::isNumeric, "Error! Please enter a number"),
+    LIST(input -> input.matches("[0-9 ]+"), "Error! Please enter numbers separated by spaces");
 
     private String errorMessage;
     private Predicate<String> isValid;
