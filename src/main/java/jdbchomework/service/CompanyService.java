@@ -9,7 +9,6 @@ import java.util.List;
 
 public class CompanyService {
 
-    private CompaniesDao companiesDao;
     private CompaniesHibDao companiesHibDao;
 
     public CompanyService(CompaniesDao companiesDao) {
