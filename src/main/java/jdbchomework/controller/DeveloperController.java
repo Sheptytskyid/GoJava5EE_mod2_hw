@@ -18,8 +18,8 @@ public class DeveloperController {
         return developerService.getAllDevelopers();
     }
 
-    public void addDeveloper(String name) {
-        developerService.addDeveloper(name);
+    public void addDeveloper(String name, List<Skill> skills) {
+        developerService.addDeveloper(name, skills);
     }
 
     public Developer getDeveloperById(int id) {

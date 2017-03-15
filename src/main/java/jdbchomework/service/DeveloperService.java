@@ -18,8 +18,8 @@ public class DeveloperService {
         return developersDao.getAll();
     }
 
-    public void addDeveloper(String name) {
-        Developer developer = new Developer(name);
+    public void addDeveloper(String name, List<Skill> skills) {
+        Developer developer = new Developer(name, skills);
         developersDao.add(developer);
     }
 
@@ -32,8 +32,7 @@ public class DeveloperService {
     }
 
     public boolean updateDeveloperById(int id, String name, List<Skill> skills) {
-        Developer developer = new Developer(name);
-        developer.setSkills(skills);
+        Developer developer = new Developer(name, skills);
         return developersDao.updateById(id, developer);
     }
 }

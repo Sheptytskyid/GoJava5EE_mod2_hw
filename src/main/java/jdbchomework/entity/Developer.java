@@ -1,20 +1,17 @@
 package jdbchomework.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.ManyToMany;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-
-
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
 @Table(name = "developers")
 public class Developer extends AbstractEntity {
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "developers_skills",
             joinColumns = @JoinColumn(name = "developer_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id"))
@@ -31,8 +28,9 @@ public class Developer extends AbstractEntity {
     }
 
 
-    public Developer(String name) {
+    public Developer(String name, List<Skill> skills) {
         super(name);
+        this.skills = skills;
     }
 
     public List<Skill> getSkills() {

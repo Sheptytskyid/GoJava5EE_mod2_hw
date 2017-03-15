@@ -17,7 +17,7 @@
             root
         </property>
         <property name="hibernate.connection.password">
-            admin
+            root
         </property>
         <property name="current_session_context_class">thread</property>
 

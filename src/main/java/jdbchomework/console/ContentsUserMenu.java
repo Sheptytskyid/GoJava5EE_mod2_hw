@@ -79,7 +79,7 @@ public class ContentsUserMenu {
                 case (5):
                     VisualUserMenu.outputSplitLine();
                     skillMenu();
-                    return;
+                    break;
                 case (6):
                     VisualUserMenu.outputSplitLine();
                     System.out.println("\tThank you for using our service.");
@@ -313,7 +313,11 @@ public class ContentsUserMenu {
                     break;
                 case 2:
                     String name = visualUserMenu.getValidInputFromUser(PLEASE_ENTER_DEVELOPER_NAME, InputType.STRING);
-                    developerController.addDeveloper(name);
+                    List<Skill> skills = Arrays.stream(visualUserMenu.getValidInputFromUser(
+                        "Please enter skill IDs separated by spaces", InputType.LIST).split(" "))
+                        .map(skillId -> skillController.getSkillById(Integer.valueOf(skillId)))
+                        .collect(Collectors.toList());
+                    developerController.addDeveloper(name, skills);
                     System.out.println("Developer successfully added");
                     break;
                 case 3:
@@ -325,7 +329,7 @@ public class ContentsUserMenu {
                     id = Integer.parseInt(visualUserMenu
                         .getValidInputFromUser(PLEASE_ENTER_DEVELOPER_ID, InputType.INTEGER));
                     name = visualUserMenu.getValidInputFromUser(PLEASE_ENTER_DEVELOPER_NAME, InputType.STRING);
-                    List<Skill> skills = Arrays.stream(visualUserMenu.getValidInputFromUser(
+                    skills = Arrays.stream(visualUserMenu.getValidInputFromUser(
                         "Please enter skill IDs separated by spaces", InputType.LIST).split(" "))
                         .map(skillId -> skillController.getSkillById(Integer.valueOf(skillId)))
                         .collect(Collectors.toList());
