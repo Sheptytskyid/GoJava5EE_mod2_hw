@@ -1,7 +1,6 @@
 package jdbchomework.service;
 
 import jdbchomework.dao.hibernate.CompaniesHibDao;
-import jdbchomework.dao.model.CompaniesDao;
 import jdbchomework.entity.Company;
 import jdbchomework.entity.Developer;
 
@@ -9,12 +8,7 @@ import java.util.List;
 
 public class CompanyService {
 
-    private CompaniesDao companiesDao;
     private CompaniesHibDao companiesHibDao;
-
-    public CompanyService(CompaniesDao companiesDao) {
-        this.companiesDao = companiesDao;
-    }
 
     public CompanyService(CompaniesHibDao companiesDao) {
         this.companiesHibDao = companiesDao;
