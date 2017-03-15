@@ -2,6 +2,7 @@ package jdbchomework.service;
 
 import jdbchomework.dao.model.DevelopersDao;
 import jdbchomework.entity.Developer;
+import jdbchomework.entity.Skill;
 
 import java.util.List;
 
@@ -30,8 +31,9 @@ public class DeveloperService {
         return developersDao.deleteById(id);
     }
 
-    public boolean updateDeveloperById(int id, String name) {
+    public boolean updateDeveloperById(int id, String name, List<Skill> skills) {
         Developer developer = new Developer(name);
+        developer.setSkills(skills);
         return developersDao.updateById(id, developer);
     }
 }
