@@ -326,7 +326,7 @@ public class ContentsUserMenu {
                         .getValidInputFromUser(PLEASE_ENTER_DEVELOPER_ID, InputType.INTEGER));
                     name = visualUserMenu.getValidInputFromUser(PLEASE_ENTER_DEVELOPER_NAME, InputType.STRING);
                     List<Skill> skills = Arrays.stream(visualUserMenu.getValidInputFromUser(
-                        "Please enter skill IDs separated by spaces", InputType.STRING).split(" "))
+                        "Please enter skill IDs separated by spaces", InputType.LIST).split(" "))
                         .map(skillId -> skillController.getSkillById(Integer.valueOf(skillId)))
                         .collect(Collectors.toList());
                     if (developerController.updateDeveloperById(id, name, skills)) {
