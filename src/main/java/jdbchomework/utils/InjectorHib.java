@@ -25,7 +25,7 @@ import jdbchomework.service.ProjectService;
 import jdbchomework.service.SkillService;
 import org.hibernate.SessionFactory;
 
-public class InjectorHibTest {
+public class InjectorHib {
 
     private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private static CompaniesHibDao companiesHibDao = new CompaniesHibDao("Company", sessionFactory, Company.class);
@@ -49,7 +49,7 @@ public class InjectorHibTest {
             developerController, projectController, skillController, visualUserMenu);
     private static ConsoleMain consoleMain = new ConsoleMain(contentsUserMenu);
 
-    private InjectorHibTest() {
+    private InjectorHib() {
         throw new IllegalAccessError("Utility class");
     }
 
