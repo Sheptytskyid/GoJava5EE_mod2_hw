@@ -11,10 +11,6 @@ public class CompanyService {
 
     private CompaniesHibDao companiesHibDao;
 
-    public CompanyService(CompaniesDao companiesDao) {
-        this.companiesDao = companiesDao;
-    }
-
     public CompanyService(CompaniesHibDao companiesDao) {
         this.companiesHibDao = companiesDao;
     }
