@@ -5,6 +5,8 @@ import jdbchomework.controller.CustomerController;
 import jdbchomework.controller.DeveloperController;
 import jdbchomework.controller.ProjectController;
 import jdbchomework.controller.SkillController;
+import jdbchomework.entity.Developer;
+import jdbchomework.entity.Project;
 import jdbchomework.entity.Skill;
 import org.slf4j.LoggerFactory;
 
@@ -14,24 +16,24 @@ import java.util.stream.Collectors;
 
 public class ContentsUserMenu {
 
-    public static final String ERROR_INCORRECT_MENU_ITEM_SELECTED = "ERROR: Incorrect menu item selected \n";
-    public static final String SKILL_NOT_FOUND = "Skill not found";
-    public static final String PROJECT_NOT_FOUND = "Project not found";
-    public static final String COMPANY_NOT_FOUND = "Company not found";
-    public static final String CUSTOMER_NOT_FOUND = "Customer not found";
-    public static final String PLEASE_ENTER_DEVELOPER_ID = "Please enter developer ID: ";
-    public static final String DEVELOPER_NOT_FOUND = "Developer not found";
-    public static final String PLEASE_ENTER_CUSTOMER_ID = "Please enter customer ID: ";
-    public static final String PLEASE_ENTER_CUSTOMER_NAME = "Please enter customer name: ";
-    public static final String CHOOSE_ACTION = "Choose action: ";
-    public static final String PLEASE_ENTER_DEVELOPER_NAME = "Please enter developer name: ";
-    public static final String PLEASE_ENTER_COMPANY_NAME = "Please enter company name: ";
-    public static final String PLEASE_ENTER_COMPANY_ID = "Please enter company ID: ";
-    public static final String PLEASE_ENTER_PROJECT_NAME = "Please enter project name: ";
-    public static final String PLEASE_ENTER_PROJECT_ID = "Please enter project ID: ";
-    public static final String PLEASE_ENTER_PROJECT_COST = "Please enter project cost: ";
-    public static final String PLEASE_ENTER_SKILL_NAME = "Please enter skill name: ";
-    public static final String PLEASE_ENTER_SKILL_ID = "Please enter skill ID: ";
+    private static final String ERROR_INCORRECT_MENU_ITEM_SELECTED = "ERROR: Incorrect menu item selected \n";
+    private static final String SKILL_NOT_FOUND = "Skill not found";
+    private static final String PROJECT_NOT_FOUND = "Project not found";
+    private static final String COMPANY_NOT_FOUND = "Company not found";
+    private static final String CUSTOMER_NOT_FOUND = "Customer not found";
+    private static final String PLEASE_ENTER_DEVELOPER_ID = "Please enter developer ID: ";
+    private static final String DEVELOPER_NOT_FOUND = "Developer not found";
+    private static final String PLEASE_ENTER_CUSTOMER_ID = "Please enter customer ID: ";
+    private static final String PLEASE_ENTER_CUSTOMER_NAME = "Please enter customer name: ";
+    private static final String CHOOSE_ACTION = "Choose action: ";
+    private static final String PLEASE_ENTER_DEVELOPER_NAME = "Please enter developer name: ";
+    private static final String PLEASE_ENTER_COMPANY_NAME = "Please enter company name: ";
+    private static final String PLEASE_ENTER_COMPANY_ID = "Please enter company ID: ";
+    private static final String PLEASE_ENTER_PROJECT_NAME = "Please enter project name: ";
+    private static final String PLEASE_ENTER_PROJECT_ID = "Please enter project ID: ";
+    private static final String PLEASE_ENTER_PROJECT_COST = "Please enter project cost: ";
+    private static final String PLEASE_ENTER_SKILL_NAME = "Please enter skill name: ";
+    private static final String PLEASE_ENTER_SKILL_ID = "Please enter skill ID: ";
     private static org.slf4j.Logger log = LoggerFactory.getLogger(ContentsUserMenu.class);
 
     private CompanyController companyController;
@@ -208,7 +210,15 @@ public class ContentsUserMenu {
                     break;
                 case 2:
                     String name = visualUserMenu.getValidInputFromUser(PLEASE_ENTER_COMPANY_NAME, InputType.STRING);
-                    companyController.addCompany(name);
+                    List<Project> projects = Arrays.stream(visualUserMenu.getValidInputFromUser(
+                        "Please enter project IDs separated by spaces", InputType.LIST).split(" "))
+                        .map(projectId -> projectController.getProjectById(Integer.valueOf(projectId)))
+                        .collect(Collectors.toList());
+                    List<Developer> developers = Arrays.stream(visualUserMenu.getValidInputFromUser(
+                        "Please enter developer IDs separated by spaces", InputType.LIST).split(" "))
+                        .map(developerId -> developerController.getDeveloperById(Integer.valueOf(developerId)))
+                        .collect(Collectors.toList());
+                    companyController.addCompany(name, projects, developers);
                     System.out.println("Company successfully added");
                     break;
                 case 3:
@@ -216,7 +226,6 @@ public class ContentsUserMenu {
                         .getValidInputFromUser(PLEASE_ENTER_COMPANY_ID, InputType.INTEGER));
                     System.out.println(companyController.getCompanyById(id));
                     break;
-
                 case 4:
                     id = Integer.parseInt(visualUserMenu.getValidInputFromUser(PLEASE_ENTER_COMPANY_ID, InputType.INTEGER));
                     companyController.getAllCompanyDevelopers(id).forEach(System.out::println);
@@ -225,7 +234,15 @@ public class ContentsUserMenu {
                     id = Integer.parseInt(visualUserMenu
                         .getValidInputFromUser(PLEASE_ENTER_COMPANY_ID, InputType.INTEGER));
                     name = visualUserMenu.getValidInputFromUser(PLEASE_ENTER_COMPANY_NAME, InputType.STRING);
-                    if (companyController.updateCompanyById(id, name)) {
+                    projects = Arrays.stream(visualUserMenu.getValidInputFromUser(
+                        "Please enter project IDs separated by spaces", InputType.LIST).split(" "))
+                        .map(projectId -> projectController.getProjectById(Integer.valueOf(projectId)))
+                        .collect(Collectors.toList());
+                    developers = Arrays.stream(visualUserMenu.getValidInputFromUser(
+                        "Please enter developer IDs separated by spaces", InputType.LIST).split(" "))
+                        .map(developerId -> developerController.getDeveloperById(Integer.valueOf(developerId)))
+                        .collect(Collectors.toList());
+                    if (companyController.updateCompanyById(id, name, projects, developers)) {
                         System.out.println("Company successfully updated");
                     } else {
                         System.out.println(COMPANY_NOT_FOUND);

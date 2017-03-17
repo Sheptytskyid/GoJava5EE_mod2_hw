@@ -3,6 +3,7 @@ package jdbchomework.service;
 import jdbchomework.dao.hibernate.CompaniesHibDao;
 import jdbchomework.entity.Company;
 import jdbchomework.entity.Developer;
+import jdbchomework.entity.Project;
 
 import java.util.List;
 
@@ -24,8 +25,8 @@ public class CompanyService {
     /**
      * Using by Hibernate
      */
-    public void addCompany(String name) {
-        Company company = new Company(name);
+    public void addCompany(String name, List<Project> projects, List<Developer> developers) {
+        Company company = new Company(name, projects, developers);
         companiesHibDao.add(company);
     }
 
@@ -37,8 +38,8 @@ public class CompanyService {
         return companiesHibDao.deleteById(id);
     }
 
-    public boolean updateCompanyById(int id, String name) {
-        Company company = new Company(name);
+    public boolean updateCompanyById(int id, String name, List<Project> projects, List<Developer> developers) {
+        Company company = new Company(name, projects, developers);
         return companiesHibDao.updateById(id, company);
     }
 
