@@ -23,8 +23,8 @@ public class CompanyController {
         return companyService.getCompanyDevelopers(id);
     }
 
-    public void addCompany(String name, List<Project> projects, List<Developer> developers) {
-        companyService.addCompany(name, projects, developers);
+    public void addCompany(String name, List<Project> projects) {
+        companyService.addCompany(name, projects);
     }
 
     public Company getCompanyById(int id) {
@@ -35,7 +35,7 @@ public class CompanyController {
         return companyService.deleteCompanyById(id);
     }
 
-    public boolean updateCompanyById(int id, String name, List<Project> projects, List<Developer> developers) {
-        return companyService.updateCompanyById(id, name, projects, developers);
+    public boolean updateCompanyById(int id, String name, List<Project> projects) {
+        return companyService.updateCompanyById(id, name, projects);
     }
 }

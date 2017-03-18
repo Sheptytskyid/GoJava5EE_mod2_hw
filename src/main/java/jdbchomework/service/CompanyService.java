@@ -25,8 +25,8 @@ public class CompanyService {
     /**
      * Using by Hibernate
      */
-    public void addCompany(String name, List<Project> projects, List<Developer> developers) {
-        Company company = new Company(name, projects, developers);
+    public void addCompany(String name, List<Project> projects) {
+        Company company = new Company(name, projects);
         companiesHibDao.add(company);
     }
 
@@ -38,8 +38,8 @@ public class CompanyService {
         return companiesHibDao.deleteById(id);
     }
 
-    public boolean updateCompanyById(int id, String name, List<Project> projects, List<Developer> developers) {
-        Company company = new Company(name, projects, developers);
+    public boolean updateCompanyById(int id, String name, List<Project> projects) {
+        Company company = new Company(name, projects);
         return companiesHibDao.updateById(id, company);
     }
 

@@ -5,7 +5,6 @@ import jdbchomework.controller.CustomerController;
 import jdbchomework.controller.DeveloperController;
 import jdbchomework.controller.ProjectController;
 import jdbchomework.controller.SkillController;
-import jdbchomework.entity.Developer;
 import jdbchomework.entity.Project;
 import jdbchomework.entity.Skill;
 import org.slf4j.LoggerFactory;
@@ -214,11 +213,7 @@ public class ContentsUserMenu {
                         "Please enter project IDs separated by spaces", InputType.LIST).split(" "))
                         .map(projectId -> projectController.getProjectById(Integer.valueOf(projectId)))
                         .collect(Collectors.toList());
-                    List<Developer> developers = Arrays.stream(visualUserMenu.getValidInputFromUser(
-                        "Please enter developer IDs separated by spaces", InputType.LIST).split(" "))
-                        .map(developerId -> developerController.getDeveloperById(Integer.valueOf(developerId)))
-                        .collect(Collectors.toList());
-                    companyController.addCompany(name, projects, developers);
+                    companyController.addCompany(name, projects);
                     System.out.println("Company successfully added");
                     break;
                 case 3:
@@ -238,11 +233,7 @@ public class ContentsUserMenu {
                         "Please enter project IDs separated by spaces", InputType.LIST).split(" "))
                         .map(projectId -> projectController.getProjectById(Integer.valueOf(projectId)))
                         .collect(Collectors.toList());
-                    developers = Arrays.stream(visualUserMenu.getValidInputFromUser(
-                        "Please enter developer IDs separated by spaces", InputType.LIST).split(" "))
-                        .map(developerId -> developerController.getDeveloperById(Integer.valueOf(developerId)))
-                        .collect(Collectors.toList());
-                    if (companyController.updateCompanyById(id, name, projects, developers)) {
+                    if (companyController.updateCompanyById(id, name, projects)) {
                         System.out.println("Company successfully updated");
                     } else {
                         System.out.println(COMPANY_NOT_FOUND);
