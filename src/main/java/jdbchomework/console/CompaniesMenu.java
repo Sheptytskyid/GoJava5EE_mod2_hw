@@ -26,7 +26,6 @@ public class CompaniesMenu extends AbstractMenu {
     }
 
     public void menu() {
-        mark:
         while (true) {
             printListInConsole(menuContents.getServiceHeaderCompany(), menuContents.getServiceCompaniesMenu());
             int action = readInt(CHOOSE_ACTION);
@@ -66,9 +65,9 @@ public class CompaniesMenu extends AbstractMenu {
                         System.out.println(COMPANY_NOT_FOUND);
                     }
                     break;
-                case (7):
+                case 7:
                     printSplitLine();
-                    break mark;
+                    return;
                 default:
                     printSplitLine();
                     System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
