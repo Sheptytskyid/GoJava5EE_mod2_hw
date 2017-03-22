@@ -41,10 +41,6 @@ public class Company extends AbstractEntity {
         sb.append("id = ").append(getId()).append(" ");
         sb.append("name = ").append(getName()).append(" ");
         sb.append("projects = ").append(projects).append(" ");
-        final StringBuilder sb = new StringBuilder("Company{\n");
-        sb.append("\tid = ").append(getId()).append(" \n");
-        sb.append("\tname = ").append(getName()).append(" \n");
-        sb.append("\tprojects = ").append(projects).append(" \n");
         sb.append('}');
         return sb.toString();
     }
