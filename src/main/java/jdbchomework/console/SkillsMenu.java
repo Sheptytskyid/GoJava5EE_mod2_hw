@@ -8,7 +8,7 @@ public class SkillsMenu extends AbstractMenu {
     private static final String SKILL_NOT_FOUND = "Skill not found";
     private static final String PLEASE_ENTER_SKILL_NAME = "Please enter skill name: ";
     private static final String PLEASE_ENTER_SKILL_ID = "Please enter skill ID: ";
-    
+
     private SkillController skillController;
 
     public SkillsMenu(MenuContents menuContents, SkillController skillController) {
@@ -18,7 +18,6 @@ public class SkillsMenu extends AbstractMenu {
     }
 
     public void menu() {
-        mark:
         while (true) {
             printListInConsole(menuContents.getServiceHeaderSkill(),
                 menuContents.getServiceSkillsMenu());
@@ -42,7 +41,7 @@ public class SkillsMenu extends AbstractMenu {
                     if (skillController.updateSkillById(id, name)) {
                         System.out.println("Skill successfully updated");
                     } else {
-                        System.out.println(SKILL_NOT_FOUND);
+                        System.err.println(SKILL_NOT_FOUND);
                     }
                     break;
                 case 5:
@@ -50,17 +49,16 @@ public class SkillsMenu extends AbstractMenu {
                     if (skillController.deleteSkillById(id)) {
                         System.out.println("Skill successfully deleted");
                     } else {
-                        System.out.println(SKILL_NOT_FOUND);
+                        System.err.println(SKILL_NOT_FOUND);
                     }
                     break;
-                case (6):
+                case 6:
                     printSplitLine();
-                    break mark;
+                    return;
                 default:
                     printSplitLine();
-                    System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
+                    System.err.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
             }
         }
     }
-
 }

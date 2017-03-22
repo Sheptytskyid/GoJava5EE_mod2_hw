@@ -5,6 +5,7 @@ import java.util.List;
 
 public class MenuContents {
 
+    public static final String SPLIT_LINE = "**************************************************************";
     private List<String> siteHeader = new ArrayList<>();
     private List<String> serviceHeader = new ArrayList<>();
     private List<String> serviceHeaderCompany = new ArrayList<>();
@@ -22,9 +23,9 @@ public class MenuContents {
     private List<String> selectionMenu = new ArrayList<>();
 
     public void makeMenus() {
-        siteHeader.add("**************************************************************");
+        siteHeader.add(SPLIT_LINE);
         siteHeader.add("\t\tWelcome to DB manager");
-        siteHeader.add("**************************************************************");
+        siteHeader.add(SPLIT_LINE);
         serviceHeader.add("\n\tMain menu");
         serviceHeaderCompany.add("\n\tCompany menu");
         serviceHeaderCustomer.add("\n\tCustomer menu");
@@ -68,7 +69,7 @@ public class MenuContents {
         serviceSkillsMenu.add("Update skill by ID");
         serviceSkillsMenu.add("Delete skill by ID");
         serviceSkillsMenu.add("Go to main menu");
-        selectionHeader.add("**************************************************************");
+        selectionHeader.add(SPLIT_LINE);
         selectionMenu.add("Yes");
         selectionMenu.add("No");
     }

@@ -27,7 +27,6 @@ public class DevelopersMenu extends AbstractMenu {
     }
 
     public void menu() {
-        mark:
         while (true) {
             printListInConsole(menuContents.getServiceHeaderDeveloper(),
                 menuContents.getServiceDevelopersMenu());
@@ -53,7 +52,7 @@ public class DevelopersMenu extends AbstractMenu {
                     if (developerController.updateDeveloperById(id, name, skills)) {
                         System.out.println("Developer successfully updated");
                     } else {
-                        System.out.println(DEVELOPER_NOT_FOUND);
+                        System.err.println(DEVELOPER_NOT_FOUND);
                     }
                     break;
                 case 5:
@@ -61,12 +60,12 @@ public class DevelopersMenu extends AbstractMenu {
                     if (developerController.deleteDeveloperById(id)) {
                         System.out.println("Developer successfully deleted");
                     } else {
-                        System.out.println(DEVELOPER_NOT_FOUND);
+                        System.err.println(DEVELOPER_NOT_FOUND);
                     }
                     break;
-                case (6):
-                    printSplitLine();;
-                    break mark;
+                case 6:
+                    printSplitLine();
+                    return;
                 default:
                     printSplitLine();
                     System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
@@ -76,8 +75,8 @@ public class DevelopersMenu extends AbstractMenu {
 
     private List<Skill> readList() {
         return Arrays.stream(getValidInputFromUser(
-                            "Please enter skill IDs separated by spaces", InputType.LIST).split(" "))
-                            .map(skillId -> skillController.getSkillById(Integer.valueOf(skillId)))
-                            .collect(Collectors.toList());
+            "Please enter skill IDs separated by spaces", InputType.LIST).split(" "))
+            .map(skillId -> skillController.getSkillById(Integer.valueOf(skillId)))
+            .collect(Collectors.toList());
     }
 }

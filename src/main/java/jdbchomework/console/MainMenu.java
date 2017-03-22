@@ -25,38 +25,37 @@ public class MainMenu extends AbstractMenu {
 
     public void menu() {
         printListInConsole(menuContents.getSiteHeader(), null);
-        mark:
         while (true) {
             printListInConsole(menuContents.getServiceHeader(), menuContents.getServiceMainMenu());
             int action = readInt(CHOOSE_ACTION);
             switch (action) {
-                case (1):
+                case 1:
                     printSplitLine();
                     companiesMenu.menu();
                     break;
-                case (2):
+                case 2:
                     printSplitLine();
                     customersMenu.menu();
                     break;
-                case (3):
+                case 3:
                     printSplitLine();
                     developersMenu.menu();
                     break;
-                case (4):
+                case 4:
                     printSplitLine();
                     projectsMenu.menu();
                     break;
-                case (5):
+                case 5:
                     printSplitLine();
                     skillsMenu.menu();
                     break;
-                case (6):
+                case 6:
                     printSplitLine();
                     System.out.println(THANK_YOU_FOR_USING_OUR_SERVICE);
-                    break mark;
+                    return;
                 default:
                     printSplitLine();
-                    System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
+                    System.err.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
             }
         }
     }

@@ -19,7 +19,6 @@ public class ProjectsMenu extends AbstractMenu {
     }
 
     public void menu() {
-        mark:
         while (true) {
             printListInConsole(menuContents.getServiceHeaderProject(), menuContents.getServiceProjectsMenu());
             int action = readInt(CHOOSE_ACTION);
@@ -44,7 +43,7 @@ public class ProjectsMenu extends AbstractMenu {
                     if (projectController.updateProjectById(id, name, cost)) {
                         System.out.println("Project successfully updated");
                     } else {
-                        System.out.println(PROJECT_NOT_FOUND);
+                        System.err.println(PROJECT_NOT_FOUND);
                     }
                     break;
                 case 5:
@@ -52,15 +51,15 @@ public class ProjectsMenu extends AbstractMenu {
                     if (projectController.deleteProjectById(id)) {
                         System.out.println("Project successfully deleted");
                     } else {
-                        System.out.println(PROJECT_NOT_FOUND);
+                        System.err.println(PROJECT_NOT_FOUND);
                     }
                     break;
-                case (6):
+                case 6:
                     printSplitLine();
-                    break mark;
+                    return;
                 default:
                     printSplitLine();
-                    System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
+                    System.err.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
             }
         }
     }

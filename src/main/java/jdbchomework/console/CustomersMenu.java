@@ -18,7 +18,6 @@ public class CustomersMenu extends AbstractMenu {
     }
 
     public void menu() {
-        mark:
         while (true) {
             printListInConsole(menuContents.getServiceHeaderCustomer(),
                 menuContents.getServiceCustomersMenu());
@@ -42,7 +41,7 @@ public class CustomersMenu extends AbstractMenu {
                     if (customerController.updateCustomerById(id, name)) {
                         System.out.println("Customer successfully updated");
                     } else {
-                        System.out.println(CUSTOMER_NOT_FOUND);
+                        System.err.println(CUSTOMER_NOT_FOUND);
                     }
                     break;
                 case 5:
@@ -50,15 +49,15 @@ public class CustomersMenu extends AbstractMenu {
                     if (customerController.deleteCustomerById(id)) {
                         System.out.println("Customer successfully deleted");
                     } else {
-                        System.out.println(CUSTOMER_NOT_FOUND);
+                        System.err.println(CUSTOMER_NOT_FOUND);
                     }
                     break;
-                case (6):
+                case 6:
                     printSplitLine();
-                    break mark;
+                    return;
                 default:
                     printSplitLine();
-                    System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
+                    System.err.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
             }
         }
     }
