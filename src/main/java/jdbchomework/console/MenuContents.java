@@ -3,28 +3,25 @@ package jdbchomework.console;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListMenu {
+public class MenuContents {
 
-    private static List<String> siteHeader = new ArrayList<>();
-    private static List<String> serviceHeader = new ArrayList<>();
-    private static List<String> serviceHeaderCompany = new ArrayList<>();
-    private static List<String> serviceHeaderCustomer = new ArrayList<>();
-    private static List<String> serviceHeaderDeveloper = new ArrayList<>();
-    private static List<String> serviceHeaderProject = new ArrayList<>();
-    private static List<String> serviceHeaderSkill = new ArrayList<>();
-    private static List<String> serviceMainMenu = new ArrayList<>();
-    private static List<String> serviceCompaniesMenu = new ArrayList<>();
-    private static List<String> serviceCustomersMenu = new ArrayList<>();
-    private static List<String> serviceDevelopersMenu = new ArrayList<>();
-    private static List<String> serviceProjectsMenu = new ArrayList<>();
-    private static List<String> serviceSkillsMenu = new ArrayList<>();
-    private static List<String> selectionHeader = new ArrayList<>();
-    private static List<String> selectionMenu = new ArrayList<>();
+    private List<String> siteHeader = new ArrayList<>();
+    private List<String> serviceHeader = new ArrayList<>();
+    private List<String> serviceHeaderCompany = new ArrayList<>();
+    private List<String> serviceHeaderCustomer = new ArrayList<>();
+    private List<String> serviceHeaderDeveloper = new ArrayList<>();
+    private List<String> serviceHeaderProject = new ArrayList<>();
+    private List<String> serviceHeaderSkill = new ArrayList<>();
+    private List<String> serviceMainMenu = new ArrayList<>();
+    private List<String> serviceCompaniesMenu = new ArrayList<>();
+    private List<String> serviceCustomersMenu = new ArrayList<>();
+    private List<String> serviceDevelopersMenu = new ArrayList<>();
+    private List<String> serviceProjectsMenu = new ArrayList<>();
+    private List<String> serviceSkillsMenu = new ArrayList<>();
+    private List<String> selectionHeader = new ArrayList<>();
+    private List<String> selectionMenu = new ArrayList<>();
 
-    private ListMenu() {
-    }
-
-    public static void makeMenus() {
+    public void makeMenus() {
         siteHeader.add("**************************************************************");
         siteHeader.add("\t\tWelcome to DB manager");
         siteHeader.add("**************************************************************");
@@ -76,63 +73,63 @@ public class ListMenu {
         selectionMenu.add("No");
     }
 
-    public static List<String> getSiteHeader() {
+    public List<String> getSiteHeader() {
         return siteHeader;
     }
 
-    public static List<String> getServiceHeader() {
+    public List<String> getServiceHeader() {
         return serviceHeader;
     }
 
-    public static List<String> getServiceMainMenu() {
+    public List<String> getServiceMainMenu() {
         return serviceMainMenu;
     }
 
-    public static List<String> getServiceCompaniesMenu() {
+    public List<String> getServiceCompaniesMenu() {
         return serviceCompaniesMenu;
     }
 
-    public static List<String> getServiceCustomersMenu() {
+    public List<String> getServiceCustomersMenu() {
         return serviceCustomersMenu;
     }
 
-    public static List<String> getServiceDevelopersMenu() {
+    public List<String> getServiceDevelopersMenu() {
         return serviceDevelopersMenu;
     }
 
-    public static List<String> getServiceProjectsMenu() {
+    public List<String> getServiceProjectsMenu() {
         return serviceProjectsMenu;
     }
 
-    public static List<String> getServiceSkillsMenu() {
+    public List<String> getServiceSkillsMenu() {
         return serviceSkillsMenu;
     }
 
-    public static List<String> getSelectionHeader() {
+    public List<String> getSelectionHeader() {
         return selectionHeader;
     }
 
-    public static List<String> getSelectionMenu() {
+    public List<String> getSelectionMenu() {
         return selectionMenu;
     }
 
-    public static List<String> getServiceHeaderCompany() {
+    public List<String> getServiceHeaderCompany() {
         return serviceHeaderCompany;
     }
 
-    public static List<String> getServiceHeaderCustomer() {
+    public List<String> getServiceHeaderCustomer() {
         return serviceHeaderCustomer;
     }
 
-    public static List<String> getServiceHeaderDeveloper() {
+    public List<String> getServiceHeaderDeveloper() {
         return serviceHeaderDeveloper;
     }
 
-    public static List<String> getServiceHeaderProject() {
+    public List<String> getServiceHeaderProject() {
         return serviceHeaderProject;
     }
 
-    public static List<String> getServiceHeaderSkill() {
+    public List<String> getServiceHeaderSkill() {
         return serviceHeaderSkill;
     }
 }

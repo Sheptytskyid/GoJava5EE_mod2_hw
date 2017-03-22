@@ -1,8 +1,13 @@
 package jdbchomework.utils;
 
-import jdbchomework.console.ConsoleMain;
-import jdbchomework.console.ContentsUserMenu;
-import jdbchomework.console.VisualUserMenu;
+import jdbchomework.console.CompaniesMenu;
+import jdbchomework.console.CustomersMenu;
+import jdbchomework.console.DevelopersMenu;
+import jdbchomework.console.MainMenu;
+import jdbchomework.console.MenuContents;
+import jdbchomework.console.MenuLauncher;
+import jdbchomework.console.ProjectsMenu;
+import jdbchomework.console.SkillsMenu;
 import jdbchomework.controller.CompanyController;
 import jdbchomework.controller.CustomerController;
 import jdbchomework.controller.DeveloperController;
@@ -44,16 +49,23 @@ public class InjectorHib {
     private static ProjectController projectController = new ProjectController(projectService);
     private static SkillController skillController = new SkillController(skillService);
 
-    private static VisualUserMenu visualUserMenu = new VisualUserMenu();
-    private static ContentsUserMenu contentsUserMenu = new ContentsUserMenu(companyController, customerController,
-            developerController, projectController, skillController, visualUserMenu);
-    private static ConsoleMain consoleMain = new ConsoleMain(contentsUserMenu);
+    private static MenuContents menuContents = new MenuContents();
+    private static DevelopersMenu developersMenu = new DevelopersMenu(menuContents, developerController,
+        skillController);
+    private static SkillsMenu skillsMenu = new SkillsMenu(menuContents, skillController);
+    private static CompaniesMenu companiesMenu = new CompaniesMenu(menuContents, companyController,
+        projectController);
+    private static ProjectsMenu projectsMenu = new ProjectsMenu(menuContents, projectController);
+    private static CustomersMenu customersMenu = new CustomersMenu(menuContents, customerController);
+    private static MainMenu mainMenu = new MainMenu(menuContents, companiesMenu, customersMenu, developersMenu,
+        projectsMenu, skillsMenu);
+    private static MenuLauncher menuLauncher = new MenuLauncher(mainMenu, menuContents);
 
     private InjectorHib() {
         throw new IllegalAccessError("Utility class");
     }
 
-    public static ConsoleMain getConsoleMain() {
-        return consoleMain;
+    public static MenuLauncher getMenuLauncher() {
+        return menuLauncher;
     }
 }
