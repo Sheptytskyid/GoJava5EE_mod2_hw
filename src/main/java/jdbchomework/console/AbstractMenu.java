@@ -49,7 +49,7 @@ public abstract class AbstractMenu {
                 input = MainWithJdbc.getReader().readLine();
             }
         } catch (IOException e) {
-            log.error(String.format("Error reading user input from console"), e);
+            log.error("Error reading user input from console", e);
         }
         return input;
     }
