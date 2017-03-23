@@ -3,7 +3,6 @@ package jdbchomework.console;
 import jdbchomework.controller.DeveloperController;
 import jdbchomework.controller.SkillController;
 import jdbchomework.entity.Skill;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,14 +19,15 @@ public class DevelopersMenu extends AbstractMenu {
 
     public DevelopersMenu(MenuContents menuContents, DeveloperController developerController,
                           SkillController skillController) {
-        super(LoggerFactory.getLogger(DevelopersMenu.class), menuContents);
+        super(menuContents);
         this.menuContents = menuContents;
         this.developerController = developerController;
         this.skillController = skillController;
     }
 
     public void menu() {
-        while (true) {
+        boolean loopMenu = true;
+        while (loopMenu) {
             printListInConsole(menuContents.getServiceHeaderDeveloper(),
                 menuContents.getServiceDevelopersMenu());
             int action = readInt(CHOOSE_ACTION);
@@ -64,10 +64,11 @@ public class DevelopersMenu extends AbstractMenu {
                     }
                     break;
                 case 6:
-                    printSplitLine();
-                    return;
+                    System.out.println(SPLIT_LINE);
+                    loopMenu = false;
+                    break;
                 default:
-                    printSplitLine();
+                    System.out.println(SPLIT_LINE);
                     System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
             }
         }

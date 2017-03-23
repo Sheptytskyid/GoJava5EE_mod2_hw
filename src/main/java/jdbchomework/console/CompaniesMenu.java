@@ -3,7 +3,6 @@ package jdbchomework.console;
 import jdbchomework.controller.CompanyController;
 import jdbchomework.controller.ProjectController;
 import jdbchomework.entity.Project;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,13 +19,14 @@ public class CompaniesMenu extends AbstractMenu {
 
     public CompaniesMenu(MenuContents menuContents, CompanyController companyController, ProjectController
         projectController) {
-        super(LoggerFactory.getLogger(CompaniesMenu.class), menuContents);
+        super(menuContents);
         this.companyController = companyController;
         this.projectController = projectController;
     }
 
     public void menu() {
-        while (true) {
+        boolean loopMenu = true;
+        while (loopMenu) {
             printListInConsole(menuContents.getServiceHeaderCompany(), menuContents.getServiceCompaniesMenu());
             int action = readInt(CHOOSE_ACTION);
             switch (action) {
@@ -66,10 +66,11 @@ public class CompaniesMenu extends AbstractMenu {
                     }
                     break;
                 case 7:
-                    printSplitLine();
-                    return;
+                    System.out.println(SPLIT_LINE);
+                    loopMenu = false;
+                    break;
                 default:
-                    printSplitLine();
+                    System.out.println(SPLIT_LINE);
                     System.out.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
             }
         }

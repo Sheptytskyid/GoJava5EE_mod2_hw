@@ -1,7 +1,5 @@
 package jdbchomework.console;
 
-import org.slf4j.LoggerFactory;
-
 public class MainMenu extends AbstractMenu {
 
     public static final String THANK_YOU_FOR_USING_OUR_SERVICE = "\tThank you for using our service.";
@@ -14,7 +12,7 @@ public class MainMenu extends AbstractMenu {
 
     public MainMenu(MenuContents menuContents, CompaniesMenu companiesMenu, CustomersMenu customersMenu,
                     DevelopersMenu developersMenu, ProjectsMenu projectsMenu, SkillsMenu skillsMenu) {
-        super(LoggerFactory.getLogger(MainMenu.class), menuContents);
+        super(menuContents);
         this.menuContents = menuContents;
         this.companiesMenu = companiesMenu;
         this.customersMenu = customersMenu;
@@ -25,36 +23,38 @@ public class MainMenu extends AbstractMenu {
 
     public void menu() {
         printListInConsole(menuContents.getSiteHeader(), null);
-        while (true) {
+        boolean loopMenu = true;
+        while (loopMenu) {
             printListInConsole(menuContents.getServiceHeader(), menuContents.getServiceMainMenu());
             int action = readInt(CHOOSE_ACTION);
             switch (action) {
                 case 1:
-                    printSplitLine();
+                    System.out.println(SPLIT_LINE);
                     companiesMenu.menu();
                     break;
                 case 2:
-                    printSplitLine();
+                    System.out.println(SPLIT_LINE);
                     customersMenu.menu();
                     break;
                 case 3:
-                    printSplitLine();
+                    System.out.println(SPLIT_LINE);
                     developersMenu.menu();
                     break;
                 case 4:
-                    printSplitLine();
+                    System.out.println(SPLIT_LINE);
                     projectsMenu.menu();
                     break;
                 case 5:
-                    printSplitLine();
+                    System.out.println(SPLIT_LINE);
                     skillsMenu.menu();
                     break;
                 case 6:
-                    printSplitLine();
+                    System.out.println(SPLIT_LINE);
                     System.out.println(THANK_YOU_FOR_USING_OUR_SERVICE);
-                    return;
+                    loopMenu = false;
+                    break;
                 default:
-                    printSplitLine();
+                    System.out.println(SPLIT_LINE);
                     System.err.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
             }
         }

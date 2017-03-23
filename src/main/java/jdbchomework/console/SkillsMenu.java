@@ -1,7 +1,6 @@
 package jdbchomework.console;
 
 import jdbchomework.controller.SkillController;
-import org.slf4j.LoggerFactory;
 
 public class SkillsMenu extends AbstractMenu {
 
@@ -12,13 +11,14 @@ public class SkillsMenu extends AbstractMenu {
     private SkillController skillController;
 
     public SkillsMenu(MenuContents menuContents, SkillController skillController) {
-        super(LoggerFactory.getLogger(SkillsMenu.class), menuContents);
+        super(menuContents);
         this.menuContents = menuContents;
         this.skillController = skillController;
     }
 
     public void menu() {
-        while (true) {
+        boolean loopMenu = true;
+        while (loopMenu) {
             printListInConsole(menuContents.getServiceHeaderSkill(),
                 menuContents.getServiceSkillsMenu());
             int action = readInt(CHOOSE_ACTION);
@@ -53,10 +53,11 @@ public class SkillsMenu extends AbstractMenu {
                     }
                     break;
                 case 6:
-                    printSplitLine();
-                    return;
+                    System.out.println(SPLIT_LINE);
+                    loopMenu = false;
+                    break;
                 default:
-                    printSplitLine();
+                    System.out.println(SPLIT_LINE);
                     System.err.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
             }
         }

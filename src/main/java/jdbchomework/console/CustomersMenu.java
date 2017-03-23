@@ -1,7 +1,6 @@
 package jdbchomework.console;
 
 import jdbchomework.controller.CustomerController;
-import org.slf4j.LoggerFactory;
 
 public class CustomersMenu extends AbstractMenu {
 
@@ -12,15 +11,15 @@ public class CustomersMenu extends AbstractMenu {
     private CustomerController customerController;
 
     public CustomersMenu(MenuContents menuContents, CustomerController customerController) {
-        super(LoggerFactory.getLogger(CustomersMenu.class), menuContents);
+        super(menuContents);
         this.menuContents = menuContents;
         this.customerController = customerController;
     }
 
     public void menu() {
-        while (true) {
-            printListInConsole(menuContents.getServiceHeaderCustomer(),
-                menuContents.getServiceCustomersMenu());
+        boolean loopMenu = true;
+        while (loopMenu) {
+            printListInConsole(menuContents.getServiceHeaderCustomer(), menuContents.getServiceCustomersMenu());
             int action = readInt(CHOOSE_ACTION);
             switch (action) {
                 case 1:
@@ -53,10 +52,11 @@ public class CustomersMenu extends AbstractMenu {
                     }
                     break;
                 case 6:
-                    printSplitLine();
-                    return;
+                    System.out.println(SPLIT_LINE);
+                    loopMenu = false;
+                    break;
                 default:
-                    printSplitLine();
+                    System.out.println(SPLIT_LINE);
                     System.err.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
             }
         }

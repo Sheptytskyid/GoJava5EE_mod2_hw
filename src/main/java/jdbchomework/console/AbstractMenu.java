@@ -1,7 +1,7 @@
 package jdbchomework.console;
 
 import jdbchomework.MainWithJdbc;
-import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,11 +10,11 @@ public abstract class AbstractMenu {
 
     public static final String CHOOSE_ACTION = "Choose action: ";
     public static final String ERROR_INCORRECT_MENU_ITEM_SELECTED = "ERROR: Incorrect menu item selected \n";
+    public static final String SPLIT_LINE = "**************************************************************";
     protected MenuContents menuContents;
-    private org.slf4j.Logger log;
+    private org.slf4j.Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public AbstractMenu(Logger log, MenuContents menuContents) {
-        this.log = log;
+    public AbstractMenu(MenuContents menuContents) {
         this.menuContents = menuContents;
     }
 
@@ -37,10 +37,6 @@ public abstract class AbstractMenu {
 
     protected String readString(String message) {
         return getValidInputFromUser(message, InputType.STRING);
-    }
-
-    protected void printSplitLine() {
-        System.out.println("**************************************************************");
     }
 
     protected String getValidInputFromUser(String message, InputType type) {

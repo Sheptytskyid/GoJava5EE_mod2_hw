@@ -1,7 +1,6 @@
 package jdbchomework.console;
 
 import jdbchomework.controller.ProjectController;
-import org.slf4j.LoggerFactory;
 
 public class ProjectsMenu extends AbstractMenu {
 
@@ -13,13 +12,14 @@ public class ProjectsMenu extends AbstractMenu {
     private ProjectController projectController;
 
     public ProjectsMenu(MenuContents menuContents, ProjectController projectController) {
-        super(LoggerFactory.getLogger(ProjectsMenu.class), menuContents);
+        super(menuContents);
         this.menuContents = menuContents;
         this.projectController = projectController;
     }
 
     public void menu() {
-        while (true) {
+        boolean loopMenu = true;
+        while (loopMenu) {
             printListInConsole(menuContents.getServiceHeaderProject(), menuContents.getServiceProjectsMenu());
             int action = readInt(CHOOSE_ACTION);
             switch (action) {
@@ -55,10 +55,11 @@ public class ProjectsMenu extends AbstractMenu {
                     }
                     break;
                 case 6:
-                    printSplitLine();
-                    return;
+                    System.out.println(SPLIT_LINE);
+                    loopMenu = false;
+                    break;
                 default:
-                    printSplitLine();
+                    System.out.println(SPLIT_LINE);
                     System.err.println(ERROR_INCORRECT_MENU_ITEM_SELECTED);
             }
         }
