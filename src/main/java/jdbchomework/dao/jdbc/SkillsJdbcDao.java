@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class SkillsJdbcDao extends AbstractJdbcDao<Skill> implements SkillsDao {
 
-    public SkillsJdbcDao(Connection connection, String table, String column) {
-        super(connection, table, column);
+    public SkillsJdbcDao(Connection connection, String table) {
+        super(connection, table);
     }
 
     @Override

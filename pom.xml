@@ -63,7 +63,6 @@
             <artifactId>mockito-all</artifactId>
             <version>1.10.19</version>
         </dependency>
-
     </dependencies>
 
     <properties>

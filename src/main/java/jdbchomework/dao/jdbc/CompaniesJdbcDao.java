@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class CompaniesJdbcDao extends AbstractJdbcDao<Company> implements CompaniesDao {
 
-    public CompaniesJdbcDao(Connection connection, String table, String column) {
-        super(connection, table, column);
+    public CompaniesJdbcDao(Connection connection, String table) {
+        super(connection, table);
     }
 
     protected Company createEntity(ResultSet resultSet) throws SQLException {

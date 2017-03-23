@@ -14,8 +14,8 @@ public class DevelopersJdbcDao extends AbstractJdbcDao<Developer> implements Dev
 
     private static org.slf4j.Logger log = LoggerFactory.getLogger(DevelopersJdbcDao.class);
 
-    public DevelopersJdbcDao(Connection connection, String table, String column) {
-        super(connection, table, column);
+    public DevelopersJdbcDao(Connection connection, String table) {
+        super(connection, table);
     }
 
     @Override

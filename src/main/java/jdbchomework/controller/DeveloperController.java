@@ -1,6 +1,7 @@
 package jdbchomework.controller;
 
 import jdbchomework.entity.Developer;
+import jdbchomework.entity.Skill;
 import jdbchomework.service.DeveloperService;
 
 import java.util.List;
@@ -17,8 +18,8 @@ public class DeveloperController {
         return developerService.getAllDevelopers();
     }
 
-    public void addDeveloper(String name) {
-        developerService.addDeveloper(name);
+    public void addDeveloper(String name, List<Skill> skills) {
+        developerService.addDeveloper(name, skills);
     }
 
     public Developer getDeveloperById(int id) {
@@ -29,7 +30,7 @@ public class DeveloperController {
         return developerService.deleteDeveloperById(id);
     }
 
-    public boolean updateDeveloperById(int id, String name) {
-        return developerService.updateDeveloperById(id, name);
+    public boolean updateDeveloperById(int id, String name, List<Skill> skills) {
+        return developerService.updateDeveloperById(id, name, skills);
     }
 }

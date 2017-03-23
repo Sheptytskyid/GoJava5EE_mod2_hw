@@ -1,6 +1,6 @@
 package jdbchomework;
 
-import jdbchomework.utils.HibernateUtil;
+import jdbchomework.utils.ConnectionUtil;
 import jdbchomework.utils.InjectorJdbc;
 
 import java.io.BufferedReader;
@@ -18,6 +18,6 @@ public class MainWithJdbc {
     public static void main(String[] args) throws IOException {
         InjectorJdbc.getConsoleMain().consoleMain();
         reader.close();
-        HibernateUtil.closeSessionFactory();
+        ConnectionUtil.closeConnection();
     }
 }
