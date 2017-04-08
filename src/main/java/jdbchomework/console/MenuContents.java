@@ -42,7 +42,7 @@ public class MenuContents {
         serviceCompaniesMenu.add("Get all companies");
         serviceCompaniesMenu.add("Add new company");
         serviceCompaniesMenu.add("Get company by ID");
-        serviceCompaniesMenu.add("Get company developers by company id*");
+        serviceCompaniesMenu.add("Get company developers by company id");
         serviceCompaniesMenu.add("Update company by ID");
         serviceCompaniesMenu.add("Delete company by ID");
         serviceCompaniesMenu.add(GO_TO_MAIN_MENU);

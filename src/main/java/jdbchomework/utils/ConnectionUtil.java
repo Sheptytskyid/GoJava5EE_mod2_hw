@@ -18,10 +18,8 @@ public class ConnectionUtil {
     }
 
     public static Connection getConnection() {
-        FileInputStream fis;
         Properties property = new Properties();
-        try {
-            fis = new FileInputStream("src/main/resources/config.properties");
+        try (FileInputStream fis = new FileInputStream("src/main/resources/config.properties")) {
             property.load(fis);
             String url = property.getProperty("db.url");
             String user = property.getProperty("db.user");

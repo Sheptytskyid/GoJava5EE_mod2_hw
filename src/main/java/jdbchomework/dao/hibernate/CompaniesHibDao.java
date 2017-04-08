@@ -22,8 +22,9 @@ public class CompaniesHibDao extends AbstractHibDao<Company> implements Companie
         super(entityName, sessionFactory, clazz);
     }
 
+    @Override
     public List<Developer> getCompanyDevelopers(long id) {
-        List result = new ArrayList<>();
+        List<Developer> result = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             try {
                 session.beginTransaction();

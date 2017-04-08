@@ -1,6 +1,5 @@
 package jdbchomework.console;
 
-import jdbchomework.MainWithJdbc;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
@@ -43,10 +42,10 @@ public abstract class AbstractMenu {
         System.out.println(message);
         String input = "";
         try {
-            input = MainWithJdbc.getReader().readLine();
+            input = MenuLauncher.getReader().readLine();
             while (!type.getIsValid().test(input)) {
                 System.out.println(type.getErrorMessage());
-                input = MainWithJdbc.getReader().readLine();
+                input = MenuLauncher.getReader().readLine();
             }
         } catch (IOException e) {
             log.error("Error reading user input from console", e);
