@@ -17,9 +17,11 @@
             root
         </property>
         <property name="hibernate.connection.password">
-            admin
+            root
         </property>
         <property name="current_session_context_class">thread</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
         <mapping class="jdbchomework.entity.Skill"/>
         <mapping class="jdbchomework.entity.Developer"/>
         <mapping class="jdbchomework.entity.Customer"/>

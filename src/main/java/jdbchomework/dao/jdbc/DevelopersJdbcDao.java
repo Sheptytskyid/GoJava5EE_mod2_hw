@@ -1,14 +1,17 @@
 package jdbchomework.dao.jdbc;
 
 import jdbchomework.dao.model.DevelopersDao;
-import jdbchomework.exceptions.DbConnectionException;
 import jdbchomework.entity.Developer;
+import jdbchomework.entity.Skill;
+import jdbchomework.exceptions.DbConnectionException;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DevelopersJdbcDao extends AbstractJdbcDao<Developer> implements DevelopersDao {
 
@@ -34,6 +37,25 @@ public class DevelopersJdbcDao extends AbstractJdbcDao<Developer> implements Dev
             throw new DbConnectionException("Cannot connect to DB", e);
         }
         return result;
+    }
+
+    public List<Skill> getDeveloperSkills(long developerId) {
+        List<Skill> skills = new ArrayList<>();
+        String sql = "select skills.id, skills.name "
+            + "from developers_skills inner join skills on developers_skills.skill_id=skills.id "
+            + "where developers_skills.developer_id= ? ;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, developerId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Skill skill = new Skill(resultSet.getInt("id"), resultSet.getString("name"));
+                skills.add(skill);
+            }
+        } catch (SQLException e) {
+            log.error("Cannot connect to DB", e);
+            throw new DbConnectionException("Cannot connect to DB", e);
+        }
+        return skills;
     }
 
     @Override

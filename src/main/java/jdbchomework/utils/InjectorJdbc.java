@@ -13,12 +13,11 @@ import jdbchomework.controller.CustomerController;
 import jdbchomework.controller.DeveloperController;
 import jdbchomework.controller.ProjectController;
 import jdbchomework.controller.SkillController;
-import jdbchomework.dao.hibernate.CompaniesHibDao;
+import jdbchomework.dao.jdbc.CompaniesJdbcDao;
 import jdbchomework.dao.jdbc.CustomersJdbcDao;
 import jdbchomework.dao.jdbc.DevelopersJdbcDao;
 import jdbchomework.dao.jdbc.ProjectsJdbcDao;
 import jdbchomework.dao.jdbc.SkillsJdbcDao;
-import jdbchomework.entity.Company;
 import jdbchomework.service.CompanyService;
 import jdbchomework.service.CustomerService;
 import jdbchomework.service.DeveloperService;
@@ -30,13 +29,11 @@ import java.sql.Connection;
 public class InjectorJdbc {
 
     private static Connection connection = ConnectionUtil.getConnection();
-    private static CompaniesHibDao companiesJdbcDao =
-        new CompaniesHibDao("Company", HibernateUtil.getSessionFactory(), Company.class);
     private static CustomersJdbcDao customersJdbcDao = new CustomersJdbcDao(connection, "customers");
     private static DevelopersJdbcDao developersJdbcDao = new DevelopersJdbcDao(connection, "developers");
+    private static CompaniesJdbcDao companiesJdbcDao = new CompaniesJdbcDao(connection, "companies", developersJdbcDao);
     private static ProjectsJdbcDao projectsJdbcDao = new ProjectsJdbcDao(connection, "projects");
     private static SkillsJdbcDao skillsJdbcDao = new SkillsJdbcDao(connection, "skills");
-    //work via CompanyHibDao
     private static CompanyService companyService = new CompanyService(companiesJdbcDao);
     private static CustomerService customerService = new CustomerService(customersJdbcDao);
     private static DeveloperService developerService = new DeveloperService(developersJdbcDao);

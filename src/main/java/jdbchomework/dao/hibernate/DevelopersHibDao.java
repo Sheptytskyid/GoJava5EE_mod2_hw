@@ -23,7 +23,7 @@ public class DevelopersHibDao extends AbstractHibDao<Developer> implements Devel
         try (Session session = sessionFactory.openSession()) {
             try {
                 session.beginTransaction();
-                Developer developer = (Developer) getById(id);
+                Developer developer = getById(id);
                 developer.setName(toUpdate.getName());
                 developer.setSkills(toUpdate.getSkills());
                 session.update(developer);
