@@ -16,7 +16,7 @@ public class MainWithJdbc {
     }
 
     public static void main(String[] args) throws IOException {
-        InjectorJdbc.getConsoleMain().consoleMain();
+        InjectorJdbc.getMenuLauncher().consoleMain();
         reader.close();
         ConnectionUtil.closeConnection();
     }

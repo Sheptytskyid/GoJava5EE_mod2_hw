@@ -7,11 +7,8 @@ import java.io.IOException;
 
 public class MainWithHibernate {
 
-
     public static void main(String[] args) throws IOException {
-        InjectorHib.getConsoleMain().consoleMain();
+        InjectorHib.getMenuLauncher().consoleMain();
         HibernateUtil.closeSessionFactory();
     }
-
-
 }
