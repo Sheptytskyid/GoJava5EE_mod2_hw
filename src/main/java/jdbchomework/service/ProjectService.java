@@ -30,7 +30,7 @@ public class ProjectService {
         return projectsDao.deleteById(id);
     }
 
-    public boolean updateProjectById(int id, Project project) {
-        return projectsDao.updateById(id, project);
+    public boolean updateProjectById(int id, String name, int cost) {
+        return projectsDao.updateById(id, new Project(name, cost));
     }
 }
